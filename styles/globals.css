@@ -1,3 +1,24 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.icon-class,
+.icon-class svg,
+.icon-class .icon-bg,
+.icon-class .icon-bg svg {
+  transition: all ease 0.3s;
+}
+.icon-class:hover svg {
+  fill: white;
+  cursor: pointer;
+}
+.icon-class:hover {
+  color: white;
+  cursor: pointer;
+}
+.icon-class:hover .icon-bg {
+  background-color: white;
+}
+.icon-class:hover .icon-bg svg {
+  fill: black;
+}
