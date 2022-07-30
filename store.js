@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit'
-import authReducer from './component/auth/authSlice'
+import authReducer from './components/auth/authSlice'
 export const store = configureStore({
   reducer: {
     //gán cho auth bằng initialState thuộc authReducer

@@ -54,26 +54,14 @@ export const LibraryIconActive = ({ className }) => {
 }
 export const PlusIcon = ({ className }) => {
   return (
-    <svg
-      role='img'
-      height='12'
-      width='12'
-      aria-hidden='true'
-      viewBox='0 0 16 16'
-      className={className}>
+    <svg role='img' height='12' width='12' aria-hidden='true' viewBox='0 0 16 16' className={className}>
       <path d='M15.25 8a.75.75 0 01-.75.75H8.75v5.75a.75.75 0 01-1.5 0V8.75H1.5a.75.75 0 010-1.5h5.75V1.5a.75.75 0 011.5 0v5.75h5.75a.75.75 0 01.75.75z'></path>
     </svg>
   )
 }
 export const LoveIcon = ({ className }) => {
   return (
-    <svg
-      role='img'
-      height='12'
-      width='12'
-      aria-hidden='true'
-      viewBox='0 0 16 16'
-      className={className}>
+    <svg role='img' height='12' width='12' aria-hidden='true' viewBox='0 0 16 16' className={className}>
       <path d='M15.724 4.22A4.313 4.313 0 0012.192.814a4.269 4.269 0 00-3.622 1.13.837.837 0 01-1.14 0 4.272 4.272 0 00-6.21 5.855l5.916 7.05a1.128 1.128 0 001.727 0l5.916-7.05a4.228 4.228 0 00.945-3.577z'></path>
     </svg>
   )
@@ -89,6 +77,13 @@ export const NextIcon = ({ className }) => {
   return (
     <svg role='img' height='24' width='24' className={className} viewBox='0 0 24 24'>
       <path d='M8.043 2.793a1 1 0 000 1.414L15.836 12l-7.793 7.793a1 1 0 101.414 1.414L18.664 12 9.457 2.793a1 1 0 00-1.414 0z'></path>
+    </svg>
+  )
+}
+export const PlayIcon = ({ className }) => {
+  return (
+    <svg role='img' height='24' width='24' viewBox='0 0 24 24' className={className}>
+      <path d='M7.05 3.606l13.49 7.788a.7.7 0 010 1.212L7.05 20.394A.7.7 0 016 19.788V4.212a.7.7 0 011.05-.606z'></path>
     </svg>
   )
 }

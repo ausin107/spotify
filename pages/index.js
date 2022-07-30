@@ -10,11 +10,25 @@ import {
   LoveIcon,
   BackIcon,
   NextIcon,
-} from '../component/Icon'
-export default function Home() {
+} from '../components/Icon'
+import { useEffect } from 'react'
+import { loadTrendingMusic } from '../lib/loadData'
+import Row from '../components/Row'
+export async function getStaticProps() {
+  const info = {
+    countryId: 'VN',
+  }
+  const music = await loadTrendingMusic(info)
+  return {
+    props: { music: music.items },
+  }
+}
+
+export default function Home({ music }) {
+  console.log(music)
   return (
-    <div className=' bg-bgColor w-screen h-screen flex flex-col'>
-      <div className='bg-bgColor fixed h-screen lg:w-2/12'>
+    <div className='bg-bgColor w-screen h-fit flex flex-col overflow-hidden'>
+      <div className='bg-black fixed h-screen lg:w-2/12 z-10'>
         <div className='p-6'>
           <SpotifyLogo className='text-white text-sm w-[60%] sm:mb-8 hover:cursor-pointer' />
           <div className='mb-8'>
@@ -50,12 +64,12 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className='bg-navbarBg flex flex-row h-16 w-10/12 fixed left-[16.666%] justify-between items-center'>
-        <div className='flex items-center ml-5'>
-          <div className='bg-black opacity-70 py-1 mr-6 rounded-full'>
+      <div className='bg-navbarBg flex flex-row h-16 w-10/12 fixed left-[16.666%] justify-between items-center z-10'>
+        <div className='flex items-center ml-8'>
+          <div className='bg-black opacity-70 py-1 mr-6 rounded-full cursor-not-allowed'>
             <BackIcon className='fill-navigateIcon' />
           </div>
-          <div className='bg-black opacity-70 py-1 mr-4 rounded-full'>
+          <div className='bg-black opacity-70 py-1 mr-4 rounded-full cursor-not-allowed'>
             <NextIcon className='fill-navigateIcon' />
           </div>
         </div>
@@ -76,6 +90,12 @@ export default function Home() {
           <div className='text-black text-lg font-semibold mr-7 tracking-wide hover:scale-105 cursor-pointer bg-white p-2 px-6 rounded-full'>
             Đăng nhập
           </div>
+        </div>
+      </div>
+      <div className='left-[16.666%] h-screen relative'>
+        <div className='h-80 bg-mainContainerBg'></div>
+        <div className='absolute top-16'>
+          <Row title='Top Trending Việt Nam' data={music} />
         </div>
       </div>
     </div>

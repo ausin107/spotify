@@ -22,3 +22,8 @@
 .icon-class:hover .icon-bg svg {
   fill: black;
 }
+/* @media screen and (min-width: 1024px) and (max-width: 3000px) {
+  .react-multi-carousel-item {
+    width: 20.1vw !important;
+  }
+} */
