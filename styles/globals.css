@@ -22,8 +22,11 @@
 .icon-class:hover .icon-bg svg {
   fill: black;
 }
-/* @media screen and (min-width: 1024px) and (max-width: 3000px) {
-  .react-multi-carousel-item {
-    width: 20.1vw !important;
-  }
-} */
+.react-multiple-carousel__arrow--right {
+  right: 0px !important;
+  bottom: 50%;
+}
+.react-multiple-carousel__arrow--left {
+  left: 0px !important;
+  bottom: 50%;
+}

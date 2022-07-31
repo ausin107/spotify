@@ -20,6 +20,7 @@ module.exports = {
           'linear-gradient(299deg, rgb(39,73,167) 0%, rgba(145,41,161,1) 45%, rgba(33,55,168,1) 100%)',
         mainContainerBg:
           'linear-gradient(0deg, rgba(18,18,18,1) 0%, rgba(18,18,18,1) 0%, rgba(29,32,33,1) 100%);',
+        notAuthBannerBg: 'linear-gradient(90deg,#af2896,#509bf5)',
       },
     },
   },
