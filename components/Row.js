@@ -37,7 +37,7 @@ export default function Row({ title, data }) {
         slidesToSlide={3}
         containerClass=''
         itemClass='text-white'
-        draggable
+        // draggable
         keyBoardControl
         removeArrowOnDeviceType={['tablet', 'mobile']}
         responsive={responsive}>

@@ -32,13 +32,14 @@ export default function Home({ VietNamTrendingMusic, KoreaTrendingMusic, GlobalT
           <div className=' uppercase '>Xem trước Spotify</div>
           <div className=' font-bold '>
             Đăng ký để nghe không giới hạn và lưu những bài hát của bạn vào playlist. Chỉ cần để lại
-            1 star cho mình.
+            1 star cho mình :{'>'}
           </div>
         </div>
         <div className='text-black text-lg font-semibold tracking-wide hover:scale-105 cursor-pointer bg-white p-2 px-6 rounded-full'>
           Đăng ký miễn phí
         </div>
       </div>
+      <div id='music-player' className='fixed bottom-0 left-0 w-screen h-[6.5rem] z-30'></div>
     </div>
   )
 }

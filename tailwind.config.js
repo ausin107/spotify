@@ -14,6 +14,9 @@ module.exports = {
         playIconBg: '#1fdf64',
         itemBg: '#181818',
         itemActiveBg: '#282828',
+        musicPlayer: '#bababa',
+        activeIcon: '#1db954',
+        activeIconHover: '#1ed760',
       },
       backgroundImage: {
         loveIconBg:
