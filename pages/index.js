@@ -2,6 +2,7 @@ import { loadTrendingMusic } from '../lib/loadData'
 import Row from '../components/Row'
 import Navbar from '../components/Navbar'
 import Sidebar from '../components/Sidebar'
+import MusicPlayer from '../components/MusicPlayer'
 export async function getStaticProps() {
   const VietNamTrendingMusic = await loadTrendingMusic('VN')
   const KoreaTrendingMusic = await loadTrendingMusic('KR')
@@ -39,7 +40,7 @@ export default function Home({ VietNamTrendingMusic, KoreaTrendingMusic, GlobalT
           Đăng ký miễn phí
         </div>
       </div>
-      <div id='music-player' className='fixed bottom-0 left-0 w-screen h-[6.5rem] z-30'></div>
+      <MusicPlayer />
     </div>
   )
 }

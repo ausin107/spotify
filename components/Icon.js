@@ -157,13 +157,17 @@ export const LoveMusicActive = ({ className, width, height }) => {
     </svg>
   )
 }
-export const MinimizeBrowserIcon = ({ className, width, height }) => {
+export const MinimizeBrowserIcon = ({ className, width, height, onClick, pipRef }) => {
   return (
-    <svg height={height} width={width} className={className} xmlns='http://www.w3.org/2000/svg'>
-      <g fill='currentColor' fill-rule='evenodd'>
-        <path
-          d='M1 3v9h14V3H1zm0-1h14a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z'
-          fill-rule='nonzero'></path>
+    <svg
+      height={height}
+      width={width}
+      className={className}
+      onClick={onClick}
+      xmlns='http://www.w3.org/2000/svg'
+      ref={pipRef}>
+      <g>
+        <path d='M1 3v9h14V3H1zm0-1h14a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z'></path>
         <path d='M10 8h4v3h-4z'></path>
       </g>
     </svg>
