@@ -3,6 +3,7 @@ import Row from '../components/Row'
 import Navbar from '../components/Navbar'
 import Sidebar from '../components/Sidebar'
 import MusicPlayer from '../components/MusicPlayer'
+import { useEffect } from 'react'
 export async function getStaticProps() {
   const VietNamTrendingMusic = await loadTrendingMusic('VN')
   const KoreaTrendingMusic = await loadTrendingMusic('KR')
@@ -16,6 +17,9 @@ export async function getStaticProps() {
   }
 }
 export default function Home({ VietNamTrendingMusic, KoreaTrendingMusic, GlobalTrendingMusic }) {
+  useEffect(() => {
+    document.title = 'Spotify - Home'
+  }, [])
   return (
     <div className='bg-bgColor h-fit flex flex-col'>
       <Sidebar />

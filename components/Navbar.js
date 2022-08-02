@@ -1,7 +1,9 @@
 import { useState, useRef, useEffect } from 'react'
 import { BackIcon, NextIcon } from './Icon'
+import { useRouter } from 'next/router'
 export default function Navbar() {
   const [currentHeight, setCurrentHeight] = useState()
+  const router = useRouter()
   const navbarRef = useRef()
   useEffect(() => {
     const handleScroll = () => {
@@ -31,17 +33,25 @@ export default function Navbar() {
         <div className='text-navbarColor text-lg font-semibold mr-7 tracking-wide hover:text-white hover:scale-105 cursor-pointer'>
           Premium
         </div>
-        <div className='text-navbarColor text-lg font-semibold mr-7 tracking-wide hover:text-white hover:scale-105 cursor-pointer'>
+        <div
+          className='text-navbarColor text-lg font-semibold mr-7 tracking-wide hover:text-white hover:scale-105 cursor-pointer'
+          onClick={() => router.push('https://support.spotify.com/')}>
           Hổ trợ
         </div>
-        <div className='text-navbarColor text-lg font-semibold mr-7 tracking-wide hover:text-white hover:scale-105 cursor-pointer'>
+        <div
+          className='text-navbarColor text-lg font-semibold mr-7 tracking-wide hover:text-white hover:scale-105 cursor-pointer'
+          onClick={() => router.push('https://www.spotify.com/vn-vi/download/windows/')}>
           Tải xuống
         </div>
         <div className='mr-7 border-l-[1px] border-white py-3'></div>
-        <div className='text-navbarColor text-lg font-semibold mr-7 tracking-wide hover:text-white hover:scale-105 cursor-pointer'>
+        <div
+          className='text-navbarColor text-lg font-semibold mr-7 tracking-wide hover:text-white hover:scale-105 cursor-pointer'
+          onClick={() => router.push('/signup')}>
           Đăng ký
         </div>
-        <div className='text-black text-lg font-semibold mr-7 tracking-wide hover:scale-105 cursor-pointer bg-white p-2 px-6 rounded-full'>
+        <div
+          className='text-black text-lg font-semibold mr-7 tracking-wide hover:scale-105 cursor-pointer bg-white p-2 px-6 rounded-full'
+          onClick={() => router.push('/login')}>
           Đăng nhập
         </div>
       </div>

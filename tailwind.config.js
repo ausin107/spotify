@@ -17,6 +17,12 @@ module.exports = {
         musicPlayer: '#bababa',
         activeIcon: '#1db954',
         activeIconHover: '#1ed760',
+        facebookBg: '#405a93',
+        facebookBgActive: '#384F81',
+        googleText: '#535353',
+        breakLine: 'rgb(204, 204, 204)',
+        textBreakLine: '#7f7f7f',
+        inputBorder: '#878787',
       },
       backgroundImage: {
         loveIconBg:
