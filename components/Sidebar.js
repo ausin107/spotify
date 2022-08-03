@@ -13,7 +13,6 @@ import {
 } from '../components/Icon'
 export default function Sidebar() {
   const router = useRouter()
-  console.log(router)
   return (
     <div className='bg-black fixed h-screen lg:w-2/12 z-10'>
       <div className='p-6'>
@@ -28,7 +27,7 @@ export default function Sidebar() {
             ) : (
               <HomeIconActive className='fill-white mr-4' />
             )}
-            Trang chủ
+            Home page
           </div>
           <div className='text-iconColor mb-4 flex font-semibold icon-class'>
             {router.pathname != '/search' ? (
@@ -36,12 +35,12 @@ export default function Sidebar() {
             ) : (
               <SearchIconActive className='fill-white mr-4' />
             )}
-            Tìm kiếm
+            Search
           </div>
           <div className='text-iconColor mb-4 flex font-semibold icon-class'>
             <LibraryIcon className='fill-iconColor mr-4 font-semibold' />
             <LibraryIconActive className='fill-white mr-4 hidden' />
-            Thư viện
+            Library
           </div>
         </div>
         <div className=''>
@@ -49,13 +48,13 @@ export default function Sidebar() {
             <div className='bg-iconColor mr-4 p-[0.4rem] rounded icon-bg'>
               <PlusIcon className='fill-black' />
             </div>
-            Tạo playlist
+            Create playlist
           </div>
           <div className='flex text-iconColor mb-4 font-semibold items-center icon-class'>
             <div className='bg-loveIconBg mr-4 p-[0.4rem] rounded'>
               <LoveIcon className='fill-iconColor' />
             </div>
-            Bài hát đã thích
+            Linked song
           </div>
         </div>
       </div>

@@ -23,6 +23,7 @@ module.exports = {
         breakLine: 'rgb(204, 204, 204)',
         textBreakLine: '#7f7f7f',
         inputBorder: '#878787',
+        logoutBg: '#282828',
       },
       backgroundImage: {
         loveIconBg:
