@@ -11,8 +11,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { auth } from '../firebase'
 import { loginSuccess, loginFailed } from '../components/auth/authSlice'
 export default function Login() {
-  const [email, setEmail] = useState()
-  const [password, setPassword] = useState()
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
   const [error, setError] = useState()
   const [successMs, setSuccessMs] = useState()
   const [isLoading, setLoading] = useState(false)
@@ -33,7 +33,7 @@ export default function Login() {
         setError()
         setTimeout(() => {
           router.push('/')
-        }, 3000)
+        }, 2000)
       })
       .catch((err) => {
         dispatch(loginFailed())
@@ -58,7 +58,7 @@ export default function Login() {
         setSuccessMs('Login successfull !!!')
         setTimeout(() => {
           router.push('/')
-        }, 3000)
+        }, 2000)
       })
       .catch((err) => {
         dispatch(loginFailed())
@@ -81,7 +81,7 @@ export default function Login() {
         setSuccessMs('Login successfull !!!')
         setTimeout(() => {
           router.push('/')
-        }, 3000)
+        }, 2000)
       })
       .catch((err) => {
         dispatch(loginFailed())

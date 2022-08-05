@@ -1,16 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit'
-import dynamic from 'next/dynamic'
-const authKey = dynamic(
-  () => {
-    import('../getWindow')
-  },
-  {
-    srr: false,
-  }
-)
+import { getStorageValue } from '../../lib/getLocalStorage'
+
+const authKey = getStorageValue('authKey', null)
+
 const initialState = {
   isAuth: !!authKey ? true : false,
-  authKey: !!authKey ? authKey : null,
+  authKey: authKey,
 }
 
 export const authSlice = createSlice({
@@ -28,7 +23,6 @@ export const authSlice = createSlice({
     logoutSuccess: (state) => {
       state.isAuth = false
       state.authKey = null
-      window.localStorage.removeItem('authKey')
     },
   },
 })

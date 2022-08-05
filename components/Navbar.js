@@ -1,10 +1,15 @@
 import { useState, useRef, useEffect } from 'react'
-import { BackIcon, LogoutIcon, NextIcon, UserIcon } from './Icon'
+import { BackIcon, EmptyIcon, LogoutIcon, NextIcon, SearchIcon } from './Icon'
 import { useRouter } from 'next/router'
 import { useSelector, useDispatch } from 'react-redux'
 import { logoutSuccess } from './auth/authSlice'
+import { updateSearchData } from './search/searchSlice'
+import { loadSearchMusic } from '../lib/loadData'
 export default function Navbar() {
   const [currentHeight, setCurrentHeight] = useState()
+  const [auth, setAuth] = useState(false)
+  const [inputValue, setInputValue] = useState('')
+  const inputRef = useRef()
   const router = useRouter()
   const navbarRef = useRef()
   const dispatch = useDispatch()
@@ -21,19 +26,76 @@ export default function Navbar() {
       window.removeEventListener('scroll', handleScroll)
     }
   }, [currentHeight])
+  useEffect(() => {
+    setAuth(isAuth)
+  }, [])
+  const handleLogout = () => {
+    dispatch(logoutSuccess())
+    window.localStorage.removeItem('authKey')
+    router.reload()
+  }
+  const handleSumbit = async () => {
+    const musicData = await loadSearchMusic(inputValue)
+    dispatch(updateSearchData({ musicData: musicData.items }))
+  }
+  const handleClear = () => {
+    setInputValue('')
+    inputRef.current.focus()
+  }
+  const handleEnter = (e) => {
+    if (e.key == 'Enter') {
+      handleSumbit()
+    }
+  }
   return (
     <div
       ref={navbarRef}
       className='bg-navbarBg flex flex-row h-16 w-10/12 fixed left-[16.666%] justify-between items-center z-20 transition-all duration-500'>
       <div className='flex items-center ml-8'>
-        <div className='bg-black opacity-70 py-1 mr-6 rounded-full cursor-not-allowed'>
+        <div
+          className='bg-black opacity-70 py-1 mr-6 rounded-full'
+          onClick={() => {
+            router.back()
+          }}>
           <BackIcon className='fill-navigateIcon' />
         </div>
-        <div className='bg-black opacity-70 py-1 mr-4 rounded-full cursor-not-allowed'>
+        <div
+          className='bg-black opacity-70 py-1 mr-4 rounded-full'
+          onClick={() => {
+            router.push(1)
+          }}>
           <NextIcon className='fill-navigateIcon' />
         </div>
+        {router.pathname == '/search' ? (
+          <div className='flex items-center'>
+            <div className='w-[22rem] bg-white rounded flex py-2 px-3 mr-2'>
+              <SearchIcon className='fill-bgColor mr-2' />
+              <input
+                value={inputValue}
+                placeholder='Type music name...'
+                className='w-80 outline-none'
+                onChange={(e) => setInputValue(e.target.value)}
+                onKeyDown={(e) => handleEnter(e)}
+                ref={inputRef}
+              />
+              <EmptyIcon
+                className='fill-bgColor cursor-pointer'
+                width='24'
+                height='24'
+                onClick={handleClear}
+              />
+            </div>
+            <button
+              onClick={handleSumbit}
+              className='w-[4.5rem] h-10 bg-activeIcon hover:bg-activeIconHover rounded font-semibold'>
+              Search
+            </button>
+          </div>
+        ) : (
+          ''
+        )}
       </div>
-      {isAuth ? (
+      {auth ? (
         <div className='flex'>
           <div
             onClick={() => router.push('https://github.com/ausin107/spotify')}
@@ -41,7 +103,7 @@ export default function Navbar() {
             Give me a star
           </div>
           <div
-            onClick={() => dispatch(logoutSuccess())}
+            onClick={handleLogout}
             className='text-white bg-logoutBg font-bold p-2 px-4 rounded-full hover:scale-105 cursor-pointer flex items-center justify-center mr-8'>
             <LogoutIcon width='16' height='16' className='mr-2' />
             Logout

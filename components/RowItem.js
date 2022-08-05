@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect } from 'react'
 import { PlayIcon } from './Icon'
 import { useDispatch } from 'react-redux/'
-import { showMusicPlayer } from './musicPlayerSlice'
+import { showMusicPlayer } from './music_player/musicPlayerSlice'
 export default function RowItem({ data }) {
   const dispatch = useDispatch()
   const title =

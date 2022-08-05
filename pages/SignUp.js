@@ -42,7 +42,7 @@ export default function SignUp() {
           setError()
           setTimeout(() => {
             router.push('/login')
-          }, 3000)
+          }, 2000)
         })
         .catch((err) => {
           let errorCode = err.code
@@ -68,7 +68,7 @@ export default function SignUp() {
         setSuccessMs('Login successfull !!!')
         setTimeout(() => {
           router.push('/')
-        }, 3000)
+        }, 2000)
       })
       .catch((err) => {
         dispatch(loginFailed())
@@ -91,7 +91,7 @@ export default function SignUp() {
         setSuccessMs('Login successfull !!!')
         setTimeout(() => {
           router.push('/')
-        }, 3000)
+        }, 2000)
       })
       .catch((err) => {
         dispatch(loginFailed())
