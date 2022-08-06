@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function Duration({ time }) {
+export default function Duration({ time, className }) {
   const handleDuration = () => {
     let minutes = parseInt(time / 60)
     let seconds = time - parseInt(time / 60) * 60
@@ -8,5 +8,5 @@ export default function Duration({ time }) {
     let result = minutes + ':' + seconds
     return result
   }
-  return <div className='text-navbarColor text-xs'>{handleDuration()}</div>
+  return <div className={className}>{handleDuration()}</div>
 }

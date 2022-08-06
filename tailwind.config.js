@@ -24,6 +24,7 @@ module.exports = {
         textBreakLine: '#7f7f7f',
         inputBorder: '#878787',
         logoutBg: '#282828',
+        searchChildBg: '#ffffff1a',
       },
       backgroundImage: {
         loveIconBg:

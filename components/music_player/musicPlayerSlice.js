@@ -2,7 +2,8 @@ import { createSlice } from '@reduxjs/toolkit'
 const initialState = {
   isShow: false,
   musicData: null,
-  musicUrl: null,
+  musicId: null,
+  isPlay: false,
 }
 export const musicPlayerSlice = createSlice({
   name: 'musicPlayer',
@@ -11,10 +12,17 @@ export const musicPlayerSlice = createSlice({
     showMusicPlayer: (state, action) => {
       state.isShow = true
       state.musicData = action.payload.musicData
-      state.musicUrl = action.payload.musicUrl
+      state.musicId = action.payload.musicId
+      state.isPlay = true
+    },
+    playMusic: (state) => {
+      state.isPlay = true
+    },
+    pauseMusic: (state) => {
+      state.isPlay = false
     },
   },
 })
-export const { showMusicPlayer } = musicPlayerSlice.actions
+export const { showMusicPlayer, playMusic, pauseMusic } = musicPlayerSlice.actions
 
 export default musicPlayerSlice.reducer

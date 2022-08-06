@@ -16,9 +16,10 @@ import {
   LoveMusicActive,
 } from './Icon'
 import Duration from './Duration'
-import { useSelector } from 'react-redux'
+import { playMusic, pauseMusic } from './music_player/musicPlayerSlice'
+import { useSelector, useDispatch } from 'react-redux'
 export default function MusicPlayer() {
-  const [isPlay, setPlay] = useState(false)
+  // const [isPlay, setPlay] = useState(false)
   const [isLoop, setLoop] = useState(false)
   const [isPIP, setPIP] = useState(false)
   const [played, setPlayed] = useState(0)
@@ -30,11 +31,13 @@ export default function MusicPlayer() {
   const playerRef = useRef()
   const volumeRef = useRef()
   const pipRef = useRef()
+  const dispatch = useDispatch()
   const isShow = useSelector((state) => state.player.isShow)
   const musicData = useSelector((state) => state.player.musicData)
-  const musicUrl = useSelector((state) => state.player.musicUrl)
+  const musicUrl = 'https://www.youtube.com/watch?v=' + useSelector((state) => state.player.musicId)
+  const isPlay = useSelector((state) => state.player.isPlay)
   const handlePlayPause = () => {
-    isPlay ? setPlay(false) : setPlay(true)
+    isPlay ? dispatch(pauseMusic()) : dispatch(playMusic())
   }
   const handleLoopMusic = () => {
     if (isLoop) {

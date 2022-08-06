@@ -6,13 +6,13 @@ export default function RowItem({ data }) {
   const dispatch = useDispatch()
   const title =
     data.snippet.title.length > 60 ? data.snippet.title.slice(0, 60) + '...' : data.snippet.title
-  const musicUrl = 'https://www.youtube.com/watch?v=' + data.id
+  const musicId = data.id
   const handleShow = () => {
-    const musicData = {
-      musicUrl: musicUrl,
+    const musicInfo = {
+      musicId,
       musicData: data,
     }
-    dispatch(showMusicPlayer(musicData))
+    dispatch(showMusicPlayer(musicInfo))
   }
   return (
     <div className='text-white p-4 cursor-pointer relative group bg-itemBg hover:bg-itemActiveBg mr-3 rounded h-full select-none'>
