@@ -176,7 +176,11 @@ export default function MusicPlayer() {
                 <div
                   className='bg-white p-2 w-fit rounded-full cursor-pointer hover:scale-105'
                   onClick={handlePlayPause}>
-                  {isPlay ? <PauseIcon /> : <PlayIcon width='16' height='16' />}
+                  {isPlay ? (
+                    <PauseIcon width='16' height='16' />
+                  ) : (
+                    <PlayIcon width='16' height='16' />
+                  )}
                 </div>
                 <div className='px-3 cursor-pointer pl-6'>
                   <NextMusic className='fill-musicPlayer hover:fill-white' width='16' height='16' />

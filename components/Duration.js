@@ -2,10 +2,12 @@ import React from 'react'
 
 export default function Duration({ time, className }) {
   const handleDuration = () => {
-    let minutes = parseInt(time / 60)
-    let seconds = time - parseInt(time / 60) * 60
+    let hours = parseInt(time / 3600)
+    let minutes = parseInt((time - hours * 3600) / 60)
+    let seconds = time - hours * 3600 - minutes * 60
     seconds = seconds < 10 ? '0' + seconds : seconds
-    let result = minutes + ':' + seconds
+    minutes = minutes < 10 ? '0' + minutes : minutes
+    let result = hours > 0 ? hours + ':' + minutes + ':' + seconds : minutes + ':' + seconds
     return result
   }
   return <div className={className}>{handleDuration()}</div>

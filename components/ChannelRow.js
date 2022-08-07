@@ -14,9 +14,10 @@ export default function ChannelRow({ artistData }) {
           return res.items[0]
         })
       )
-      //   data = data.filter((item, index) => data.indexOf(item) === index)
-      console.log(data)
-      setArtist(data)
+      let jsonObj = data.map(JSON.stringify)
+      let uniqueSet = new Set(jsonObj)
+      let uniqueArray = Array.from(uniqueSet).map(JSON.parse)
+      setArtist(uniqueArray)
     }
     getAllArtist()
   }, [artistData])
@@ -26,23 +27,22 @@ export default function ChannelRow({ artistData }) {
       <div className='flex'>
         {!!artist &&
           artist.map((item, index) => {
-            return (
-              <div
-                key={index}
-                className='mr-4 group bg-itemBg hover:bg-itemActiveBg rounded px-5 py-5 relative transition-all duration-300'>
-                <img
-                  className='rounded-full w-44 mb-4 shadow-2xl'
-                  src={item.snippet.thumbnails.medium.url}
-                />
-                <div className='text-white font-bold mb-1'>
-                  {item.snippet.title.replace('Official', '').trim()}
+            if (index < 6) {
+              return (
+                <div
+                  key={index}
+                  className='mr-4 w-full group bg-itemBg hover:bg-itemActiveBg rounded px-5 py-5 relative transition-all duration-300'>
+                  <img
+                    className='rounded-full mb-4 shadow-2xl'
+                    src={item.snippet.thumbnails.medium.url}
+                  />
+                  <div className='text-white font-bold mb-1'>
+                    {item.snippet.title.replace('Official', '').trim()}
+                  </div>
+                  <div className='text-iconColor text-sm font-bold mb-4'>Artist</div>
                 </div>
-                <div className='text-iconColor text-sm font-bold mb-4'>Artist</div>
-                <div className='group-hover:visible group-hover:translate-y-0 hover:scale-105 group-hover:opacity-100 transition-all duration-300 invisible translate-y-5 opacity-0 p-3 d-flex bg-playIconBg absolute rounded-full right-6 bottom-6 cursor-pointer'>
-                  <PlayIcon width='24' height='24' className='fill-black' />
-                </div>
-              </div>
-            )
+              )
+            }
           })}
       </div>
     </div>

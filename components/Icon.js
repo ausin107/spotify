@@ -99,9 +99,9 @@ export const PlayIcon = ({ className, width, height }) => {
     </svg>
   )
 }
-export const PauseIcon = ({ className }) => {
+export const PauseIcon = ({ className, width, height }) => {
   return (
-    <svg role='img' height='16' width='16' viewBox='0 0 16 16' className={className}>
+    <svg role='img' height={height} width={width} viewBox='0 0 16 16' className={className}>
       <path d='M2.7 1a.7.7 0 00-.7.7v12.6a.7.7 0 00.7.7h2.6a.7.7 0 00.7-.7V1.7a.7.7 0 00-.7-.7H2.7zm8 0a.7.7 0 00-.7.7v12.6a.7.7 0 00.7.7h2.6a.7.7 0 00.7-.7V1.7a.7.7 0 00-.7-.7h-2.6z'></path>
     </svg>
   )

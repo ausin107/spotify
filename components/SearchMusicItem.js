@@ -16,12 +16,21 @@ export default function SearchMusicItem({ musicData }) {
       let data = await loadMusicData(musicData.id.videoId)
       let duration = data.items[0].contentDetails.duration
       duration = duration.replace('PT', '')
-      let m = parseInt(duration.slice(0, duration.indexOf('M'))) * 60
-      let s = parseInt(duration.slice(duration.indexOf('M') + 1, duration.indexOf('S')))
-      setDuration(m + s)
+      let [h, m, s] = [0, 0, 0]
+      if (duration.includes('H') == false) {
+        h = 0
+        m = parseInt(duration.slice(0, duration.indexOf('M'))) * 60
+        s = parseInt(duration.slice(duration.indexOf('M') + 1, duration.indexOf('S')))
+      } else if (duration.includes('H') == true) {
+        h = parseInt(duration.slice(0, duration.indexOf('H'))) * 3600
+        m = parseInt(duration.slice(duration.indexOf('H') + 1, duration.indexOf('M'))) * 60
+        s = parseInt(duration.slice(duration.indexOf('M') + 1, duration.indexOf('S')))
+      }
+      let result = h + m + s
+      setDuration(result)
     }
     getDuration()
-  }, [])
+  }, [musicData])
   const handleLoved = (e) => {
     e.stopPropagation()
     isLoved ? setLoved(false) : setLoved(true)
@@ -45,10 +54,10 @@ export default function SearchMusicItem({ musicData }) {
       onClick={handlePlay}
       ref={itemRef}
       tabIndex={0}>
-      <div className='flex'>
-        <div className='relative'>
+      <div className='flex items-center'>
+        <div className='relative mr-4'>
           <img
-            className='h-10 mr-4 group-hover:opacity-25 group-focus:opacity-25'
+            className='h-10 group-hover:opacity-25 group-focus:opacity-25'
             src={musicData.snippet.thumbnails.medium.url}
           />
           <div onClick={(e) => handlePlayPause(e)}>

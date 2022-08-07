@@ -1,9 +1,4 @@
 import { loadTrendingMusic } from '../lib/loadData'
-import Row from '../components/Row'
-import Navbar from '../components/Navbar'
-import Sidebar from '../components/Sidebar'
-import MusicPlayer from '../components/MusicPlayer'
-import AdvertisementBanner from '../components/AdvertisementBanner'
 import { useEffect } from 'react'
 export async function getStaticProps() {
   const VietNamTrendingMusic = await loadTrendingMusic('VN')
@@ -22,19 +17,13 @@ export default function Home({ VietNamTrendingMusic, KoreaTrendingMusic, GlobalT
     document.title = 'Spotify - Home'
   }, [])
   return (
-    <div className='bg-bgColor h-fit flex flex-col'>
-      <Sidebar />
-      <Navbar />
-      <div className='left-[16.666%] w-[82vw] overflow-hidden h-full relative bg-bgColor pb-24'>
-        <div className='h-80 bg-mainContainerBg absolute w-screen'></div>
-        <div className='pt-16 relative z-10'>
-          <Row title='Top Thịnh Hành Tại Việt Nam' data={VietNamTrendingMusic} />
-          <Row title='Đang Hot Tại Hàn Quốc' data={KoreaTrendingMusic} />
-          <Row title='Bảng Phát Hành Mới Nổi Tiếng' data={GlobalTrendingMusic} />
-        </div>
+    <div className='left-[16.666%] w-[82vw] overflow-hidden h-full relative bg-bgColor pb-24'>
+      <div className='h-80 bg-mainContainerBg absolute w-screen'></div>
+      <div className='pt-16 relative z-10'>
+        <Row title='Top Thịnh Hành Tại Việt Nam' data={VietNamTrendingMusic} />
+        <Row title='Đang Hot Tại Hàn Quốc' data={KoreaTrendingMusic} />
+        <Row title='Bảng Phát Hành Mới Nổi Tiếng' data={GlobalTrendingMusic} />
       </div>
-      <AdvertisementBanner />
-      <MusicPlayer />
     </div>
   )
 }

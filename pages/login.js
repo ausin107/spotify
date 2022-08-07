@@ -155,3 +155,4 @@ export default function Login() {
     </div>
   )
 }
+Login.getLayout = (page) => page
