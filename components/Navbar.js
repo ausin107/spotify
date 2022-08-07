@@ -53,18 +53,18 @@ export default function Navbar() {
       className='bg-navbarBg flex flex-row h-16 w-10/12 fixed left-[16.666%] justify-between items-center z-20 transition-all duration-500'>
       <div className='flex items-center ml-8'>
         <div
-          className='bg-black opacity-70 py-1 mr-6 rounded-full'
+          className='bg-black opacity-70 py-1 px-1 mr-4 rounded-full cursor-pointer'
           onClick={() => {
-            router.back()
+            window.history.back()
           }}>
-          <BackIcon className='fill-navigateIcon' />
+          <BackIcon className='fill-white' />
         </div>
         <div
-          className='bg-black opacity-70 py-1 mr-4 rounded-full'
+          className='bg-black opacity-70 py-1 px-1 mr-4 rounded-full cursor-pointer'
           onClick={() => {
-            router.push(1)
+            window.history.forward()
           }}>
-          <NextIcon className='fill-navigateIcon' />
+          <NextIcon className='fill-white' />
         </div>
         {router.pathname == '/search' ? (
           <div className='flex items-center'>
@@ -73,7 +73,7 @@ export default function Navbar() {
               <input
                 value={inputValue}
                 placeholder='Type music name...'
-                className='w-80 outline-none'
+                className='w-80 outline-none font-semibold'
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyDown={(e) => handleEnter(e)}
                 ref={inputRef}

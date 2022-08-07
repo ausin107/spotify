@@ -1,5 +1,6 @@
 import { loadTrendingMusic } from '../lib/loadData'
 import { useEffect } from 'react'
+import Row from '../components/Row'
 export async function getStaticProps() {
   const VietNamTrendingMusic = await loadTrendingMusic('VN')
   const KoreaTrendingMusic = await loadTrendingMusic('KR')

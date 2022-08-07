@@ -55,28 +55,28 @@ export default function SearchMusicItem({ musicData }) {
       ref={itemRef}
       tabIndex={0}>
       <div className='flex items-center'>
-        <div className='relative mr-4'>
-          <img
-            className='h-10 group-hover:opacity-25 group-focus:opacity-25'
-            src={musicData.snippet.thumbnails.medium.url}
-          />
-          <div onClick={(e) => handlePlayPause(e)}>
+        <div
+          className='h-10 w-[4.5rem] bg-cover '
+          style={{ backgroundImage: `url(${musicData.snippet.thumbnails.medium.url})` }}>
+          <div
+            onClick={(e) => handlePlayPause(e)}
+            className='w-full h-full flex items-center justify-center group-hover:bg-searchItemBg group-focus:bg-searchItemBg'>
             {isPlay && musicId == musicData.id.videoId ? (
               <PauseIcon
-                className='fill-white group-hover:visible group-focus:visible invisible absolute top-1/3 right-2/4'
+                className='fill-white group-hover:visible group-focus:visible invisible'
                 width='16'
                 height='16'
               />
             ) : (
               <PlayIcon
-                className='fill-white group-hover:visible group-focus:visible invisible absolute top-1/3 right-2/4'
+                className='fill-white group-hover:visible group-focus:visible invisible'
                 width='16'
                 height='16'
               />
             )}
           </div>
         </div>
-        <div className='flex flex-col'>
+        <div className='flex flex-col ml-4'>
           <div className='text-white font-semibold text-sm'>
             {musicData.snippet.title.slice(0, musicData.snippet.title.indexOf('|')).trim()}
           </div>

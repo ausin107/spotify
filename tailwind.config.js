@@ -32,6 +32,8 @@ module.exports = {
         mainContainerBg:
           'linear-gradient(0deg, rgba(18,18,18,1) 0%, rgba(18,18,18,1) 0%, rgba(29,32,33,1) 100%);',
         notAuthBannerBg: 'linear-gradient(90deg,#af2896,#509bf5)',
+        searchItemBg:
+          'radial-gradient(circle, rgba(53,45,54,1) 0%, rgba(53,47,60,0.545273211823792) 49%, rgba(55,65,73,0.7805673294708508) 100%)',
       },
     },
   },

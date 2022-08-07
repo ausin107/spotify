@@ -13,17 +13,17 @@ export default function TopResult({ musicData }) {
       musicData: musicData[0],
       musicId: musicData[0].id.videoId,
     }
-    if (!isShow && musicId != musicData[0].id.videoId) {
+    if (musicId != musicData[0].id.videoId) {
       dispatch(showMusicPlayer(musicInfo))
     }
   }
   const handlePlay = (e) => {
-    e.stopPropagration()
+    e.stopPropagation()
     const musicInfo = {
       musicData: musicData[0],
       musicId: musicData[0].id.videoId,
     }
-    if (!isShow && musicId != musicData[0].id.videoId) {
+    if (musicId != musicData[0].id.videoId) {
       dispatch(showMusicPlayer(musicInfo))
     } else if (musicId == musicData[0].id.videoId) {
       isPlay ? dispatch(pauseMusic()) : dispatch(playMusic())
