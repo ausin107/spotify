@@ -8,6 +8,7 @@ export default function DefaultSearch() {
         {allSearchPageData.map((item) => {
           return (
             <div
+              key={item.id}
               className='overflow-hidden w-44 h-44 rounded p-4 cursor-pointer relative'
               style={{ backgroundColor: `${item.bgColor}` }}>
               <div className='text-white font-bold text-2xl'>{item.title}</div>

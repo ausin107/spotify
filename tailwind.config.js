@@ -25,6 +25,7 @@ module.exports = {
         inputBorder: '#878787',
         logoutBg: '#282828',
         searchChildBg: '#ffffff1a',
+        banner2LoginBg: '#0d72ea',
       },
       backgroundImage: {
         loveIconBg:
