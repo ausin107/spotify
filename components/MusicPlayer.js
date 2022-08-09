@@ -11,21 +11,18 @@ import {
   VolumeIconLow,
   VolumeIconHigh,
   VolumeIconMedium,
-  LoveMusic,
   MinimizeBrowserIcon,
-  LoveMusicActive,
 } from './Icon'
+import LoveButton from './LoveButton'
 import Duration from './Duration'
 import { playMusic, pauseMusic } from './music_player/musicPlayerSlice'
 import { useSelector, useDispatch } from 'react-redux'
 export default function MusicPlayer() {
-  // const [isPlay, setPlay] = useState(false)
   const [isLoop, setLoop] = useState(false)
   const [isPIP, setPIP] = useState(false)
   const [played, setPlayed] = useState(0)
   const [duration, setDuration] = useState(0)
   const [volume, setVolume] = useState(1)
-  const [isLoved, setLoved] = useState(false)
   const musicInput = useRef()
   const loopIConRef = useRef()
   const playerRef = useRef()
@@ -34,8 +31,13 @@ export default function MusicPlayer() {
   const dispatch = useDispatch()
   const isShow = useSelector((state) => state.player.isShow)
   const musicData = useSelector((state) => state.player.musicData)
-  const musicUrl = 'https://www.youtube.com/watch?v=' + useSelector((state) => state.player.musicId)
+  const musicId = useSelector((state) => state.player.musicId)
   const isPlay = useSelector((state) => state.player.isPlay)
+  const musicUrl = 'https://www.youtube.com/watch?v=' + musicId
+  const title =
+    musicData?.snippet.title.length > 55
+      ? musicData?.snippet.title.slice(0, 55) + '...'
+      : musicData?.snippet.title
   const handlePlayPause = () => {
     isPlay ? dispatch(pauseMusic()) : dispatch(playMusic())
   }
@@ -100,17 +102,14 @@ export default function MusicPlayer() {
       setVolume(0.5)
     }
   }
-  const handleLoveMusic = () => {
-    if (isLoved) {
-      setLoved(false)
-    } else {
-      setLoved(true)
-    }
+  const handleBack = () => {
+    const playedTime = (playerRef.current.getCurrentTime() - 5) / duration
+    playerRef.current.seekTo(playedTime, 'fraction')
   }
-  const title =
-    musicData?.snippet.title.length > 55
-      ? musicData?.snippet.title.slice(0, 55) + '...'
-      : musicData?.snippet.title
+  const handleNext = () => {
+    const playedTime = (playerRef.current.getCurrentTime() + 5) / duration
+    playerRef.current.seekTo(playedTime, 'fraction')
+  }
   return (
     <div id='music-player' className='fixed bottom-0 left-0 w-screen h-[6.5rem] z-30'>
       {isShow && (
@@ -141,21 +140,7 @@ export default function MusicPlayer() {
                 <div className='text-iconColor text-sm'>{musicData.snippet.channelTitle}</div>
               </div>
               <div className='flex'>
-                <div onClick={handleLoveMusic}>
-                  {isLoved ? (
-                    <LoveMusicActive
-                      className='fill-activeIcon hover:fill-activeIconHover mr-4 cursor-pointer'
-                      width='16'
-                      height='16'
-                    />
-                  ) : (
-                    <LoveMusic
-                      className='fill-musicPlayer hover:fill-white mr-4 cursor-pointer'
-                      width='16'
-                      height='16'
-                    />
-                  )}
-                </div>
+                <LoveButton musicId={musicId} musicData={musicData} />
                 <MinimizeBrowserIcon
                   className='fill-musicPlayer hover:fill-white cursor-pointer'
                   width='16'
@@ -170,7 +155,7 @@ export default function MusicPlayer() {
                 <div className='px-3 cursor-pointer'>
                   <MixMusic className='fill-musicPlayer hover:fill-white' width='16' height='16' />
                 </div>
-                <div className='px-3 cursor-pointer pr-6'>
+                <div className='px-3 cursor-pointer pr-6' onClick={handleBack}>
                   <BackMusic className='fill-musicPlayer hover:fill-white' width='16' height='16' />
                 </div>
                 <div
@@ -182,7 +167,7 @@ export default function MusicPlayer() {
                     <PlayIcon width='16' height='16' />
                   )}
                 </div>
-                <div className='px-3 cursor-pointer pl-6'>
+                <div className='px-3 cursor-pointer pl-6' onClick={handleNext}>
                   <NextMusic className='fill-musicPlayer hover:fill-white' width='16' height='16' />
                 </div>
                 <div className='px-3 cursor-pointer' onClick={handleLoopMusic}>

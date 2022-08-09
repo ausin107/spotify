@@ -10,7 +10,7 @@ export default function AdvertisementBanner() {
     if (isShow) {
       bannerRef.current.style.zIndex = 20
     } else bannerRef.current.style.zIndex = 40
-  }, [])
+  }, [isShow])
   return (
     <div
       className='fixed bottom-0 cursor-pointer w-screen bg-notAuthBannerBg h-16 flex justify-between items-center px-10'

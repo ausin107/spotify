@@ -111,13 +111,10 @@ export default function Navbar() {
         </div>
       ) : (
         <div className='flex items-center'>
-          <div className='text-navbarColor text-lg font-semibold mr-7 tracking-wide hover:text-white hover:scale-105 cursor-pointer'>
-            Premium
-          </div>
           <div
-            className='text-navbarColor text-lg font-semibold mr-7 tracking-wide hover:text-white hover:scale-105 cursor-pointer'
-            onClick={() => router.push('https://support.spotify.com/')}>
-            Support
+            onClick={() => router.push('https://github.com/ausin107/spotify')}
+            className='text-white font-bold border mr-6 border-white p-2 rounded-full hover:scale-105 hover:bg-black cursor-pointer'>
+            Give me a star
           </div>
           <div
             className='text-navbarColor text-lg font-semibold mr-7 tracking-wide hover:text-white hover:scale-105 cursor-pointer'

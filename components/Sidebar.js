@@ -18,9 +18,9 @@ export default function Sidebar() {
   const router = useRouter()
   const isAuth = useSelector((state) => state.auth.isAuth)
   const bannerRef = useRef([])
-  const hanldeAuth = (bannerId) => {
+  const hanldeAuth = (bannerId, path) => {
     if (isAuth) {
-      router.push('/library')
+      router.push(path)
     } else {
       bannerRef.current.map((item, index) => {
         if (index == bannerId) {
@@ -61,7 +61,7 @@ export default function Sidebar() {
           </Link>
           <div className='relative'>
             <div
-              onClick={() => hanldeAuth(0)}
+              onClick={() => hanldeAuth(0, '/library')}
               className='text-iconColor mb-4 flex font-semibold icon-class'>
               {router.pathname != '/library' ? (
                 <LibraryIcon className='fill-iconColor mr-4 font-semibold' />
@@ -96,7 +96,7 @@ export default function Sidebar() {
         <div className=''>
           <div className='relative'>
             <div
-              onClick={() => hanldeAuth(1)}
+              onClick={() => hanldeAuth(1, '/playlist')}
               className='flex text-iconColor mb-4 font-semibold items-center icon-class'>
               <div className='bg-iconColor mr-4 p-[0.4rem] rounded icon-bg'>
                 <PlusIcon className='fill-black' />
@@ -127,12 +127,12 @@ export default function Sidebar() {
           </div>
           <div className='relative'>
             <div
-              onClick={() => hanldeAuth(2)}
+              onClick={() => hanldeAuth(2, '/collection')}
               className='flex text-iconColor mb-4 font-semibold items-center icon-class'>
               <div className='bg-loveIconBg mr-4 p-[0.4rem] rounded'>
                 <LoveIcon className='fill-iconColor' />
               </div>
-              Linked song
+              Liked song
             </div>
             <div
               ref={(el) => (bannerRef.current[2] = el)}

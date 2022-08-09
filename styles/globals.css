@@ -85,7 +85,8 @@ input[type='range']#music-volume-input:hover::-webkit-slider-thumb {
 .hiddenBanner {
   opacity: 0;
   transform: translateX(1rem);
-  transform: all 0.5s ease;
+  transition: all 0.5s ease;
+  visibility: hidden;
 }
 .triangle {
   position: absolute;
