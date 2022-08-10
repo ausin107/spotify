@@ -87,7 +87,7 @@ export default function Navbar() {
             </div>
             <button
               onClick={handleSumbit}
-              className='w-[4.5rem] h-10 bg-activeIcon hover:bg-activeIconHover rounded font-semibold'>
+              className='w-[4.5rem] h-10 bg-activeIcon hover:bg-activeIconHover hover:scale-105 rounded font-semibold'>
               Search
             </button>
           </div>

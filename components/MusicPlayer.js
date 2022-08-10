@@ -12,6 +12,8 @@ import {
   VolumeIconHigh,
   VolumeIconMedium,
   MinimizeBrowserIcon,
+  Next15s,
+  Back15s,
 } from './Icon'
 import LoveButton from './LoveButton'
 import Duration from './Duration'
@@ -33,6 +35,7 @@ export default function MusicPlayer() {
   const musicData = useSelector((state) => state.player.musicData)
   const musicId = useSelector((state) => state.player.musicId)
   const isPlay = useSelector((state) => state.player.isPlay)
+  const isPlayList = useSelector((state) => state.player.isPlayList)
   const musicUrl = 'https://www.youtube.com/watch?v=' + musicId
   const title =
     musicData?.snippet.title.length > 55
@@ -103,12 +106,18 @@ export default function MusicPlayer() {
     }
   }
   const handleBack = () => {
-    const playedTime = (playerRef.current.getCurrentTime() - 5) / duration
-    playerRef.current.seekTo(playedTime, 'fraction')
+    if (isPlayList) {
+    } else {
+      const playedTime = (playerRef.current.getCurrentTime() - 15) / duration
+      playerRef.current.seekTo(playedTime, 'fraction')
+    }
   }
   const handleNext = () => {
-    const playedTime = (playerRef.current.getCurrentTime() + 5) / duration
-    playerRef.current.seekTo(playedTime, 'fraction')
+    if (isPlayList) {
+    } else {
+      const playedTime = (playerRef.current.getCurrentTime() + 15) / duration
+      playerRef.current.seekTo(playedTime, 'fraction')
+    }
   }
   return (
     <div id='music-player' className='fixed bottom-0 left-0 w-screen h-[6.5rem] z-30'>
@@ -156,7 +165,15 @@ export default function MusicPlayer() {
                   <MixMusic className='fill-musicPlayer hover:fill-white' width='16' height='16' />
                 </div>
                 <div className='px-3 cursor-pointer pr-6' onClick={handleBack}>
-                  <BackMusic className='fill-musicPlayer hover:fill-white' width='16' height='16' />
+                  {isPlayList ? (
+                    <BackMusic
+                      className='fill-musicPlayer hover:fill-white'
+                      width='16'
+                      height='16'
+                    />
+                  ) : (
+                    <Back15s className='fill-musicPlayer hover:fill-white' width='16' height='16' />
+                  )}
                 </div>
                 <div
                   className='bg-white p-2 w-fit rounded-full cursor-pointer hover:scale-105'
@@ -168,7 +185,15 @@ export default function MusicPlayer() {
                   )}
                 </div>
                 <div className='px-3 cursor-pointer pl-6' onClick={handleNext}>
-                  <NextMusic className='fill-musicPlayer hover:fill-white' width='16' height='16' />
+                  {isPlayList ? (
+                    <NextMusic
+                      className='fill-musicPlayer hover:fill-white'
+                      width='16'
+                      height='16'
+                    />
+                  ) : (
+                    <Next15s className='fill-musicPlayer hover:fill-white' width='16' height='16' />
+                  )}
                 </div>
                 <div className='px-3 cursor-pointer' onClick={handleLoopMusic}>
                   <LoopMusic

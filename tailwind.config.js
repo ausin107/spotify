@@ -35,6 +35,13 @@ module.exports = {
         notAuthBannerBg: 'linear-gradient(90deg,#af2896,#509bf5)',
         searchItemBg:
           'radial-gradient(circle, rgba(53,45,54,1) 0%, rgba(53,47,60,0.545273211823792) 49%, rgba(55,65,73,0.7805673294708508) 100%)',
+        likedBg:
+          'linear-gradient(180deg, rgba(79,56,154,1) 0%, rgba(45,32,87,1) 54%, rgba(18,18,18,0.9402311950170693) 100%);',
+        resultBg:
+          'linear-gradient(180deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.15) 54%, rgba(0,0,0,0.15311634907869398) 100%);',
+      },
+      boxShadow: {
+        '3xl': '-1px 1px 59px 18px rgba(0,0,0,0.51)',
       },
     },
   },

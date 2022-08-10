@@ -9,7 +9,8 @@ export const getCollection = (path) => async (dispatch) => {
   dispatch(startLoading())
   try {
     const allMusics = await getAllLikedMusic(path)
-    dispatch(loadItemsSuccess(allMusics))
+    // dispatch(loadItemsSuccess(allMusics))
+    return allMusics
   } catch (e) {
     dispatch(loadItemsFailed())
   }

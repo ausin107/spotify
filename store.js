@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit'
 import authReducer from './components/auth/authSlice'
 import musicPlayerSlice from './components/music_player/musicPlayerSlice'
 import searchSlice from './components/search/searchSlice'
+import collectionSlice from './components/collection/collectionSlice'
 export const store = configureStore({
   reducer: {
     //gán cho auth bằng initialState thuộc authReducer
@@ -10,5 +11,6 @@ export const store = configureStore({
     auth: authReducer,
     player: musicPlayerSlice,
     search: searchSlice,
+    collection: collectionSlice,
   },
 })

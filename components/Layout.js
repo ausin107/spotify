@@ -14,7 +14,7 @@ export default function Layout({ children }) {
     <div className='bg-bgColor h-fit flex flex-col'>
       <Sidebar />
       <Navbar />
-      <div className='bg-bgColor h-fit flex flex-col'>{children}</div>
+      <div className='bg-bgColor h-fit overflow-hidden flex flex-col'>{children}</div>
       {!auth && <AdvertisementBanner />}
       <MusicPlayer />
     </div>
