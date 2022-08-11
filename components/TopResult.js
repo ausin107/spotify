@@ -1,13 +1,12 @@
 import React from 'react'
 import SearchMusicItem from './SearchMusicItem'
 import { PlayIcon, PauseIcon } from './Icon'
-import { playMusic, pauseMusic, showMusicPlayer } from './music_player/musicPlayerSlice'
+import { setPlayPauseMusic, showMusicPlayer } from './music_player/musicPlayerSlice'
 import { useDispatch, useSelector } from 'react-redux'
 export default function TopResult({ musicData }) {
   const dispatch = useDispatch()
   const isPlay = useSelector((state) => state.player.isPlay)
   const musicId = useSelector((state) => state.player.musicId)
-  const isShow = useSelector((state) => state.player.isShow)
   const handleShow = () => {
     const musicInfo = {
       musicData: musicData[0],
@@ -26,7 +25,7 @@ export default function TopResult({ musicData }) {
     if (musicId != musicData[0].id.videoId) {
       dispatch(showMusicPlayer(musicInfo))
     } else if (musicId == musicData[0].id.videoId) {
-      isPlay ? dispatch(pauseMusic()) : dispatch(playMusic())
+      dispatch(setPlayPauseMusic())
     }
   }
   return (

@@ -1,16 +1,10 @@
 import { startLoading, loadItemsSuccess, loadItemsFailed } from './collectionSlice'
-import {
-  addLikedMusic,
-  getSingleLikedMusic,
-  getAllLikedMusic,
-  updateLikedMusic,
-} from '../../lib/firebaseAction'
+import { addLikedMusic, getAllLikedMusic } from '../../lib/firebaseAction'
 export const getCollection = (path) => async (dispatch) => {
   dispatch(startLoading())
   try {
     const allMusics = await getAllLikedMusic(path)
-    // dispatch(loadItemsSuccess(allMusics))
-    return allMusics
+    dispatch(loadItemsSuccess(allMusics))
   } catch (e) {
     dispatch(loadItemsFailed())
   }

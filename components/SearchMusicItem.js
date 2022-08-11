@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { PlayIcon, PauseIcon, LoveMusic, LoveMusicActive } from './Icon'
 import { loadMusicData } from '../lib/loadData'
-import { showMusicPlayer, playMusic, pauseMusic } from './music_player/musicPlayerSlice'
+import { showMusicPlayer, setPlayPauseMusic } from './music_player/musicPlayerSlice'
 import Duration from './Duration'
 import { useDispatch, useSelector } from 'react-redux'
 export default function SearchMusicItem({ musicData }) {
@@ -15,19 +15,7 @@ export default function SearchMusicItem({ musicData }) {
     const getDuration = async () => {
       let data = await loadMusicData(musicData.id.videoId)
       let duration = data.items[0].contentDetails.duration
-      duration = duration.replace('PT', '')
-      let [h, m, s] = [0, 0, 0]
-      if (duration.includes('H') == false) {
-        h = 0
-        m = parseInt(duration.slice(0, duration.indexOf('M'))) * 60
-        s = parseInt(duration.slice(duration.indexOf('M') + 1, duration.indexOf('S')))
-      } else if (duration.includes('H') == true) {
-        h = parseInt(duration.slice(0, duration.indexOf('H'))) * 3600
-        m = parseInt(duration.slice(duration.indexOf('H') + 1, duration.indexOf('M'))) * 60
-        s = parseInt(duration.slice(duration.indexOf('M') + 1, duration.indexOf('S')))
-      }
-      let result = h + m + s
-      setDuration(result)
+      setDuration(duration)
     }
     getDuration()
   }, [musicData])
@@ -46,7 +34,9 @@ export default function SearchMusicItem({ musicData }) {
   }
   const handlePlayPause = (e) => {
     e.stopPropagation()
-    isPlay && musicId == musicData.id.videoId ? dispatch(pauseMusic()) : dispatch(playMusic())
+    if (isPlay && musicId == musicData.id.videoId) {
+      dispatch(setPlayPauseMusic())
+    }
   }
   return (
     <div
@@ -101,7 +91,7 @@ export default function SearchMusicItem({ musicData }) {
             />
           )}
         </div>
-        <Duration time={duration} className='text-navbarColor font-semibold' />
+        <Duration isoTime={duration} className='text-navbarColor font-semibold' />
       </div>
     </div>
   )

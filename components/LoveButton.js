@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
 import { LoveMusicActive, LoveMusic } from './Icon'
 import { useSelector, useDispatch } from 'react-redux'
-import { addCollection } from './collection/collectionAction'
+import { addCollection, getCollections } from './collection/collectionAction'
+import { loadItemsSuccess } from './collection/collectionSlice'
 export default function LoveButton({ musicId, musicData }) {
   const [isLoved, setLoved] = useState(false)
   const dispatch = useDispatch()

@@ -17,8 +17,9 @@ import {
 } from './Icon'
 import LoveButton from './LoveButton'
 import Duration from './Duration'
-import { playMusic, pauseMusic } from './music_player/musicPlayerSlice'
+import { setPlayPauseMusic, setEnded } from './music_player/musicPlayerSlice'
 import { useSelector, useDispatch } from 'react-redux'
+import { increaseCurrentId, decreaseCurrentId } from './collection/collectionSlice'
 export default function MusicPlayer() {
   const [isLoop, setLoop] = useState(false)
   const [isPIP, setPIP] = useState(false)
@@ -42,7 +43,7 @@ export default function MusicPlayer() {
       ? musicData?.snippet.title.slice(0, 55) + '...'
       : musicData?.snippet.title
   const handlePlayPause = () => {
-    isPlay ? dispatch(pauseMusic()) : dispatch(playMusic())
+    dispatch(setPlayPauseMusic())
   }
   const handleLoopMusic = () => {
     if (isLoop) {
@@ -107,6 +108,7 @@ export default function MusicPlayer() {
   }
   const handleBack = () => {
     if (isPlayList) {
+      dispatch(decreaseCurrentId())
     } else {
       const playedTime = (playerRef.current.getCurrentTime() - 15) / duration
       playerRef.current.seekTo(playedTime, 'fraction')
@@ -114,9 +116,16 @@ export default function MusicPlayer() {
   }
   const handleNext = () => {
     if (isPlayList) {
+      dispatch(increaseCurrentId())
     } else {
       const playedTime = (playerRef.current.getCurrentTime() + 15) / duration
       playerRef.current.seekTo(playedTime, 'fraction')
+    }
+  }
+  const handleEnded = () => {
+    if (isPlayList) {
+      dispatch(setEnded())
+      dispatch(increaseCurrentId())
     }
   }
   return (
@@ -132,6 +141,7 @@ export default function MusicPlayer() {
             playing={isPlay}
             onDuration={(time) => setDuration(time)}
             onProgress={(state) => handleProgress(state)}
+            onEnded={handleEnded}
             ref={playerRef}
             loop={isLoop}
             volume={parseFloat(volume)}
