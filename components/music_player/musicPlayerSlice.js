@@ -22,14 +22,17 @@ export const musicPlayerSlice = createSlice({
       state.isPlay = state.isPlay ? false : true
     },
     setPlayList: (state) => {
-      state.isPlayList = state.isPlayList ? false : true
+      state.isPlayList = true
+    },
+    setNotPlayList: (state) => {
+      state.isPlayList = false
     },
     setEnded: (state) => {
       state.isEnded = state.isPlayList ? false : true
     },
   },
 })
-export const { showMusicPlayer, setPlayPauseMusic, setPlayList, setEnded } =
+export const { showMusicPlayer, setPlayPauseMusic, setPlayList, setNotPlayList, setEnded } =
   musicPlayerSlice.actions
 
 export default musicPlayerSlice.reducer

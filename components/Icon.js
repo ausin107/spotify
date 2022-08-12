@@ -92,16 +92,28 @@ export const NextIcon = ({ className }) => {
     </svg>
   )
 }
-export const PlayIcon = ({ className, width, height }) => {
+export const PlayIcon = ({ className, width, height, onClick }) => {
   return (
-    <svg role='img' height={height} width={width} viewBox='0 0 16 16' className={className}>
+    <svg
+      role='img'
+      height={height}
+      width={width}
+      onClick={onClick}
+      viewBox='0 0 16 16'
+      className={className}>
       <path d='M3 1.713a.7.7 0 011.05-.607l10.89 6.288a.7.7 0 010 1.212L4.05 14.894A.7.7 0 013 14.288V1.713z'></path>
     </svg>
   )
 }
-export const PauseIcon = ({ className, width, height }) => {
+export const PauseIcon = ({ className, width, height, onClick }) => {
   return (
-    <svg role='img' height={height} width={width} viewBox='0 0 16 16' className={className}>
+    <svg
+      role='img'
+      height={height}
+      width={width}
+      onClick={onClick}
+      viewBox='0 0 16 16'
+      className={className}>
       <path d='M2.7 1a.7.7 0 00-.7.7v12.6a.7.7 0 00.7.7h2.6a.7.7 0 00.7-.7V1.7a.7.7 0 00-.7-.7H2.7zm8 0a.7.7 0 00-.7.7v12.6a.7.7 0 00.7.7h2.6a.7.7 0 00.7-.7V1.7a.7.7 0 00-.7-.7h-2.6z'></path>
     </svg>
   )

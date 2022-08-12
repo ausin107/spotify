@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { LoveMusicActive, LoveMusic } from './Icon'
 import { useSelector, useDispatch } from 'react-redux'
-import { addCollection, getCollections } from './collection/collectionAction'
+import { addCollection, deleteCollection, getCollection } from './collection/collectionAction'
 import { loadItemsSuccess } from './collection/collectionSlice'
 export default function LoveButton({ musicId, musicData }) {
   const [isLoved, setLoved] = useState(false)
@@ -11,9 +11,12 @@ export default function LoveButton({ musicId, musicData }) {
   const handleLoveMusic = async () => {
     if (isAuth) {
       if (isLoved) {
+        dispatch(deleteCollection(`collection/${authKey}/items/${musicId}`))
+        dispatch(getCollection(`collection/${authKey}/items`))
         setLoved(false)
       } else {
         dispatch(addCollection(`collection/${authKey}/items/${musicId}`, musicData))
+        dispatch(getCollection(`collection/${authKey}/items`))
         setLoved(true)
       }
     } else {

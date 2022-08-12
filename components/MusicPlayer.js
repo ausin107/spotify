@@ -25,7 +25,7 @@ export default function MusicPlayer() {
   const [isPIP, setPIP] = useState(false)
   const [played, setPlayed] = useState(0)
   const [duration, setDuration] = useState(0)
-  const [volume, setVolume] = useState(1)
+  const [volume, setVolume] = useState(0.5)
   const musicInput = useRef()
   const loopIConRef = useRef()
   const playerRef = useRef()
@@ -37,11 +37,14 @@ export default function MusicPlayer() {
   const musicId = useSelector((state) => state.player.musicId)
   const isPlay = useSelector((state) => state.player.isPlay)
   const isPlayList = useSelector((state) => state.player.isPlayList)
-  const musicUrl = 'https://www.youtube.com/watch?v=' + musicId
   const title =
-    musicData?.snippet.title.length > 55
-      ? musicData?.snippet.title.slice(0, 55) + '...'
-      : musicData?.snippet.title
+    musicData?.snippet.title.length > 55 ? musicData?.snippet.title.slice(0, 55) + '...' : musicData?.snippet.title
+  const handleReady = () => {
+    setDuration(playerRef.current.getDuration())
+  }
+  const handleMusicUrl = () => {
+    return 'https://www.youtube.com/watch?v=' + musicId
+  }
   const handlePlayPause = () => {
     dispatch(setPlayPauseMusic())
   }
@@ -86,15 +89,11 @@ export default function MusicPlayer() {
     if (volume > 0 && volume < 0.3) {
       return <VolumeIconLow className='fill-musicPlayer hover:fill-white' width='16' height='16' />
     } else if (volume >= 0.3 && volume < 0.6) {
-      return (
-        <VolumeIconMedium className='fill-musicPlayer hover:fill-white' width='16' height='16' />
-      )
+      return <VolumeIconMedium className='fill-musicPlayer hover:fill-white' width='16' height='16' />
     } else if (volume >= 0.6) {
       return <VolumeIconHigh className='fill-musicPlayer hover:fill-white' width='16' height='16' />
     } else {
-      return (
-        <VolumeIconMuted className='fill-musicPlayer hover:fill-white' width='16' height='16' />
-      )
+      return <VolumeIconMuted className='fill-musicPlayer hover:fill-white' width='16' height='16' />
     }
   }
   const handleMuted = () => {
@@ -137,9 +136,9 @@ export default function MusicPlayer() {
           <ReactPlayer
             width='0px'
             height='0px'
-            url={musicUrl}
+            url={handleMusicUrl()}
             playing={isPlay}
-            onDuration={(time) => setDuration(time)}
+            onReady={handleReady}
             onProgress={(state) => handleProgress(state)}
             onEnded={handleEnded}
             ref={playerRef}
@@ -149,11 +148,7 @@ export default function MusicPlayer() {
           />
           <div className='flex flex-row justify-between'>
             <div className='flex items-center mr-4'>
-              <img
-                draggable={false}
-                className='rounded w-36 h-18 mr-4'
-                src={musicData.snippet.thumbnails.medium.url}
-              />
+              <img draggable={false} className='rounded w-36 h-18 mr-4' src={musicData.snippet.thumbnails.medium.url} />
               <div>
                 <div className='text-white text-sm font-semibold mb-2 w-60'>{title}</div>
                 <div className='text-iconColor text-sm'>{musicData.snippet.channelTitle}</div>
@@ -176,11 +171,7 @@ export default function MusicPlayer() {
                 </div>
                 <div className='px-3 cursor-pointer pr-6' onClick={handleBack}>
                   {isPlayList ? (
-                    <BackMusic
-                      className='fill-musicPlayer hover:fill-white'
-                      width='16'
-                      height='16'
-                    />
+                    <BackMusic className='fill-musicPlayer hover:fill-white' width='16' height='16' />
                   ) : (
                     <Back15s className='fill-musicPlayer hover:fill-white' width='16' height='16' />
                   )}
@@ -188,19 +179,11 @@ export default function MusicPlayer() {
                 <div
                   className='bg-white p-2 w-fit rounded-full cursor-pointer hover:scale-105'
                   onClick={handlePlayPause}>
-                  {isPlay ? (
-                    <PauseIcon width='16' height='16' />
-                  ) : (
-                    <PlayIcon width='16' height='16' />
-                  )}
+                  {isPlay ? <PauseIcon width='16' height='16' /> : <PlayIcon width='16' height='16' />}
                 </div>
                 <div className='px-3 cursor-pointer pl-6' onClick={handleNext}>
                   {isPlayList ? (
-                    <NextMusic
-                      className='fill-musicPlayer hover:fill-white'
-                      width='16'
-                      height='16'
-                    />
+                    <NextMusic className='fill-musicPlayer hover:fill-white' width='16' height='16' />
                   ) : (
                     <Next15s className='fill-musicPlayer hover:fill-white' width='16' height='16' />
                   )}

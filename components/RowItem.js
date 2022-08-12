@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect } from 'react'
 import { PlayIcon, PauseIcon } from './Icon'
 import { useDispatch, useSelector } from 'react-redux/'
-import { showMusicPlayer, setPlayPauseMusic } from './music_player/musicPlayerSlice'
+import { showMusicPlayer, setPlayPauseMusic, setNotPlayList } from './music_player/musicPlayerSlice'
 export default function RowItem({ data }) {
   const dispatch = useDispatch()
   const musicState = useSelector((state) => state.player)
@@ -9,6 +9,7 @@ export default function RowItem({ data }) {
     data.snippet.title.length > 60 ? data.snippet.title.slice(0, 60) + '...' : data.snippet.title
   const musicId = data.id.videoId || data.id
   const handleShow = () => {
+    dispatch(setNotPlayList())
     const musicInfo = {
       musicId,
       musicData: data,

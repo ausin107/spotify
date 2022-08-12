@@ -21,10 +21,10 @@ export const collectionSlice = createSlice({
       state.isLoading = false
     },
     setCurrentId: (state, action) => {
-      state.currentId = action.payload.index
+      state.currentId = action.payload
     },
     increaseCurrentId: (state) => {
-      if (state.currentId <= state.items.length - 1) {
+      if (state.currentId < state.items.length) {
         state.currentId += 1
       }
     },

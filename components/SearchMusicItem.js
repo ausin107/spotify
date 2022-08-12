@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { PlayIcon, PauseIcon, LoveMusic, LoveMusicActive } from './Icon'
 import { loadMusicData } from '../lib/loadData'
-import { showMusicPlayer, setPlayPauseMusic } from './music_player/musicPlayerSlice'
+import { showMusicPlayer, setPlayPauseMusic, setNotPlayList } from './music_player/musicPlayerSlice'
 import Duration from './Duration'
 import { useDispatch, useSelector } from 'react-redux'
 export default function SearchMusicItem({ musicData }) {
@@ -11,6 +11,14 @@ export default function SearchMusicItem({ musicData }) {
   const musicId = useSelector((state) => state.player.musicId)
   const dispatch = useDispatch()
   const itemRef = useRef()
+  let musicName = musicData.snippet.title
+    .replace('Official Music Video', '')
+    .replace('(', '')
+    .replace(')', '')
+    .replace('|', '')
+    .slice(0, musicData.snippet.title.indexOf('|'))
+    .trim()
+  musicName = musicName.length >= 50 ? musicName.slice(0, 50) + '...' : musicName
   useEffect(() => {
     const getDuration = async () => {
       let data = await loadMusicData(musicData.id.videoId)
@@ -24,6 +32,7 @@ export default function SearchMusicItem({ musicData }) {
     isLoved ? setLoved(false) : setLoved(true)
   }
   const handlePlay = () => {
+    dispatch(setNotPlayList())
     itemRef.current.focus()
     const musicId = musicData.id.videoId
     const musicInfo = {
@@ -67,9 +76,7 @@ export default function SearchMusicItem({ musicData }) {
           </div>
         </div>
         <div className='flex flex-col ml-4'>
-          <div className='text-white font-semibold text-sm'>
-            {musicData.snippet.title.slice(0, musicData.snippet.title.indexOf('|')).trim()}
-          </div>
+          <div className='text-white font-semibold text-sm'>{musicName}</div>
           <div className='text-iconColor text-sm font-semibold'>
             {musicData.snippet.channelTitle.replace('Official', '').trim()}
           </div>

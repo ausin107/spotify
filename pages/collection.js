@@ -1,58 +1,61 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Image from 'next/image'
 import { getAllLikedMusic } from '../lib/firebaseAction'
 import { loadItemsSuccess } from '../components/collection/collectionSlice'
-import {
-  setPlayList,
-  showMusicPlayer,
-  setEnded,
-  setCurrentId,
-} from '../components/music_player/musicPlayerSlice'
-import { ClockIcon, PlayIcon } from '../components/Icon'
+import { setPlayList, showMusicPlayer, setEnded, setPlayPauseMusic } from '../components/music_player/musicPlayerSlice'
+import { ClockIcon, PlayIcon, PauseIcon } from '../components/Icon'
 import PlayListItem from '../components/PlayListItem'
 export default function Collection() {
   const [data, setData] = useState('')
   const dispatch = useDispatch()
   const authKey = useSelector((state) => state.auth.authKey)
+  const isPlay = useSelector((state) => state.player.isPlay)
+  const isPlayList = useSelector((state) => state.player.isPlayList)
+  const isShow = useSelector((state) => state.player.isShow)
   const likedMusic = useSelector((state) => state.collection?.items)
   const isEnded = useSelector((state) => state.player.isEnded)
   const currentId = useSelector((state) => state.collection.currentId)
+  const isLoading = useSelector((state) => state.collection.isLoading)
   useEffect(() => {
     const getData = async () => {
       const result = await getAllLikedMusic(`collection/${authKey}/items`)
-      let data = []
-      result.forEach((doc) => {
-        return data.push(doc.data())
-      })
-      dispatch(loadItemsSuccess(data))
-      setData(data)
+      dispatch(loadItemsSuccess(result))
+      setData(result)
     }
     getData()
-  }, [])
+    document.title = 'Spotify - Favorite'
+  }, [isLoading])
   useEffect(() => {
-    likedMusic.map((item, index) => {
-      if (index == currentId) {
-        const musicInfo = {
-          musicData: item,
-          musicId: item.id,
+    if (isPlayList) {
+      likedMusic.map((item, index) => {
+        if (index == currentId) {
+          const musicInfo = {
+            musicData: item,
+            musicId: item.id,
+          }
+          dispatch(showMusicPlayer(musicInfo))
+          document.title = item.snippet.title
         }
-        dispatch(showMusicPlayer(musicInfo))
-      }
-    })
-    dispatch(setEnded())
+      })
+      dispatch(setEnded())
+    }
   }, [currentId])
   const handlePlay = () => {
-    dispatch(setPlayList())
-    likedMusic.map((item, index) => {
-      if (index == 0) {
-        const musicInfo = {
-          musicData: item,
-          musicId: item.id,
+    if (!isPlayList) {
+      dispatch(setPlayList())
+      likedMusic.map((item, index) => {
+        if (index == 0) {
+          const musicInfo = {
+            musicData: item,
+            musicId: item.id,
+          }
+          dispatch(showMusicPlayer(musicInfo))
         }
-        dispatch(showMusicPlayer(musicInfo))
-      }
-    })
+      })
+    } else if (isPlayList) {
+      dispatch(setPlayPauseMusic())
+    }
   }
   return (
     <div className='bg-bgColor left-[16.666%] w-[82.5vw] overflow-hidden relative'>
@@ -66,24 +69,24 @@ export default function Collection() {
             style={{ textShadow: '4px -1px 46px rgb(0 0 0 / 75%)' }}>
             Playlist
           </div>
-          <div
-            className='text-white font-bold text-8xl mb-12'
-            style={{ textShadow: '4px -1px 46px rgb(0 0 0 / 75%)' }}>
+          <div className='text-white font-bold text-8xl mb-12' style={{ textShadow: '4px -1px 46px rgb(0 0 0 / 75%)' }}>
             Liked Song
           </div>
-          <div
-            className='text-white text-xs font-bold'
-            style={{ textShadow: '4px -1px 46px rgb(0 0 0 / 75%)' }}>
+          <div className='text-white text-xs font-bold' style={{ textShadow: '4px -1px 46px rgb(0 0 0 / 75%)' }}>
             Ausin - 2 Bài hát
           </div>
         </div>
       </div>
       {data && (
-        <div className='flex px-9 relative -top-40 py-4 bg-resultBg flex-col '>
+        <div className='flex px-9 -top-40 relative pt-4 bg-resultBg flex-col '>
           <div
             onClick={handlePlay}
-            className='p-4 bg-playIconBg hover:bg-activeIconHover rounded-full hover:scale-105 mb-8 w-fit'>
-            <PlayIcon className='fill-black' width='24' height='24' />
+            className='p-4 bg-playIconBg hover:bg-activeIconHover rounded-full hover:scale-105 mb-8 w-fit cursor-pointer'>
+            {isPlay && isPlayList ? (
+              <PauseIcon className='fill-black' width='24' height='24' />
+            ) : (
+              <PlayIcon className='fill-black' width='24' height='24' />
+            )}
           </div>
           <div className='flex px-6 pb-2'>
             <div className='text-iconColor text-sm w-[3%]'>#</div>
@@ -94,7 +97,7 @@ export default function Collection() {
               <ClockIcon width='16' height='16' className='fill-iconColor hover:fill-white' />
             </div>
           </div>
-          <div className='border-b border-t border-searchChildBg flex flex-col pt-4 pb-20 mb-20'>
+          <div className='border-b border-t border-searchChildBg flex flex-col pt-4 pb-4'>
             {data.map((item, index) => {
               return <PlayListItem key={index} data={item} index={index} />
             })}
