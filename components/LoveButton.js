@@ -1,54 +1,67 @@
 import { useState, useEffect } from 'react'
 import { LoveMusicActive, LoveMusic } from './Icon'
 import { useSelector, useDispatch } from 'react-redux'
-import { addCollection, deleteCollection, getCollection } from './collection/collectionAction'
+import { setLoved, setUnLoved } from './music_player/musicPlayerSlice'
+import { addCollection, deleteCollection, getCollection, getSingleDoc } from './collection/collectionAction'
 import { loadItemsSuccess, startLoading } from './collection/collectionSlice'
 import { getSingleLikedMusic } from '../lib/firebaseAction'
 export default function LoveButton({ musicId, musicData }) {
-  const [isLoved, setLoved] = useState(false)
+  const [isLove, setLove] = useState(false)
   const dispatch = useDispatch()
+  const isLoved = useSelector((state) => state.player.isLoved)
+  const musicIdShowed = useSelector((state) => state.player.musicId)
   const isAuth = useSelector((state) => state.auth.isAuth)
   const authKey = useSelector((state) => state.auth.authKey)
   const isLoading = useSelector((state) => state.collection.isLoading)
-  const handleLoveMusic = async () => {
+  const handleLoveMusic = async (e) => {
+    e.stopPropagation()
     if (isAuth) {
-      if (isLoved) {
+      if (isLove) {
         dispatch(deleteCollection(`collection/${authKey}/items/${musicId}`))
         dispatch(getCollection(`collection/${authKey}/items`))
-        setLoved(false)
+        setLove(false)
       } else {
         dispatch(addCollection(`collection/${authKey}/items/${musicId}`, musicData))
         dispatch(getCollection(`collection/${authKey}/items`))
-        setLoved(true)
+        setLove(true)
       }
     } else {
       alert('Please Login !!')
     }
   }
-  const handleIcon = () => {
-    if (!isLoading && isLoved) {
-      return (
+  useEffect(() => {
+    const getData = async () => {
+      const result = await getSingleLikedMusic(`collection/${authKey}/items/${musicId}`)
+      if (!!result) {
+        setLove(true)
+      } else {
+        setLove(false)
+      }
+    }
+    getData()
+  }, [isLoading])
+  useEffect(() => {
+    const getData = async () => {
+      const result = await getSingleLikedMusic(`collection/${authKey}/items/${musicId}`)
+      if (!!result) {
+        setLove(true)
+      } else {
+        setLove(false)
+      }
+    }
+    getData()
+  }, [musicId])
+  return (
+    <div onClick={(e) => handleLoveMusic(e)}>
+      {isLove ? (
         <LoveMusicActive
           className='fill-activeIcon hover:fill-activeIconHover mr-4 cursor-pointer'
           width='16'
           height='16'
         />
-      )
-    } else if (!isLoading && !isLoved) {
-      return <LoveMusic className='fill-musicPlayer hover:fill-white mr-4 cursor-pointer' width='16' height='16' />
-    } else return ''
-  }
-  useEffect(() => {
-    const getData = async () => {
-      dispatch(startLoading())
-      const result = await getSingleLikedMusic(`collection/${authKey}/items/${musicId}`)
-      if (!!result) {
-        setLoved(true)
-      } else setLoved(false)
-      dispatch(loadItemsSuccess())
-    }
-    getData()
-  }, [musicId])
-
-  return <div onClick={handleLoveMusic}>{handleIcon()}</div>
+      ) : (
+        <LoveMusic className='fill-musicPlayer hover:fill-white mr-4 cursor-pointer' width='16' height='16' />
+      )}
+    </div>
+  )
 }

@@ -6,6 +6,7 @@ const initialState = {
   isPlay: false,
   isPlayList: false,
   isEnded: false,
+  isLoved: false,
 }
 export const musicPlayerSlice = createSlice({
   name: 'musicPlayer',
@@ -38,6 +39,7 @@ export const musicPlayerSlice = createSlice({
     },
   },
 })
-export const { showMusicPlayer, setPlayPauseMusic, setPlayList, setNotPlayList, setEnded } = musicPlayerSlice.actions
+export const { showMusicPlayer, setPlayPauseMusic, setPlayList, setNotPlayList, setEnded, setLoved, setUnLoved } =
+  musicPlayerSlice.actions
 
 export default musicPlayerSlice.reducer

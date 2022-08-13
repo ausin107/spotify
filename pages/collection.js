@@ -14,7 +14,6 @@ export default function Collection() {
   const isPlay = useSelector((state) => state.player.isPlay)
   const isPlayList = useSelector((state) => state.player.isPlayList)
   const isShow = useSelector((state) => state.player.isShow)
-  const likedMusic = useSelector((state) => state.collection?.items)
   const isEnded = useSelector((state) => state.player.isEnded)
   const currentId = useSelector((state) => state.collection.currentId)
   const isLoading = useSelector((state) => state.collection.isLoading)
@@ -29,7 +28,7 @@ export default function Collection() {
   }, [isLoading])
   useEffect(() => {
     if (isPlayList) {
-      likedMusic.map((item, index) => {
+      data.map((item, index) => {
         if (index == currentId) {
           const musicInfo = {
             musicData: item,
@@ -45,7 +44,7 @@ export default function Collection() {
   const handlePlay = () => {
     if (!isPlayList) {
       dispatch(setPlayList())
-      likedMusic.map((item, index) => {
+      data.map((item, index) => {
         if (index == 0) {
           const musicInfo = {
             musicData: item,
@@ -78,7 +77,7 @@ export default function Collection() {
           </div>
         </div>
       </div>
-      {data ? (
+      {data.length > 0 ? (
         <div className='flex px-9 -top-40 relative pt-4 bg-resultBg flex-col '>
           <div
             onClick={handlePlay}

@@ -35,7 +35,6 @@ export default function Navbar() {
       navbarRef.current.classList.add('bg-navbarBg')
       navbarRef.current.classList.remove('bg-transparent')
     }
-    console.log(router.pathname)
   }, [router.pathname])
   const handleLogout = () => {
     dispatch(logoutSuccess())

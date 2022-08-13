@@ -10,11 +10,12 @@ export const getCollection = (path) => async (dispatch) => {
     dispatch(loadItemsSuccess())
   }
 }
-export const getSingleCollection = (path) => async (dispatch) => {
+export const getSingleDoc = (path) => async (dispatch) => {
   dispatch(startLoading())
   try {
     const result = await getSingleLikedMusic(path)
     dispatch(loadItemsSuccess())
+    return result
   } catch (e) {
     dispatch(loadItemsSuccess())
   }
