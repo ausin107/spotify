@@ -54,26 +54,14 @@ export const LibraryIconActive = ({ className }) => {
 }
 export const PlusIcon = ({ className }) => {
   return (
-    <svg
-      role='img'
-      height='12'
-      width='12'
-      aria-hidden='true'
-      viewBox='0 0 16 16'
-      className={className}>
+    <svg role='img' height='12' width='12' aria-hidden='true' viewBox='0 0 16 16' className={className}>
       <path d='M15.25 8a.75.75 0 01-.75.75H8.75v5.75a.75.75 0 01-1.5 0V8.75H1.5a.75.75 0 010-1.5h5.75V1.5a.75.75 0 011.5 0v5.75h5.75a.75.75 0 01.75.75z'></path>
     </svg>
   )
 }
 export const LoveIcon = ({ className }) => {
   return (
-    <svg
-      role='img'
-      height='12'
-      width='12'
-      aria-hidden='true'
-      viewBox='0 0 16 16'
-      className={className}>
+    <svg role='img' height='12' width='12' aria-hidden='true' viewBox='0 0 16 16' className={className}>
       <path d='M15.724 4.22A4.313 4.313 0 0012.192.814a4.269 4.269 0 00-3.622 1.13.837.837 0 01-1.14 0 4.272 4.272 0 00-6.21 5.855l5.916 7.05a1.128 1.128 0 001.727 0l5.916-7.05a4.228 4.228 0 00.945-3.577z'></path>
     </svg>
   )
@@ -94,26 +82,14 @@ export const NextIcon = ({ className }) => {
 }
 export const PlayIcon = ({ className, width, height, onClick }) => {
   return (
-    <svg
-      role='img'
-      height={height}
-      width={width}
-      onClick={onClick}
-      viewBox='0 0 16 16'
-      className={className}>
+    <svg role='img' height={height} width={width} onClick={onClick} viewBox='0 0 16 16' className={className}>
       <path d='M3 1.713a.7.7 0 011.05-.607l10.89 6.288a.7.7 0 010 1.212L4.05 14.894A.7.7 0 013 14.288V1.713z'></path>
     </svg>
   )
 }
 export const PauseIcon = ({ className, width, height, onClick }) => {
   return (
-    <svg
-      role='img'
-      height={height}
-      width={width}
-      onClick={onClick}
-      viewBox='0 0 16 16'
-      className={className}>
+    <svg role='img' height={height} width={width} onClick={onClick} viewBox='0 0 16 16' className={className}>
       <path d='M2.7 1a.7.7 0 00-.7.7v12.6a.7.7 0 00.7.7h2.6a.7.7 0 00.7-.7V1.7a.7.7 0 00-.7-.7H2.7zm8 0a.7.7 0 00-.7.7v12.6a.7.7 0 00.7.7h2.6a.7.7 0 00.7-.7V1.7a.7.7 0 00-.7-.7h-2.6z'></path>
     </svg>
   )
@@ -144,13 +120,7 @@ export const NextMusic = ({ className, width, height }) => {
 
 export const LoopMusic = ({ className, width, height, iconRef }) => {
   return (
-    <svg
-      role='img'
-      height={height}
-      width={width}
-      viewBox='0 0 16 16'
-      className={className}
-      ref={iconRef}>
+    <svg role='img' height={height} width={width} viewBox='0 0 16 16' className={className} ref={iconRef}>
       <path d='M0 4.75A3.75 3.75 0 013.75 1h8.5A3.75 3.75 0 0116 4.75v5a3.75 3.75 0 01-3.75 3.75H9.81l1.018 1.018a.75.75 0 11-1.06 1.06L6.939 12.75l2.829-2.828a.75.75 0 111.06 1.06L9.811 12h2.439a2.25 2.25 0 002.25-2.25v-5a2.25 2.25 0 00-2.25-2.25h-8.5A2.25 2.25 0 001.5 4.75v5A2.25 2.25 0 003.75 12H5v1.5H3.75A3.75 3.75 0 010 9.75v-5z'></path>
     </svg>
   )
@@ -187,12 +157,7 @@ export const MinimizeBrowserIcon = ({ className, width, height, onClick, pipRef 
 }
 export const VolumeIconMuted = ({ className, width, height }) => {
   return (
-    <svg
-      role='presentation'
-      height={height}
-      width={width}
-      viewBox='0 0 16 16'
-      className={className}>
+    <svg role='presentation' height={height} width={width} viewBox='0 0 16 16' className={className}>
       <path d='M13.86 5.47a.75.75 0 00-1.061 0l-1.47 1.47-1.47-1.47A.75.75 0 008.8 6.53L10.269 8l-1.47 1.47a.75.75 0 101.06 1.06l1.47-1.47 1.47 1.47a.75.75 0 001.06-1.06L12.39 8l1.47-1.47a.75.75 0 000-1.06z'></path>
       <path d='M10.116 1.5A.75.75 0 008.991.85l-6.925 4a3.642 3.642 0 00-1.33 4.967 3.639 3.639 0 001.33 1.332l6.925 4a.75.75 0 001.125-.649v-1.906a4.73 4.73 0 01-1.5-.694v1.3L2.817 9.852a2.141 2.141 0 01-.781-2.92c.187-.324.456-.594.78-.782l5.8-3.35v1.3c.45-.313.956-.55 1.5-.694V1.5z'></path>
     </svg>
@@ -200,36 +165,21 @@ export const VolumeIconMuted = ({ className, width, height }) => {
 }
 export const VolumeIconLow = ({ className, width, height }) => {
   return (
-    <svg
-      role='presentation'
-      height={height}
-      width={width}
-      viewBox='0 0 16 16'
-      className={className}>
+    <svg role='presentation' height={height} width={width} viewBox='0 0 16 16' className={className}>
       <path d='M9.741.85a.75.75 0 01.375.65v13a.75.75 0 01-1.125.65l-6.925-4a3.642 3.642 0 01-1.33-4.967 3.639 3.639 0 011.33-1.332l6.925-4a.75.75 0 01.75 0zm-6.924 5.3a2.139 2.139 0 000 3.7l5.8 3.35V2.8l-5.8 3.35zm8.683 4.29V5.56a2.75 2.75 0 010 4.88z'></path>
     </svg>
   )
 }
 export const VolumeIconMedium = ({ className, width, height }) => {
   return (
-    <svg
-      role='presentation'
-      height={height}
-      width={width}
-      viewBox='0 0 16 16'
-      className={className}>
+    <svg role='presentation' height={height} width={width} viewBox='0 0 16 16' className={className}>
       <path d='M9.741.85a.75.75 0 01.375.65v13a.75.75 0 01-1.125.65l-6.925-4a3.642 3.642 0 01-1.33-4.967 3.639 3.639 0 011.33-1.332l6.925-4a.75.75 0 01.75 0zm-6.924 5.3a2.139 2.139 0 000 3.7l5.8 3.35V2.8l-5.8 3.35zm8.683 6.087a4.502 4.502 0 000-8.474v1.65a2.999 2.999 0 010 5.175v1.649z'></path>
     </svg>
   )
 }
 export const VolumeIconHigh = ({ className, width, height }) => {
   return (
-    <svg
-      role='presentation'
-      height={height}
-      width={width}
-      viewBox='0 0 16 16'
-      className={className}>
+    <svg role='presentation' height={height} width={width} viewBox='0 0 16 16' className={className}>
       <path d='M9.741.85a.75.75 0 01.375.65v13a.75.75 0 01-1.125.65l-6.925-4a3.642 3.642 0 01-1.33-4.967 3.639 3.639 0 011.33-1.332l6.925-4a.75.75 0 01.75 0zm-6.924 5.3a2.139 2.139 0 000 3.7l5.8 3.35V2.8l-5.8 3.35zm8.683 4.29V5.56a2.75 2.75 0 010 4.88z'></path>
       <path d='M11.5 13.614a5.752 5.752 0 000-11.228v1.55a4.252 4.252 0 010 8.127v1.55z'></path>
     </svg>
@@ -298,13 +248,7 @@ export const SpinIcon = ({ className, width, height }) => {
       xmlns='http://www.w3.org/2000/svg'
       fill='none'
       viewBox='0 0 24 24'>
-      <circle
-        className='opacity-25'
-        cx='12'
-        cy='12'
-        r='10'
-        stroke='currentColor'
-        strokeWidth='4'></circle>
+      <circle className='opacity-25' cx='12' cy='12' r='10' stroke='currentColor' strokeWidth='4'></circle>
       <path
         className='opacity-75'
         fill='currentColor'
@@ -330,13 +274,7 @@ export const LogoutIcon = ({ className, width, height }) => {
 }
 export const EmptyIcon = ({ className, width, height, onClick }) => {
   return (
-    <svg
-      role='img'
-      hheight={height}
-      width={width}
-      className={className}
-      onClick={onClick}
-      viewBox='0 0 24 24'>
+    <svg role='img' hheight={height} width={width} className={className} onClick={onClick} viewBox='0 0 24 24'>
       <path d='M3.293 3.293a1 1 0 011.414 0L12 10.586l7.293-7.293a1 1 0 111.414 1.414L13.414 12l7.293 7.293a1 1 0 01-1.414 1.414L12 13.414l-7.293 7.293a1 1 0 01-1.414-1.414L10.586 12 3.293 4.707a1 1 0 010-1.414z'></path>
     </svg>
   )
@@ -362,6 +300,13 @@ export const ClockIcon = ({ className, width, height }) => {
     <svg role='img' height={height} width={width} className={className} viewBox='0 0 16 16'>
       <path d='M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8z'></path>
       <path d='M8 3.25a.75.75 0 01.75.75v3.25H11a.75.75 0 010 1.5H7.25V4A.75.75 0 018 3.25z'></path>
+    </svg>
+  )
+}
+export const MusicIcon = ({ className, width, height }) => {
+  return (
+    <svg role='img' height={height} width={width} className={className} viewBox='0 0 24 24'>
+      <path d='M15 4v12.167a3.5 3.5 0 11-3.5-3.5H13V4h2zm-2 10.667h-1.5a1.5 1.5 0 101.5 1.5v-1.5z'></path>
     </svg>
   )
 }

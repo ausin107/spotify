@@ -24,6 +24,7 @@ module.exports = {
         inputBorder: '#878787',
         logoutBg: '#282828',
         searchChildBg: '#ffffff1a',
+        disableBtn: '#ffffff4d',
         banner2LoginBg: '#0d72ea',
       },
       backgroundImage: {
@@ -33,11 +34,10 @@ module.exports = {
         searchItemBg:
           'radial-gradient(circle, rgba(53,45,54,1) 0%, rgba(53,47,60,0.545273211823792) 49%, rgba(55,65,73,0.7805673294708508) 100%)',
         likedBg: 'linear-gradient(180deg, rgba(79,56,154,1) 0%, rgba(62,45,121,1) 50%, rgba(18,18,18,1) 100%);',
-        resultBg:
-          'linear-gradient(180deg, rgba(18,18,18,0.15031522863051472) 0%, rgba(18,18,18,0.15311634907869398) 50%, rgba(18,18,18,0.5) 100%);',
+        resultBg: 'linear-gradient(180deg, rgba(18,18,18,0.3) 0%, rgba(18,18,18,0.3) 50%, rgba(18,18,18,0.3) 100%);',
       },
       boxShadow: {
-        '3xl': '-1px 1px 59px 18px rgba(0,0,0,0.51)',
+        '3xl': '-1px 1px 59px 18px rgba(0,0,0,0.3)',
       },
     },
   },

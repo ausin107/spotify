@@ -28,7 +28,15 @@ export default function Navbar() {
   }, [currentHeight])
   useEffect(() => {
     setAuth(isAuth)
-  }, [])
+    if (router.pathname == '/collection') {
+      navbarRef.current.classList.add('bg-transparent')
+      navbarRef.current.classList.remove('bg-navbarBg')
+    } else {
+      navbarRef.current.classList.add('bg-navbarBg')
+      navbarRef.current.classList.remove('bg-transparent')
+    }
+    console.log(router.pathname)
+  }, [router.pathname])
   const handleLogout = () => {
     dispatch(logoutSuccess())
     window.localStorage.removeItem('authKey')
@@ -78,12 +86,7 @@ export default function Navbar() {
                 onKeyDown={(e) => handleEnter(e)}
                 ref={inputRef}
               />
-              <EmptyIcon
-                className='fill-bgColor cursor-pointer'
-                width='24'
-                height='24'
-                onClick={handleClear}
-              />
+              <EmptyIcon className='fill-bgColor cursor-pointer' width='24' height='24' onClick={handleClear} />
             </div>
             <button
               onClick={handleSumbit}

@@ -2,9 +2,10 @@ import { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Image from 'next/image'
 import { getAllLikedMusic } from '../lib/firebaseAction'
+import Link from 'next/link'
 import { loadItemsSuccess } from '../components/collection/collectionSlice'
 import { setPlayList, showMusicPlayer, setEnded, setPlayPauseMusic } from '../components/music_player/musicPlayerSlice'
-import { ClockIcon, PlayIcon, PauseIcon } from '../components/Icon'
+import { ClockIcon, PlayIcon, PauseIcon, MusicIcon } from '../components/Icon'
 import PlayListItem from '../components/PlayListItem'
 export default function Collection() {
   const [data, setData] = useState('')
@@ -77,7 +78,7 @@ export default function Collection() {
           </div>
         </div>
       </div>
-      {data && (
+      {data ? (
         <div className='flex px-9 -top-40 relative pt-4 bg-resultBg flex-col '>
           <div
             onClick={handlePlay}
@@ -102,6 +103,17 @@ export default function Collection() {
               return <PlayListItem key={index} data={item} index={index} />
             })}
           </div>
+        </div>
+      ) : (
+        <div className='flex px-9 -top-40 relative pt-14 bg-resultBg flex-col items-center'>
+          <MusicIcon width='64' height='64' className='fill-white mb-10' />
+          <div className='text-3xl font-bold text-white mb-8'>Your favorite song will appear here</div>
+          <div className='font-bold text-white mb-12'>Save the song by tapping the heart icon.</div>
+          <Link href='/search'>
+            <div className='py-3 px-8 bg-white font-bold hover:scale-105 hover:underline hover:underline-offset-1 rounded-full cursor-pointer'>
+              Find songs
+            </div>
+          </Link>
         </div>
       )}
     </div>

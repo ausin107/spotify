@@ -20,6 +20,7 @@ import Duration from './Duration'
 import { setPlayPauseMusic, setEnded } from './music_player/musicPlayerSlice'
 import { useSelector, useDispatch } from 'react-redux'
 import { increaseCurrentId, decreaseCurrentId } from './collection/collectionSlice'
+import SekeletonPlayer from './SekeletonPlayer'
 export default function MusicPlayer() {
   const [isLoop, setLoop] = useState(false)
   const [isPIP, setPIP] = useState(false)
@@ -129,7 +130,7 @@ export default function MusicPlayer() {
   }
   return (
     <div id='music-player' className='fixed bottom-0 left-0 w-screen h-[6.5rem] z-30'>
-      {isShow && (
+      {isShow ? (
         <div
           className=' w-screen h-[6.5rem] bg-itemBg border-t-[0.5px] border-itemActiveBg px-4 pr-8 py-2 select-none'
           onMouseDown={(e) => e.stopPropagation()}>
@@ -147,7 +148,7 @@ export default function MusicPlayer() {
             pip={isPIP}
           />
           <div className='flex flex-row justify-between'>
-            <div className='flex items-center mr-4'>
+            <div className='flex items-center w-[30%]'>
               <img draggable={false} className='rounded w-36 h-18 mr-4' src={musicData.snippet.thumbnails.medium.url} />
               <div>
                 <div className='text-white text-sm font-semibold mb-2 w-60'>{title}</div>
@@ -164,7 +165,7 @@ export default function MusicPlayer() {
                 />
               </div>
             </div>
-            <div className='flex flex-col items-center justify-around'>
+            <div className='flex flex-col items-center justify-around w-[55%]'>
               <div className='flex items-center'>
                 <div className='px-3 cursor-pointer'>
                   <MixMusic className='fill-musicPlayer hover:fill-white' width='16' height='16' />
@@ -214,7 +215,7 @@ export default function MusicPlayer() {
                 <Duration time={duration} className='text-navbarColor text-xs' />
               </div>
             </div>
-            <div className='flex'>
+            <div className='flex w-[15%] items-center justify-center'>
               <div className='flex items-center'>
                 <div onClick={handleMuted}>{handleVolumeIcon()}</div>
                 <input
@@ -232,6 +233,8 @@ export default function MusicPlayer() {
             </div>
           </div>
         </div>
+      ) : (
+        <SekeletonPlayer />
       )}
     </div>
   )

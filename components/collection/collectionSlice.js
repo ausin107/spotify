@@ -17,9 +17,6 @@ export const collectionSlice = createSlice({
       state.isLoading = false
       state.items = action.payload
     },
-    loadItemsFailed: (state) => {
-      state.isLoading = false
-    },
     setCurrentId: (state, action) => {
       state.currentId = action.payload
     },
@@ -35,13 +32,7 @@ export const collectionSlice = createSlice({
     },
   },
 })
-export const {
-  startLoading,
-  loadItemsSuccess,
-  loadItemsFailed,
-  setCurrentId,
-  increaseCurrentId,
-  decreaseCurrentId,
-} = collectionSlice.actions
+export const { startLoading, loadItemsSuccess, setCurrentId, increaseCurrentId, decreaseCurrentId } =
+  collectionSlice.actions
 
 export default collectionSlice.reducer
