@@ -1,14 +1,12 @@
 import { useState, useEffect } from 'react'
 import { LoveMusicActive, LoveMusic } from './Icon'
 import { useSelector, useDispatch } from 'react-redux'
-import { setLoved, setUnLoved } from './music_player/musicPlayerSlice'
-import { addCollection, deleteCollection, getCollection, getSingleDoc } from './collection/collectionAction'
-import { loadItemsSuccess, startLoading } from './collection/collectionSlice'
-import { getSingleLikedMusic } from '../lib/firebaseAction'
+import { addCollection, deleteCollection, getCollection } from './collection/collectionAction'
+import { getSingleFavoriteMusic } from '../lib/firebaseAction'
+import { setShow } from './toast/toastSlice'
 export default function LoveButton({ musicId, musicData }) {
   const [isLove, setLove] = useState(false)
   const dispatch = useDispatch()
-  const isLoved = useSelector((state) => state.player.isLoved)
   const musicIdShowed = useSelector((state) => state.player.musicId)
   const isAuth = useSelector((state) => state.auth.isAuth)
   const authKey = useSelector((state) => state.auth.authKey)
@@ -19,10 +17,12 @@ export default function LoveButton({ musicId, musicData }) {
       if (isLove) {
         dispatch(deleteCollection(`collection/${authKey}/items/${musicId}`))
         dispatch(getCollection(`collection/${authKey}/items`))
+        dispatch(setShow('Removed from your Favorite Songs'))
         setLove(false)
       } else {
         dispatch(addCollection(`collection/${authKey}/items/${musicId}`, musicData))
         dispatch(getCollection(`collection/${authKey}/items`))
+        dispatch(setShow('Added to your Favorite Songs'))
         setLove(true)
       }
     } else {
@@ -31,7 +31,7 @@ export default function LoveButton({ musicId, musicData }) {
   }
   useEffect(() => {
     const getData = async () => {
-      const result = await getSingleLikedMusic(`collection/${authKey}/items/${musicId}`)
+      const result = await getSingleFavoriteMusic(`collection/${authKey}/items/${musicId}`)
       if (!!result) {
         setLove(true)
       } else {
@@ -42,7 +42,7 @@ export default function LoveButton({ musicId, musicData }) {
   }, [isLoading])
   useEffect(() => {
     const getData = async () => {
-      const result = await getSingleLikedMusic(`collection/${authKey}/items/${musicId}`)
+      const result = await getSingleFavoriteMusic(`collection/${authKey}/items/${musicId}`)
       if (!!result) {
         setLove(true)
       } else {

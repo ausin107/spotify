@@ -99,3 +99,8 @@ input[type='range']#music-volume-input:hover::-webkit-slider-thumb {
   border-color: transparent transparent #0d72ea transparent;
   transform: rotate(270deg);
 }
+.hiddenToast {
+  opacity: 0;
+  transition: all 0.5s ease;
+  visibility: hidden;
+}

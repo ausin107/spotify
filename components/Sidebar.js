@@ -78,9 +78,7 @@ export default function Sidebar() {
                 Login to watch your playlist, video and create awesome playlists.
               </div>
               <div className='flex justify-end items-center'>
-                <div
-                  className='text-white hover:scale-105 font-bold mr-4 cursor-pointer'
-                  onClick={() => hanldeAuth(0)}>
+                <div className='text-white hover:scale-105 font-bold mr-4 cursor-pointer' onClick={() => hanldeAuth(0)}>
                   Later
                 </div>
                 <Link href='/login'>
@@ -111,9 +109,7 @@ export default function Sidebar() {
                 Login to watch your playlist, video and create awesome playlists.
               </div>
               <div className='flex justify-end items-center'>
-                <div
-                  className='text-white hover:scale-105 font-bold mr-4 cursor-pointer'
-                  onClick={() => hanldeAuth(1)}>
+                <div className='text-white hover:scale-105 font-bold mr-4 cursor-pointer' onClick={() => hanldeAuth(1)}>
                   Later
                 </div>
                 <Link href='/login'>
@@ -132,7 +128,7 @@ export default function Sidebar() {
               <div className='bg-loveIconBg mr-4 p-[0.4rem] rounded'>
                 <LoveIcon className='fill-iconColor' />
               </div>
-              Liked song
+              Favorite song
             </div>
             <div
               ref={(el) => (bannerRef.current[2] = el)}
@@ -142,9 +138,7 @@ export default function Sidebar() {
                 Login to watch your playlist, video and create awesome playlists.
               </div>
               <div className='flex justify-end items-center'>
-                <div
-                  className='text-white hover:scale-105 font-bold mr-4 cursor-pointer'
-                  onClick={() => hanldeAuth(2)}>
+                <div className='text-white hover:scale-105 font-bold mr-4 cursor-pointer' onClick={() => hanldeAuth(2)}>
                   Later
                 </div>
                 <Link href='/login'>

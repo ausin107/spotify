@@ -3,7 +3,8 @@ import Sidebar from './Sidebar'
 import MusicPlayer from './MusicPlayer'
 import Navbar from './Navbar'
 import AdvertisementBanner from './AdvertisementBanner'
-import { useSelector } from 'react-redux'
+import Toasts from './Toasts'
+import { useSelector, useDispatch } from 'react-redux'
 export default function Layout({ children }) {
   const [auth, setAuth] = useState(false)
   const isAuth = useSelector((state) => state.auth.isAuth)
@@ -15,6 +16,7 @@ export default function Layout({ children }) {
       <Sidebar />
       <Navbar />
       <div className='bg-bgColor h-fit overflow-hidden flex flex-col'>{children}</div>
+      <Toasts />
       {!auth && <AdvertisementBanner />}
       <MusicPlayer />
     </div>

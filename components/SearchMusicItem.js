@@ -3,6 +3,7 @@ import { PlayIcon, PauseIcon, LoveMusic, LoveMusicActive } from './Icon'
 import { loadMusicData } from '../lib/loadData'
 import { showMusicPlayer, setPlayPauseMusic, setNotPlayList } from './music_player/musicPlayerSlice'
 import Duration from './Duration'
+import LoveButton from './LoveButton'
 import { useDispatch, useSelector } from 'react-redux'
 export default function SearchMusicItem({ musicData }) {
   const [duration, setDuration] = useState(0)
@@ -84,19 +85,7 @@ export default function SearchMusicItem({ musicData }) {
       </div>
       <div className='flex items-center'>
         <div onClick={(e) => handleLoved(e)} className='mr-8'>
-          {isLoved ? (
-            <LoveMusicActive
-              className='group-hover:visible group-focus:visible invisible fill-activeIcon hover:fill-activeIconHover cursor-pointer'
-              width='16'
-              height='16'
-            />
-          ) : (
-            <LoveMusic
-              className='group-hover:visible group-focus:visible invisible fill-iconColor hover:fill-white cursor-pointer'
-              width='16'
-              height='16'
-            />
-          )}
+          <LoveButton musicData={musicData} musicId={musicData.id.videoId} />
         </div>
         <Duration isoTime={duration} className='text-navbarColor font-semibold' />
       </div>

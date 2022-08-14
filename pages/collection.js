@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Image from 'next/image'
-import { getAllLikedMusic } from '../lib/firebaseAction'
+import { getAllFavoriteMusic } from '../lib/firebaseAction'
 import Link from 'next/link'
 import { loadItemsSuccess } from '../components/collection/collectionSlice'
 import { setPlayList, showMusicPlayer, setEnded, setPlayPauseMusic } from '../components/music_player/musicPlayerSlice'
@@ -19,7 +19,7 @@ export default function Collection() {
   const isLoading = useSelector((state) => state.collection.isLoading)
   useEffect(() => {
     const getData = async () => {
-      const result = await getAllLikedMusic(`collection/${authKey}/items`)
+      const result = await getAllFavoriteMusic(`collection/${authKey}/items`)
       dispatch(loadItemsSuccess(result))
       setData(result)
     }
@@ -30,9 +30,10 @@ export default function Collection() {
     if (isPlayList) {
       data.map((item, index) => {
         if (index == currentId) {
+          let musicId = typeof item.id == 'object' ? item.id.videoId : item.id
           const musicInfo = {
             musicData: item,
-            musicId: item.id,
+            musicId,
           }
           dispatch(showMusicPlayer(musicInfo))
           document.title = item.snippet.title
@@ -44,11 +45,12 @@ export default function Collection() {
   const handlePlay = () => {
     if (!isPlayList) {
       dispatch(setPlayList())
-      data.map((item, index) => {
+      data?.map((item, index) => {
         if (index == 0) {
+          let musicId = typeof item.id == 'object' ? item.id.videoId : item.id
           const musicInfo = {
             musicData: item,
-            musicId: item.id,
+            musicId,
           }
           dispatch(showMusicPlayer(musicInfo))
         }
@@ -70,10 +72,10 @@ export default function Collection() {
             Playlist
           </div>
           <div className='text-white font-bold text-8xl mb-12' style={{ textShadow: '4px -1px 46px rgb(0 0 0 / 75%)' }}>
-            Liked Song
+            Favorite Song
           </div>
           <div className='text-white text-xs font-bold' style={{ textShadow: '4px -1px 46px rgb(0 0 0 / 75%)' }}>
-            Ausin - 2 Bài hát
+            User - {data.length} song
           </div>
         </div>
       </div>

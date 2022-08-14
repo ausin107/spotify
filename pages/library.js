@@ -4,10 +4,10 @@ import { db } from '../firebase'
 import { getCollection } from '../components/collection/collectionAction'
 import { useDispatch } from 'react-redux'
 import {
-  getAllLikedMusic,
-  updateLikedMusic,
-  addLikedMusic,
-  getSingleLikedMusic,
+  getAllFavoriteMusic,
+  updateFavoriteMusic,
+  addFavoriteMusic,
+  getSingleFavoriteMusic,
 } from '../lib/firebaseAction'
 import { useSelector } from 'react-redux'
 export default function Library() {
@@ -21,17 +21,17 @@ export default function Library() {
     <div className='left-[16.666%] w-[82vw] overflow-hidden h-full relative bg-bgColor pb-24'>
       <div
         className='bg-white p-2 rounded flex w-fit mt-20 ml-20 mr-5'
-        onClick={() => addLikedMusic(`collection/${authKey}/items/musicCode`, testData)}>
+        onClick={() => addFavoriteMusic(`collection/${authKey}/items/musicCode`, testData)}>
         add
       </div>
       <div
         className='bg-white p-2 rounded flex w-fit mt-20 ml-20'
-        onClick={() => getSingleLikedMusic(`collection/${authKey}/items/musicCode`)}>
+        onClick={() => getSingleFavoriteMusic(`collection/${authKey}/items/musicCode`)}>
         Get 1
       </div>
       <div
         className='bg-white p-2 rounded flex w-fit mt-20 ml-20'
-        onClick={() => getAllLikedMusic(`collection/${authKey}/items`)}>
+        onClick={() => getAllFavoriteMusic(`collection/${authKey}/items`)}>
         Get
       </div>
     </div>
