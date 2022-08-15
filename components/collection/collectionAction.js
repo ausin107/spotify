@@ -1,30 +1,34 @@
-import { startLoading, loadItemsSuccess } from './collectionSlice'
+import { startLoading, loadItemsSuccess, endLoading } from './collectionSlice'
 import { addFavoriteMusic, getAllFavoriteMusic, removeFavoriteMusic } from '../../lib/firebaseAction'
 export const getCollection = (path) => async (dispatch) => {
   dispatch(startLoading())
   try {
     const allMusics = await getAllFavoriteMusic(path)
-    dispatch(loadItemsSuccess(allMusics))
+    const result = {
+      data: allMusics,
+      index: 0,
+    }
+    dispatch(loadItemsSuccess(result))
+    dispatch(endLoading())
   } catch (e) {
-    dispatch(loadItemsSuccess())
+    dispatch(endLoading())
   }
 }
 export const addCollection = (path, data) => async (dispatch) => {
   dispatch(startLoading())
   try {
     await addFavoriteMusic(path, data)
-    dispatch(loadItemsSuccess())
+    dispatch(endLoading())
   } catch (e) {
-    dispatch(loadItemsSuccess())
+    dispatch(endLoading())
   }
 }
 export const deleteCollection = (path) => async (dispatch) => {
   dispatch(startLoading())
   try {
     await removeFavoriteMusic(path)
-    dispatch(loadItemsSuccess())
+    dispatch(endLoading())
   } catch (e) {
-    console.log(e)
-    dispatch(loadItemsSuccess())
+    dispatch(endLoading())
   }
 }

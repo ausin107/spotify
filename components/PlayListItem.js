@@ -5,6 +5,7 @@ import Duration from './Duration'
 import LoveButton from './LoveButton'
 import { LoveMusicActive, LoveMusic, PlayIcon, PauseIcon } from './Icon'
 import { loadMusicData } from '../lib/loadData'
+import { getCollection } from './collection/collectionAction'
 import { setPlayPauseMusic, setPlayList, setEnded } from './music_player/musicPlayerSlice'
 import { setCurrentId } from './collection/collectionSlice'
 import { useSelector, useDispatch } from 'react-redux'
@@ -12,6 +13,7 @@ export default function PlayListItem({ data, index }) {
   const [duration, setDuration] = useState('')
   const [isHover, setHover] = useState(false)
   const [isFocus, setFocus] = useState(false)
+  const authKey = useSelector((state) => state.auth.authKey)
   const isShow = useSelector((state) => state.player.isShow)
   const isPlay = useSelector((state) => state.player.isPlay)
   const musicId = useSelector((state) => state.player.musicId)
@@ -38,13 +40,14 @@ export default function PlayListItem({ data, index }) {
   }, [])
   const handlePlayPause = () => {
     dispatch(setPlayList())
+    // dispatch(getCollection(`collection/${authKey}/items`))
     if (isShow && musicId == itemId) {
       dispatch(setPlayPauseMusic())
     } else if (!isShow) {
-      dispatch(setCurrentId(index))
+      dispatch(setCurrentId({ index: index }))
     } else if (musicId != itemId) {
       dispatch(setEnded())
-      dispatch(setCurrentId(index))
+      dispatch(setCurrentId({ index: index }))
     }
   }
   const handleHover = () => {
@@ -60,13 +63,6 @@ export default function PlayListItem({ data, index }) {
       return index + 1
     }
   }
-  const handleMusicName = () => {
-    if (musicId == itemId) {
-      return <div className='text-playIconBg'>{musicName}</div>
-    } else {
-      return <div className='text-white'>{musicName}</div>
-    }
-  }
   return (
     <div
       className='flex p-2 px-6 items-center hover:bg-itemActiveBg focus:bg-itemActiveBg rounded group'
@@ -79,7 +75,13 @@ export default function PlayListItem({ data, index }) {
       <div className='flex w-2/5'>
         <img src={data.snippet.thumbnails.medium.url} className=' h-11 shadow-2xl mr-4' />
         <div className=''>
-          <div>{handleMusicName()}</div>
+          <div>
+            {musicId == itemId ? (
+              <div className='text-playIconBg'>{musicName}</div>
+            ) : (
+              <div className='text-white'>{musicName}</div>
+            )}
+          </div>
           <div className='text-iconColor text-sm font-semibold group-hover:text-white group-focus:text-white '>
             {channelName}
           </div>

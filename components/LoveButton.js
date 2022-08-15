@@ -26,7 +26,7 @@ export default function LoveButton({ musicId, musicData }) {
         setLove(true)
       }
     } else {
-      alert('Please Login !!')
+      dispatch(setShow('Please Login First !!'))
     }
   }
   useEffect(() => {

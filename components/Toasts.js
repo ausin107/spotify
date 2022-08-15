@@ -15,6 +15,7 @@ export default function Toasts() {
       clearTimeout(handleToast)
     }
   }, [isShow])
+
   return (
     <div className={newClass}>
       <div className='py-3 px-6 rounded font-semibold text-white flex items-center justify-center bg-toastsBg shadow-xl w-1/5'>

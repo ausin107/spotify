@@ -27,6 +27,9 @@ export default function MusicPlayer() {
   const [played, setPlayed] = useState(0)
   const [duration, setDuration] = useState(0)
   const [volume, setVolume] = useState(0.5)
+  const [volumeIcon, setVolumeIcon] = useState(
+    <VolumeIconMedium className='fill-musicPlayer hover:fill-white' width='16' height='16' />
+  )
   const musicInput = useRef()
   const loopIConRef = useRef()
   const playerRef = useRef()
@@ -85,25 +88,25 @@ export default function MusicPlayer() {
   const handleSetVolume = (e) => {
     setVolume(e.target.value)
     volumeRef.current.style.backgroundSize = e.target.value * 100 + '%'
-  }
-  const handleVolumeIcon = () => {
-    if (volume > 0 && volume < 0.3) {
-      return <VolumeIconLow className='fill-musicPlayer hover:fill-white' width='16' height='16' />
-    } else if (volume >= 0.3 && volume < 0.6) {
-      return <VolumeIconMedium className='fill-musicPlayer hover:fill-white' width='16' height='16' />
-    } else if (volume >= 0.6) {
-      return <VolumeIconHigh className='fill-musicPlayer hover:fill-white' width='16' height='16' />
+    if (e.target.value > 0 && e.target.value < 0.3) {
+      setVolumeIcon(<VolumeIconLow className='fill-musicPlayer hover:fill-white' width='16' height='16' />)
+    } else if (e.target.value >= 0.3 && e.target.value < 0.6) {
+      setVolumeIcon(<VolumeIconMedium className='fill-musicPlayer hover:fill-white' width='16' height='16' />)
+    } else if (e.target.value >= 0.6) {
+      setVolumeIcon(<VolumeIconHigh className='fill-musicPlayer hover:fill-white' width='16' height='16' />)
     } else {
-      return <VolumeIconMuted className='fill-musicPlayer hover:fill-white' width='16' height='16' />
+      setVolumeIcon(<VolumeIconMuted className='fill-musicPlayer hover:fill-white' width='16' height='16' />)
     }
   }
   const handleMuted = () => {
     if (volume != 0) {
       volumeRef.current.style.backgroundSize = '0%'
       setVolume(0)
+      setVolumeIcon(<VolumeIconMuted className='fill-musicPlayer hover:fill-white' width='16' height='16' />)
     } else {
       volumeRef.current.style.backgroundSize = '50%'
       setVolume(0.5)
+      setVolumeIcon(<VolumeIconMedium className='fill-musicPlayer hover:fill-white' width='16' height='16' />)
     }
   }
   const handleBack = () => {
@@ -217,7 +220,7 @@ export default function MusicPlayer() {
             </div>
             <div className='flex w-[15%] items-center justify-center'>
               <div className='flex items-center'>
-                <div onClick={handleMuted}>{handleVolumeIcon()}</div>
+                <div onClick={handleMuted}>{volumeIcon}</div>
                 <input
                   className='w-24 h-1 mx-2 cursor-pointer'
                   type='range'

@@ -14,14 +14,16 @@ export const collectionSlice = createSlice({
       state.isLoading = true
     },
     loadItemsSuccess: (state, action) => {
+      state.items = action.payload.data
+    },
+    endLoading: (state) => {
       state.isLoading = false
-      state.items = action.payload
     },
     setCurrentId: (state, action) => {
-      state.currentId = action.payload
+      state.currentId = action.payload.index
     },
     increaseCurrentId: (state) => {
-      if (state.currentId < state.items.length) {
+      if (state.currentId < state.items.length - 1) {
         state.currentId += 1
       }
     },
@@ -32,7 +34,7 @@ export const collectionSlice = createSlice({
     },
   },
 })
-export const { startLoading, loadItemsSuccess, setCurrentId, increaseCurrentId, decreaseCurrentId } =
+export const { startLoading, loadItemsSuccess, setCurrentId, increaseCurrentId, decreaseCurrentId, endLoading } =
   collectionSlice.actions
 
 export default collectionSlice.reducer

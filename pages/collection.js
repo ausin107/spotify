@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import Image from 'next/image'
 import { getAllFavoriteMusic } from '../lib/firebaseAction'
 import Link from 'next/link'
-import { loadItemsSuccess } from '../components/collection/collectionSlice'
+import { getCollection } from '../components/collection/collectionAction'
 import { setPlayList, showMusicPlayer, setEnded, setPlayPauseMusic } from '../components/music_player/musicPlayerSlice'
 import { ClockIcon, PlayIcon, PauseIcon, MusicIcon } from '../components/Icon'
 import PlayListItem from '../components/PlayListItem'
@@ -17,41 +17,43 @@ export default function Collection() {
   const isEnded = useSelector((state) => state.player.isEnded)
   const currentId = useSelector((state) => state.collection.currentId)
   const isLoading = useSelector((state) => state.collection.isLoading)
+  const allMusic = useSelector((state) => state.collection.items)
   useEffect(() => {
     const getData = async () => {
       const result = await getAllFavoriteMusic(`collection/${authKey}/items`)
-      dispatch(loadItemsSuccess(result))
       setData(result)
     }
     getData()
     document.title = 'Spotify - Favorite'
-  }, [isLoading])
+  }, [allMusic])
   useEffect(() => {
     if (isPlayList) {
-      data.map((item, index) => {
-        if (index == currentId) {
-          let musicId = typeof item.id == 'object' ? item.id.videoId : item.id
-          const musicInfo = {
-            musicData: item,
-            musicId,
+      !!data &&
+        data.map((item, index) => {
+          if (index == currentId) {
+            let musicId = typeof item.id == 'object' ? item.id.videoId : item.id
+            const musicInfo = {
+              musicData: item,
+              musicId,
+            }
+            dispatch(showMusicPlayer(musicInfo))
+            document.title = item.snippet.title
           }
-          dispatch(showMusicPlayer(musicInfo))
-          document.title = item.snippet.title
-        }
-      })
+        })
       dispatch(setEnded())
     }
   }, [currentId])
   const handlePlay = () => {
     if (!isPlayList) {
       dispatch(setPlayList())
-      data?.map((item, index) => {
+      data.map((item, index) => {
         if (index == 0) {
           let musicId = typeof item.id == 'object' ? item.id.videoId : item.id
           const musicInfo = {
             musicData: item,
             musicId,
           }
+          dispatch(getCollection(`collection/${authKey}/items`))
           dispatch(showMusicPlayer(musicInfo))
         }
       })
