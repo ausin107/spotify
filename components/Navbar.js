@@ -28,7 +28,7 @@ export default function Navbar() {
   }, [currentHeight])
   useEffect(() => {
     setAuth(isAuth)
-    if (router.pathname == '/collection') {
+    if (router.pathname == '/collection' || router.pathname == '/library') {
       navbarRef.current.classList.add('bg-transparent')
       navbarRef.current.classList.remove('bg-navbarBg')
     } else {

@@ -13,10 +13,7 @@ export default function Collection() {
   const authKey = useSelector((state) => state.auth.authKey)
   const isPlay = useSelector((state) => state.player.isPlay)
   const isPlayList = useSelector((state) => state.player.isPlayList)
-  const isShow = useSelector((state) => state.player.isShow)
-  const isEnded = useSelector((state) => state.player.isEnded)
   const currentId = useSelector((state) => state.collection.currentId)
-  const isLoading = useSelector((state) => state.collection.isLoading)
   const allMusic = useSelector((state) => state.collection.items)
   useEffect(() => {
     const getData = async () => {

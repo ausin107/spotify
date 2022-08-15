@@ -104,3 +104,8 @@ input[type='range']#music-volume-input:hover::-webkit-slider-thumb {
   transition: all 0.5s ease;
   visibility: hidden;
 }
+.bottomShadow {
+  box-shadow: -2px 12px 28px -9px rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: -2px 12px 28px -9px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: -2px 12px 28px -9px rgba(0, 0, 0, 0.75);
+}

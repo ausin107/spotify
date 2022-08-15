@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import {
   SpotifyLogo,
@@ -18,6 +18,7 @@ export default function Sidebar() {
   const router = useRouter()
   const isAuth = useSelector((state) => state.auth.isAuth)
   const bannerRef = useRef([])
+  const linkRef = useRef([])
   const hanldeAuth = (bannerId, path) => {
     if (isAuth) {
       router.push(path)
@@ -31,6 +32,15 @@ export default function Sidebar() {
       })
     }
   }
+  useEffect(() => {
+    const pathName = ['/', '/search', '/library', '/playlist', '/collection']
+    for (let x in pathName) {
+      linkRef.current[x].classList.remove('!text-white', '!font-bold')
+      if (pathName[x] == router.pathname) {
+        linkRef.current[x].classList.add('!text-white', '!font-bold')
+      }
+    }
+  }, [router.pathname])
   return (
     <div className='bg-black fixed h-screen lg:w-2/12 z-20 select-none'>
       <div className='p-6'>
@@ -40,7 +50,7 @@ export default function Sidebar() {
         />
         <div className='mb-8'>
           <Link href='/'>
-            <div className='text-iconColor mb-4 flex font-semibold icon-class'>
+            <div className='text-iconColor mb-4 flex font-semibold icon-class' ref={(el) => (linkRef.current[0] = el)}>
               {router.pathname != '/' ? (
                 <HomeIcon className='fill-iconColor mr-4 font-semibold' />
               ) : (
@@ -50,7 +60,7 @@ export default function Sidebar() {
             </div>
           </Link>
           <Link href='/search'>
-            <div className='text-iconColor mb-4 flex font-semibold icon-class'>
+            <div className='text-iconColor mb-4 flex font-semibold icon-class' ref={(el) => (linkRef.current[1] = el)}>
               {router.pathname != '/search' ? (
                 <SearchIcon className='fill-iconColor mr-4 font-semibold ' />
               ) : (
@@ -62,7 +72,8 @@ export default function Sidebar() {
           <div className='relative'>
             <div
               onClick={() => hanldeAuth(0, '/library')}
-              className='text-iconColor mb-4 flex font-semibold icon-class'>
+              className='text-iconColor mb-4 flex font-semibold icon-class'
+              ref={(el) => (linkRef.current[2] = el)}>
               {router.pathname != '/library' ? (
                 <LibraryIcon className='fill-iconColor mr-4 font-semibold' />
               ) : (
@@ -95,7 +106,8 @@ export default function Sidebar() {
           <div className='relative'>
             <div
               onClick={() => hanldeAuth(1, '/playlist')}
-              className='flex text-iconColor mb-4 font-semibold items-center icon-class'>
+              className='flex text-iconColor mb-4 font-semibold items-center icon-class'
+              ref={(el) => (linkRef.current[3] = el)}>
               <div className='bg-iconColor mr-4 p-[0.4rem] rounded icon-bg'>
                 <PlusIcon className='fill-black' />
               </div>
@@ -124,9 +136,14 @@ export default function Sidebar() {
           <div className='relative'>
             <div
               onClick={() => hanldeAuth(2, '/collection')}
-              className='flex text-iconColor mb-4 font-semibold items-center icon-class'>
+              className='flex text-iconColor mb-4 font-semibold items-center icon-class'
+              ref={(el) => (linkRef.current[4] = el)}>
               <div className='bg-loveIconBg mr-4 p-[0.4rem] rounded'>
-                <LoveIcon className='fill-iconColor' />
+                {router.pathname == '/collection' ? (
+                  <LoveIcon className='fill-white' />
+                ) : (
+                  <LoveIcon className='fill-iconColor' />
+                )}
               </div>
               Favorite song
             </div>
