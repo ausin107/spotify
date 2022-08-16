@@ -57,7 +57,7 @@ export default function Navbar() {
   return (
     <div
       ref={navbarRef}
-      className='bg-navbarBg flex flex-row h-16 w-10/12 fixed left-[16.666%] justify-between items-center z-20 transition-all duration-500'>
+      className='bg-navbarBg flex flex-row h-16 w-10/12 fixed left-[16.666%] justify-between items-center z-20 transition-all duration-500 select-none'>
       <div className='flex items-center ml-8'>
         <div
           className='bg-black opacity-70 py-1 px-1 mr-4 rounded-full cursor-pointer'

@@ -13,15 +13,18 @@ import {
   LoveIcon,
 } from '../components/Icon'
 import Link from 'next/link'
+import Playlists from './Playlists'
+import { addMusicToPlayList } from '../lib/firebaseAction'
 export default function Sidebar() {
-  const [isShowLogin, setShowLogin] = useState(false)
   const router = useRouter()
   const isAuth = useSelector((state) => state.auth.isAuth)
+  const authKey = useSelector((state) => state.auth.authKey)
   const bannerRef = useRef([])
   const linkRef = useRef([])
   const hanldeAuth = (bannerId, path) => {
     if (isAuth) {
-      router.push(path)
+      addMusicToPlayList(`collection/${authKey}/playlists`, {})
+      // router.push(path)
     } else {
       bannerRef.current.map((item, index) => {
         if (index == bannerId) {
@@ -43,7 +46,7 @@ export default function Sidebar() {
   }, [router.pathname])
   return (
     <div className='bg-black fixed h-screen lg:w-2/12 z-20 select-none'>
-      <div className='p-6'>
+      <div className='p-6 pb-4'>
         <SpotifyLogo
           onClick={() => router.push('/')}
           className='text-white text-sm w-[60%] sm:mb-8 hover:cursor-pointer'
@@ -136,7 +139,7 @@ export default function Sidebar() {
           <div className='relative'>
             <div
               onClick={() => hanldeAuth(2, '/collection')}
-              className='flex text-iconColor mb-4 font-semibold items-center icon-class'
+              className='flex text-iconColor font-semibold items-center icon-class'
               ref={(el) => (linkRef.current[4] = el)}>
               <div className='bg-loveIconBg mr-4 p-[0.4rem] rounded'>
                 {router.pathname == '/collection' ? (
@@ -169,6 +172,7 @@ export default function Sidebar() {
           </div>
         </div>
       </div>
+      <Playlists />
     </div>
   )
 }
