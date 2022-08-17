@@ -13,7 +13,7 @@ import {
   LoveIcon,
 } from '../components/Icon'
 import Link from 'next/link'
-import Playlists from './Playlists'
+import PlaylistsSidebar from './PlaylistsSidebar'
 import { addMusicToPlayList } from '../lib/firebaseAction'
 export default function Sidebar() {
   const router = useRouter()
@@ -172,7 +172,7 @@ export default function Sidebar() {
           </div>
         </div>
       </div>
-      <Playlists />
+      <PlaylistsSidebar />
     </div>
   )
 }

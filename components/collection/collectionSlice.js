@@ -4,6 +4,7 @@ const initialState = {
   collectionKey: null,
   isLoading: false,
   currentId: null,
+  currentPlaylist: null,
   items: [],
 }
 export const collectionSlice = createSlice({
@@ -32,9 +33,19 @@ export const collectionSlice = createSlice({
         state.currentId -= 1
       }
     },
+    setCurrentPlayList: (state, action) => {
+      state.currentPlaylist = action.payload
+    },
   },
 })
-export const { startLoading, loadItemsSuccess, setCurrentId, increaseCurrentId, decreaseCurrentId, endLoading } =
-  collectionSlice.actions
+export const {
+  startLoading,
+  loadItemsSuccess,
+  endLoading,
+  setCurrentId,
+  increaseCurrentId,
+  decreaseCurrentId,
+  setCurrentPlayList,
+} = collectionSlice.actions
 
 export default collectionSlice.reducer

@@ -1,10 +1,13 @@
 import { useState, useEffect, useRef } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
+import { setEnded, showMusicPlayer } from '../../components/music_player/musicPlayerSlice'
 import { getPlaylistsInfo, getAllPlaylistMusics } from '../../lib/firebaseAction'
 import { SearchIcon, EmptyIcon, MusicIconV2 } from '../../components/Icon'
 import { loadSearchMusic } from '../../lib/loadData'
+import { setCurrentPlayList } from '../../components/collection/collectionSlice'
 import PlaylistSearchItem from '../../components/PlaylistSearchItem'
+import PlaylistsBody from '../../components/PlaylistsBody'
 export default function PlayList() {
   const [data, setData] = useState('')
   const [searchData, setSearchData] = useState([
@@ -363,9 +366,15 @@ export default function PlayList() {
   const [inputValue, setInputValue] = useState('')
   const router = useRouter()
   const inputRef = useRef()
-  const authKey = useSelector((state) => state.auth.authKey)
+  const dispatch = useDispatch()
   const playListId = router.query.id
+  const authKey = useSelector((state) => state.auth.authKey)
+  const allMusic = useSelector((state) => state.collection.items)
+  const isPlayList = useSelector((state) => state.player.isPlayList)
+  const currentId = useSelector((state) => state.collection.currentId)
+
   useEffect(() => {
+    dispatch(setCurrentPlayList(playListId))
     const getPlaylist = async () => {
       const allPlaylists = await getPlaylistsInfo(`collection/${authKey}/playlists/`)
       allPlaylists.map((item, index) => {
@@ -378,7 +387,24 @@ export default function PlayList() {
       setData(data)
     }
     getPlaylist()
-  }, [])
+  }, [allMusic])
+  useEffect(() => {
+    if (isPlayList) {
+      !!data &&
+        data.map((item, index) => {
+          if (index == currentId) {
+            let musicId = typeof item.id == 'object' ? item.id.videoId : item.id
+            const musicInfo = {
+              musicData: item,
+              musicId,
+            }
+            dispatch(showMusicPlayer(musicInfo))
+            document.title = item.snippet.title
+          }
+        })
+      dispatch(setEnded())
+    }
+  }, [currentId])
   const handleSumbit = async () => {
     // const musicData = await loadSearchMusic(inputValue, 10, '&order=viewCount')
     // setSearchData(musicData.items)
@@ -413,7 +439,8 @@ export default function PlayList() {
           </div>
         </div>
       </div>
-      {data.length ? (
+      {data.length > 0 && <PlaylistsBody data={data} />}
+      {!!searchData && (
         <div className='bg-resultBg px-8 pt-20 relative -top-40'>
           <div className='border-t border-searchChildBg mb-8'></div>
           <div className='flex items-center justify-between'>
@@ -444,15 +471,11 @@ export default function PlayList() {
             </div>
           </div>
           <div className='mt-8'>
-            {searchData &&
-              searchData.map((item, index) => {
-                return <PlaylistSearchItem key={index} data={item} />
-              })}
+            {searchData.map((item, index) => {
+              return <PlaylistSearchItem key={index} data={item} />
+            })}
           </div>
-          {/* <div className='border-b border-searchChildBg mt-8'></div> */}
         </div>
-      ) : (
-        ''
       )}
     </div>
   )

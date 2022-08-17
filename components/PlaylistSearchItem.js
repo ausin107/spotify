@@ -1,25 +1,53 @@
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { PauseIcon, PlayIcon } from './Icon'
+import { setNotPlayList, setPlayPauseMusic, showMusicPlayer } from './music_player/musicPlayerSlice'
+import { addCollection, getCollection } from './collection/collectionAction'
+import { setShow } from './toast/toastSlice'
 export default function PlaylistSearchItem({ data }) {
-  const [isFocus, setFocus] = useState(false)
+  const dispatch = useDispatch()
   const isPlay = useSelector((state) => state.player.isPlay)
   const musicId = useSelector((state) => state.player.musicId)
+  const isShow = useSelector((state) => state.player.isShow)
+  const authKey = useSelector((state) => state.auth.authKey)
+  const isAuth = useSelector((state) => state.auth.isAuth)
+  const currentPLId = useSelector((state) => state.collection.currentPlaylist)
   const title = data.snippet.title
   let musicName = title.replace('Official Music Video', '').replace('(', '').replace(')', '')
   musicName = musicName.length >= 50 ? musicName.slice(0, 50) + '...' : musicName
   let albumName = musicName.length >= 30 ? musicName.slice(0, 30) + '...' : musicName
   const channelName = data.snippet.channelTitle.replace('Official', '').trim()
   const itemId = data.id.videoId
-  const handlePlayPause = () => {}
+  const handlePlayPause = (e) => {
+    dispatch(setNotPlayList())
+    e.stopPropagation()
+    const musicInfo = {
+      musicData: data,
+      musicId: itemId,
+    }
+    if (musicId != itemId) {
+      dispatch(showMusicPlayer(musicInfo))
+    } else if (musicId == itemId) {
+      dispatch(setPlayPauseMusic())
+    }
+  }
+  const handleAddMusic = async (e) => {
+    e.stopPropagation()
+    if (isAuth) {
+      // dispatch(deleteCollection(`collection/${authKey}/playlists/${currentPLId}/items/${itemId}`))
+      // dispatch(getCollection(`collection/${authKey}/playlists/${currentPLId}/items`))
+      // dispatch(setShow('Removed from your Favorite Songs'))
+      dispatch(addCollection(`collection/${authKey}/playlists/${currentPLId}/items/${itemId}`, data))
+      dispatch(getCollection(`collection/${authKey}/playlists/${currentPLId}/items`))
+      dispatch(setShow('Added to your Playlist'))
+    } else {
+      dispatch(setShow('Please Login First !!'))
+    }
+  }
   return (
-    <div
-      className='flex p-2 px-6 items-center hover:bg-itemActiveBg focus:bg-itemActiveBg rounded group'
-      onFocus={() => setFocus(true)}
-      onBlur={() => setFocus(false)}
-      tabIndex={0}>
-      <div className='w-[3%] group-hover:visible group-focus:visible invisible ' onClick={handlePlayPause}>
-        {isPlay ? (
+    <div className='flex p-2 px-6 items-center hover:bg-itemActiveBg focus:bg-itemActiveBg rounded group' tabIndex={0}>
+      <div className='w-[3%] group-hover:visible group-focus:visible invisible ' onClick={(e) => handlePlayPause(e)}>
+        {isPlay && musicId == itemId ? (
           <PauseIcon className='fill-white cursor-pointer' width='16' height='16' />
         ) : (
           <PlayIcon className='fill-white cursor-pointer' width='16' height='16' />
@@ -43,7 +71,7 @@ export default function PlaylistSearchItem({ data }) {
       <div className='w-[22%] text-iconColor text-sm font-semibold group-hover:text-white group-focus:text-white hover:underline cursor-pointer underline-offset-1'>
         {albumName}
       </div>
-      <div className='w-[15%] flex justify-end'>
+      <div className='w-[15%] flex justify-end' onClick={handleAddMusic}>
         <div className='border border-iconColor rounded-full py-1 px-4 w-fit text-white text-sm font-semibold hover:border-white cursor-pointer'>
           Add
         </div>

@@ -40,7 +40,6 @@ export default function PlayListItem({ data, index }) {
   }, [])
   const handlePlayPause = () => {
     dispatch(setPlayList())
-    // dispatch(getCollection(`collection/${authKey}/items`))
     if (isShow && musicId == itemId) {
       dispatch(setPlayPauseMusic())
     } else if (!isShow) {

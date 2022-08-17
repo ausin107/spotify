@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { getPlaylistsInfo, addMusicToPlayList, getPlaylist } from '../lib/firebaseAction'
 import Link from 'next/link'
-export default function Playlists() {
+export default function PlaylistsSidebar() {
   const [playlists, setPLaylists] = useState('')
   const authKey = useSelector((state) => state.auth.authKey)
   useEffect(() => {

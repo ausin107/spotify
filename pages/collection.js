@@ -1,17 +1,15 @@
 import { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import Image from 'next/image'
 import { getAllFavoriteMusic } from '../lib/firebaseAction'
+import Image from 'next/image'
 import Link from 'next/link'
-import { getCollection } from '../components/collection/collectionAction'
-import { setPlayList, showMusicPlayer, setEnded, setPlayPauseMusic } from '../components/music_player/musicPlayerSlice'
-import { ClockIcon, PlayIcon, PauseIcon, MusicIcon } from '../components/Icon'
-import PlayListItem from '../components/PlayListItem'
+import { showMusicPlayer, setEnded } from '../components/music_player/musicPlayerSlice'
+import { MusicIcon } from '../components/Icon'
+import PlaylistsBody from '../components/PlaylistsBody'
 export default function Collection() {
   const [data, setData] = useState('')
   const dispatch = useDispatch()
   const authKey = useSelector((state) => state.auth.authKey)
-  const isPlay = useSelector((state) => state.player.isPlay)
   const isPlayList = useSelector((state) => state.player.isPlayList)
   const currentId = useSelector((state) => state.collection.currentId)
   const allMusic = useSelector((state) => state.collection.items)
@@ -40,24 +38,6 @@ export default function Collection() {
       dispatch(setEnded())
     }
   }, [currentId])
-  const handlePlay = () => {
-    if (!isPlayList) {
-      dispatch(setPlayList())
-      data.map((item, index) => {
-        if (index == 0) {
-          let musicId = typeof item.id == 'object' ? item.id.videoId : item.id
-          const musicInfo = {
-            musicData: item,
-            musicId,
-          }
-          dispatch(getCollection(`collection/${authKey}/items`))
-          dispatch(showMusicPlayer(musicInfo))
-        }
-      })
-    } else if (isPlayList) {
-      dispatch(setPlayPauseMusic())
-    }
-  }
   return (
     <div className='bg-bgColor left-[16.666%] w-[82.5vw] overflow-hidden relative'>
       <div className='pt-20 pb-48 px-9 flex bg-likedBg items-end'>
@@ -79,31 +59,7 @@ export default function Collection() {
         </div>
       </div>
       {data.length > 0 ? (
-        <div className='flex px-9 -top-40 relative pt-4 bg-resultBg flex-col '>
-          <div
-            onClick={handlePlay}
-            className='p-4 bg-playIconBg hover:bg-activeIconHover rounded-full hover:scale-105 mb-8 w-fit cursor-pointer'>
-            {isPlay && isPlayList ? (
-              <PauseIcon className='fill-black' width='24' height='24' />
-            ) : (
-              <PlayIcon className='fill-black' width='24' height='24' />
-            )}
-          </div>
-          <div className='flex px-6 pb-2'>
-            <div className='text-iconColor text-sm w-[3%]'>#</div>
-            <div className='text-iconColor text-sm w-2/5'>NAME</div>
-            <div className='text-iconColor text-sm w-1/4'>ALBUM</div>
-            <div className='text-iconColor text-sm w-1/5'>DATE</div>
-            <div className='text-iconColor text-sm w-[12%] flex justify-end'>
-              <ClockIcon width='16' height='16' className='fill-iconColor hover:fill-white' />
-            </div>
-          </div>
-          <div className='border-b border-t border-searchChildBg flex flex-col pt-4 pb-4'>
-            {data.map((item, index) => {
-              return <PlayListItem key={index} data={item} index={index} />
-            })}
-          </div>
-        </div>
+        <PlaylistsBody data={data} />
       ) : (
         <div className='flex px-9 -top-40 relative pt-14 bg-resultBg flex-col items-center'>
           <MusicIcon width='64' height='64' className='fill-white mb-10' />
