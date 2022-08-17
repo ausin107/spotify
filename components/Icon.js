@@ -23,9 +23,9 @@ export const HomeIconActive = ({ className }) => {
     </svg>
   )
 }
-export const SearchIcon = ({ className }) => {
+export const SearchIcon = ({ className, height, width }) => {
   return (
-    <svg role='img' height='24' width='24' className={className} viewBox='0 0 24 24'>
+    <svg role='img' height={height} width={width} className={className} viewBox='0 0 24 24'>
       <path d='M10.533 1.279c-5.18 0-9.407 4.14-9.407 9.279s4.226 9.279 9.407 9.279c2.234 0 4.29-.77 5.907-2.058l4.353 4.353a1 1 0 101.414-1.414l-4.344-4.344a9.157 9.157 0 002.077-5.816c0-5.14-4.226-9.28-9.407-9.28zm-7.407 9.279c0-4.006 3.302-7.28 7.407-7.28s7.407 3.274 7.407 7.28-3.302 7.279-7.407 7.279-7.407-3.273-7.407-7.28z'></path>
     </svg>
   )
@@ -307,6 +307,25 @@ export const MusicIcon = ({ className, width, height }) => {
   return (
     <svg role='img' height={height} width={width} className={className} viewBox='0 0 24 24'>
       <path d='M15 4v12.167a3.5 3.5 0 11-3.5-3.5H13V4h2zm-2 10.667h-1.5a1.5 1.5 0 101.5 1.5v-1.5z'></path>
+    </svg>
+  )
+}
+export const EditIcon = ({ className, width, height }) => {
+  return (
+    <svg role='img' height={height} width={width} className={className} aria-hidden='true' viewBox='0 0 24 24'>
+      <path d='M17.318 1.975a3.329 3.329 0 114.707 4.707L8.451 20.256c-.49.49-1.082.867-1.735 1.103L2.34 22.94a1 1 0 01-1.28-1.28l1.581-4.376a4.726 4.726 0 011.103-1.735L17.318 1.975zm3.293 1.414a1.329 1.329 0 00-1.88 0L5.159 16.963c-.283.283-.5.624-.636 1l-.857 2.372 2.371-.857a2.726 2.726 0 001.001-.636L20.611 5.268a1.329 1.329 0 000-1.879z'></path>
+    </svg>
+  )
+}
+export const MusicIconV2 = ({ className, width, height }) => {
+  return (
+    <svg height={height} width={width} className={className} viewBox='0 0 80 81' xmlns='http://www.w3.org/2000/svg'>
+      <title>Playlist Icon</title>
+      <path
+        className={className}
+        d='M25.6 11.565v45.38c-2.643-3.27-6.68-5.37-11.2-5.37-7.94 0-14.4 6.46-14.4 14.4s6.46 14.4 14.4 14.4 14.4-6.46 14.4-14.4v-51.82l48-10.205V47.2c-2.642-3.27-6.678-5.37-11.2-5.37-7.94 0-14.4 6.46-14.4 14.4s6.46 14.4 14.4 14.4S80 64.17 80 56.23V0L25.6 11.565zm-11.2 65.61c-6.176 0-11.2-5.025-11.2-11.2 0-6.177 5.024-11.2 11.2-11.2 6.176 0 11.2 5.023 11.2 11.2 0 6.174-5.026 11.2-11.2 11.2zm51.2-9.745c-6.176 0-11.2-5.024-11.2-11.2 0-6.174 5.024-11.2 11.2-11.2 6.176 0 11.2 5.026 11.2 11.2 0 6.178-5.026 11.2-11.2 11.2z'
+        fill='currentColor'
+        fillRule='evenodd'></path>
     </svg>
   )
 }

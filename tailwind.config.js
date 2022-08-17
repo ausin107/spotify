@@ -37,6 +37,7 @@ module.exports = {
         likedBg: 'linear-gradient(180deg, rgba(79,56,154,1) 0%, rgba(62,45,121,1) 50%, rgba(18,18,18,1) 100%);',
         resultBg: 'linear-gradient(180deg, rgba(18,18,18,0.3) 0%, rgba(18,18,18,0.3) 50%, rgba(18,18,18,0.3) 100%);',
         favoriteBg: 'linear-gradient(146deg, rgba(74,19,243,1) 0%, rgba(106,76,237,1) 50%, rgba(137,134,230,1) 100%)',
+        greyBg: 'linear-gradient(180deg, rgba(85,85,85,1) 0%, rgba(66,66,66,1) 50%, rgba(18,18,18,1) 100%)',
       },
       boxShadow: {
         '3xl': '-1px 1px 59px 18px rgba(0,0,0,0.3)',

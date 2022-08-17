@@ -65,7 +65,7 @@ export default function Sidebar() {
           <Link href='/search'>
             <div className='text-iconColor mb-4 flex font-semibold icon-class' ref={(el) => (linkRef.current[1] = el)}>
               {router.pathname != '/search' ? (
-                <SearchIcon className='fill-iconColor mr-4 font-semibold ' />
+                <SearchIcon height='24' width='24' className='fill-iconColor mr-4 font-semibold ' />
               ) : (
                 <SearchIconActive className='fill-white mr-4' />
               )}

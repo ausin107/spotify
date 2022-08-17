@@ -18,8 +18,8 @@ export default function Playlists() {
         <div className='border-t border-itemActiveBg text-white w-full mx-6 py-4'>
           {playlists.map((item, index) => {
             return (
-              <Link href={'/playlists/' + item.playListId}>
-                <div key={item.playListId} className='text-iconColor font-semibold mb-2 cursor-pointer icon-class'>
+              <Link key={item.playListId} href={'/playlists/' + item.playListId}>
+                <div className='text-iconColor font-semibold mb-2 cursor-pointer icon-class'>
                   My playlists #{index + 1}
                 </div>
               </Link>

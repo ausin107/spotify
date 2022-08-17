@@ -42,7 +42,7 @@ export default function Navbar() {
     router.reload()
   }
   const handleSumbit = async () => {
-    const musicData = await loadSearchMusic(inputValue)
+    const musicData = await loadSearchMusic(inputValue, 12)
     dispatch(updateSearchData({ musicData: musicData.items }))
   }
   const handleClear = () => {
@@ -76,7 +76,7 @@ export default function Navbar() {
         {router.pathname == '/search' ? (
           <div className='flex items-center'>
             <div className='w-[22rem] bg-white rounded flex py-2 px-3 mr-2'>
-              <SearchIcon className='fill-bgColor mr-2' />
+              <SearchIcon height='24' width='24' className='fill-bgColor mr-2' />
               <input
                 value={inputValue}
                 placeholder='Type music name...'
