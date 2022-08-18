@@ -1,14 +1,16 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Image from 'next/image'
 import DateConvert from './DateConvert'
 import Duration from './Duration'
 import LoveButton from './LoveButton'
-import { LoveMusicActive, LoveMusic, PlayIcon, PauseIcon } from './Icon'
+import { PlayIcon, PauseIcon, TrashCanIcon } from './Icon'
 import { loadMusicData } from '../lib/loadData'
-import { getCollection } from './collection/collectionAction'
+import { getCollection, deleteCollection } from './collection/collectionAction'
 import { setPlayPauseMusic, setPlayList, setEnded } from './music_player/musicPlayerSlice'
+import { setShow } from './toast/toastSlice'
 import { setCurrentId } from './collection/collectionSlice'
 import { useSelector, useDispatch } from 'react-redux'
+import { useRouter } from 'next/router'
 export default function PlayListItem({ data, index }) {
   const [duration, setDuration] = useState('')
   const [isHover, setHover] = useState(false)
@@ -18,14 +20,11 @@ export default function PlayListItem({ data, index }) {
   const isPlay = useSelector((state) => state.player.isPlay)
   const musicId = useSelector((state) => state.player.musicId)
   const dispatch = useDispatch()
+  const trashRef = useRef()
+  const router = useRouter()
+  const currentPLId = useSelector((state) => state.collection.currentPlaylist)
   const title = data.snippet.title
-  let musicName = title
-    .replace('Official Music Video', '')
-    .replace('(', '')
-    .replace(')', '')
-    .replace('|', '')
-    .slice(0, title.indexOf('|'))
-    .trim()
+  let musicName = title.replace('Official Music Video', '').replace('(', '').replace(')', '').replaceAll('|', '')
   musicName = musicName.length >= 30 ? musicName.slice(0, 30) + '...' : musicName
   const channelName = data.snippet.channelTitle.replace('Official', '').trim()
   const date = data.snippet.publishedAt.slice(0, 10)
@@ -37,6 +36,11 @@ export default function PlayListItem({ data, index }) {
       setDuration(duration)
     }
     getDuration()
+    if (router.pathname == '/collection') {
+      trashRef.current.classList.add('hidden')
+    } else {
+      trashRef.current.classList.remove('hidden')
+    }
   }, [])
   const handlePlayPause = () => {
     dispatch(setPlayList())
@@ -61,6 +65,12 @@ export default function PlayListItem({ data, index }) {
     } else {
       return index + 1
     }
+  }
+  const hanldeRemove = (e) => {
+    e.stopPropagation()
+    dispatch(deleteCollection(`collection/${authKey}/playlists/${currentPLId}/items/${itemId}`))
+    dispatch(getCollection(`collection/${authKey}/playlists/${currentPLId}/items`))
+    dispatch(setShow('Removed from your Favorite Songs'))
   }
   return (
     <div
@@ -90,9 +100,15 @@ export default function PlayListItem({ data, index }) {
         {musicName}
       </div>
       <DateConvert className='text-iconColor font-semibold text-sm w-1/5' data={date} />
-      <div className='flex justify-end items-center w-[12%]'>
+      <div className='flex justify-end items-center w-[10%]'>
         <LoveButton musicId={itemId} musicData={data} />
         <Duration isoTime={duration} className='text-navbarColor font-semibold' />
+      </div>
+      <div
+        className='w-[3%] flex justify-end invisible group-hover:visible group-focus:visible cursor-pointer'
+        onClick={hanldeRemove}
+        ref={trashRef}>
+        <TrashCanIcon className='text-iconColor w-4 hover:text-white' />
       </div>
     </div>
   )

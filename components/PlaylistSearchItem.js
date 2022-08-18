@@ -13,7 +13,7 @@ export default function PlaylistSearchItem({ data }) {
   const isAuth = useSelector((state) => state.auth.isAuth)
   const currentPLId = useSelector((state) => state.collection.currentPlaylist)
   const title = data.snippet.title
-  let musicName = title.replace('Official Music Video', '').replace('(', '').replace(')', '')
+  let musicName = title.replace('Official Music Video', '').replace('(', '').replace(')', '').replaceAll('|', '')
   musicName = musicName.length >= 50 ? musicName.slice(0, 50) + '...' : musicName
   let albumName = musicName.length >= 30 ? musicName.slice(0, 30) + '...' : musicName
   const channelName = data.snippet.channelTitle.replace('Official', '').trim()
@@ -34,9 +34,6 @@ export default function PlaylistSearchItem({ data }) {
   const handleAddMusic = async (e) => {
     e.stopPropagation()
     if (isAuth) {
-      // dispatch(deleteCollection(`collection/${authKey}/playlists/${currentPLId}/items/${itemId}`))
-      // dispatch(getCollection(`collection/${authKey}/playlists/${currentPLId}/items`))
-      // dispatch(setShow('Removed from your Favorite Songs'))
       dispatch(addCollection(`collection/${authKey}/playlists/${currentPLId}/items/${itemId}`, data))
       dispatch(getCollection(`collection/${authKey}/playlists/${currentPLId}/items`))
       dispatch(setShow('Added to your Playlist'))

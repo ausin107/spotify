@@ -11,9 +11,7 @@ export default function TopResult({ musicData }) {
     .replace('Official Music Video', '')
     .replace('(', '')
     .replace(')', '')
-    .replace('|', '')
-    .slice(0, musicData[0].snippet.title.indexOf('|'))
-    .trim()
+    .replaceAll('|', '')
   musicName = musicName.length >= 30 ? musicName.slice(0, 30) + '...' : musicName
   const handleShow = () => {
     dispatch(setNotPlayList())

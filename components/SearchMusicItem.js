@@ -16,9 +16,7 @@ export default function SearchMusicItem({ musicData }) {
     .replace('Official Music Video', '')
     .replace('(', '')
     .replace(')', '')
-    .replace('|', '')
-    .slice(0, musicData.snippet.title.indexOf('|'))
-    .trim()
+    .replaceAll('|', '')
   musicName = musicName.length >= 50 ? musicName.slice(0, 50) + '...' : musicName
   useEffect(() => {
     const getDuration = async () => {

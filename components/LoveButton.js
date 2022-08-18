@@ -39,18 +39,7 @@ export default function LoveButton({ musicId, musicData }) {
       }
     }
     getData()
-  }, [isLoading])
-  useEffect(() => {
-    const getData = async () => {
-      const result = await getSingleFavoriteMusic(`collection/${authKey}/items/${musicId}`)
-      if (!!result) {
-        setLove(true)
-      } else {
-        setLove(false)
-      }
-    }
-    getData()
-  }, [musicId])
+  }, [isLoading, musicId])
   return (
     <div onClick={(e) => handleLoveMusic(e)}>
       {isLove ? (

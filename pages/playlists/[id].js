@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
 import { setEnded, showMusicPlayer } from '../../components/music_player/musicPlayerSlice'
-import { getPlaylistsInfo, getAllPlaylistMusics } from '../../lib/firebaseAction'
+import { getAllPlaylistMusics } from '../../lib/firebaseAction'
 import { SearchIcon, EmptyIcon, MusicIconV2 } from '../../components/Icon'
 import { loadSearchMusic } from '../../lib/loadData'
 import { setCurrentPlayList } from '../../components/collection/collectionSlice'
@@ -362,7 +362,6 @@ export default function PlayList() {
       },
     },
   ])
-  const [basicInfo, setBasicInfo] = useState('')
   const [inputValue, setInputValue] = useState('')
   const router = useRouter()
   const inputRef = useRef()
@@ -376,18 +375,11 @@ export default function PlayList() {
   useEffect(() => {
     dispatch(setCurrentPlayList(playListId))
     const getPlaylist = async () => {
-      const allPlaylists = await getPlaylistsInfo(`collection/${authKey}/playlists/`)
-      allPlaylists.map((item, index) => {
-        if (item.playListId == playListId) {
-          item.index = index
-          setBasicInfo(item)
-        }
-      })
       const data = await getAllPlaylistMusics(`collection/${authKey}/playlists/${playListId}/items`)
       setData(data)
     }
     getPlaylist()
-  }, [allMusic])
+  }, [allMusic, playListId])
   useEffect(() => {
     if (isPlayList) {
       !!data &&
@@ -432,7 +424,7 @@ export default function PlayList() {
             Playlist
           </div>
           <div className='text-white font-bold text-8xl mb-12' style={{ textShadow: '4px -1px 46px rgb(0 0 0 / 75%)' }}>
-            My Playlist #{basicInfo.index + 1}
+            My Playlist
           </div>
           <div className='text-white text-xs font-bold' style={{ textShadow: '4px -1px 46px rgb(0 0 0 / 75%)' }}>
             User - {data.length} song
