@@ -1,32 +1,34 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useSelector } from 'react-redux'
 import { getPlaylistsInfo, addMusicToPlayList, getPlaylist } from '../lib/firebaseAction'
 import Link from 'next/link'
-export default function PlaylistsSidebar() {
-  const [playlists, setPLaylists] = useState('')
-  const authKey = useSelector((state) => state.auth.authKey)
+import { useRouter } from 'next/router'
+export default function PlaylistsSidebar({ allPlaylists }) {
+  const router = useRouter()
+  const playlistRef = useRef([])
   useEffect(() => {
-    const getData = async () => {
-      const result = await getPlaylistsInfo(`collection/${authKey}/playlists`)
-      setPLaylists(result)
-    }
-    getData()
-  }, [])
+    allPlaylists.map((item, index) => {
+      playlistRef.current[index].classList.remove('!text-white')
+      if (item.playListId == router.query.id) {
+        playlistRef.current[index].classList.add('!text-white')
+      }
+    })
+  }, [router.query.id])
   return (
     <div className='flex'>
-      {!!playlists && (
-        <div className='border-t border-itemActiveBg text-white w-full mx-6 py-4'>
-          {playlists.map((item, index) => {
-            return (
-              <Link key={item.playListId} href={'/playlists/' + item.playListId}>
-                <div className='text-iconColor font-semibold mb-2 cursor-pointer icon-class'>
-                  My playlists #{index + 1}
-                </div>
-              </Link>
-            )
-          })}
-        </div>
-      )}
+      <div className='border-t border-itemActiveBg text-white w-full mx-6 py-4'>
+        {allPlaylists.map((item, index) => {
+          return (
+            <Link key={item.playListId} href={'/playlists/' + item.playListId}>
+              <div
+                className='text-iconColor font-semibold mb-2 cursor-pointer icon-class'
+                ref={(el) => (playlistRef.current[index] = el)}>
+                My playlists #{index + 1}
+              </div>
+            </Link>
+          )
+        })}
+      </div>
     </div>
   )
 }

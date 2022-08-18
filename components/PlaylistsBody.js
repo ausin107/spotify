@@ -3,6 +3,7 @@ import { PlayIcon, PauseIcon, ClockIcon } from './Icon'
 import PlayListItem from './PlayListItem'
 import { getCollection } from './collection/collectionAction'
 import { setPlayList, setPlayPauseMusic, showMusicPlayer } from './music_player/musicPlayerSlice'
+import { loadItemsSuccess } from './collection/collectionSlice'
 export default function PlaylistsBody({ data }) {
   const dispatch = useDispatch()
   const isPlayList = useSelector((state) => state.player.isPlayList)
@@ -23,6 +24,7 @@ export default function PlaylistsBody({ data }) {
           dispatch(showMusicPlayer(musicInfo))
         }
       })
+      dispatch(loadItemsSuccess(data))
     } else if (isPlayList) {
       dispatch(setPlayPauseMusic())
     }

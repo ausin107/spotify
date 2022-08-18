@@ -15,16 +15,24 @@ import {
 import Link from 'next/link'
 import PlaylistsSidebar from './PlaylistsSidebar'
 import { addMusicToPlayList } from '../lib/firebaseAction'
+import { getPlaylistsInfo } from '../lib/firebaseAction'
 export default function Sidebar() {
+  const [playlists, setPlaylists] = useState('')
   const router = useRouter()
   const isAuth = useSelector((state) => state.auth.isAuth)
   const authKey = useSelector((state) => state.auth.authKey)
   const bannerRef = useRef([])
   const linkRef = useRef([])
-  const hanldeAuth = (bannerId, path) => {
+  const hanldeAuth = async (bannerId, path) => {
     if (isAuth) {
-      addMusicToPlayList(`collection/${authKey}/playlists`, {})
-      // router.push(path)
+      if (path == '/playlists') {
+        const playlistId = await addMusicToPlayList(`collection/${authKey}/playlists`, {})
+        const newPlaylist = await getPlaylistsInfo(`collection/${authKey}/playlists`)
+        setPlaylists(newPlaylist)
+        router.push(`/playlists/${playlistId}`)
+      } else {
+        router.push(path)
+      }
     } else {
       bannerRef.current.map((item, index) => {
         if (index == bannerId) {
@@ -44,6 +52,13 @@ export default function Sidebar() {
       }
     }
   }, [router.pathname])
+  useEffect(() => {
+    const getAllPlaylists = async () => {
+      const result = await getPlaylistsInfo(`collection/${authKey}/playlists`)
+      setPlaylists(result)
+    }
+    getAllPlaylists()
+  }, [])
   return (
     <div className='bg-black fixed h-screen lg:w-2/12 z-20 select-none'>
       <div className='p-6 pb-4'>
@@ -108,7 +123,7 @@ export default function Sidebar() {
         <div className=''>
           <div className='relative'>
             <div
-              onClick={() => hanldeAuth(1, '/playlist')}
+              onClick={() => hanldeAuth(1, '/playlists')}
               className='flex text-iconColor mb-4 font-semibold items-center icon-class'
               ref={(el) => (linkRef.current[3] = el)}>
               <div className='bg-iconColor mr-4 p-[0.4rem] rounded icon-bg'>
@@ -172,7 +187,7 @@ export default function Sidebar() {
           </div>
         </div>
       </div>
-      <PlaylistsSidebar />
+      {!!playlists && <PlaylistsSidebar allPlaylists={playlists} />}
     </div>
   )
 }
