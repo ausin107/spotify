@@ -17,7 +17,7 @@ export default function PlaylistSearchItem({ data }) {
   musicName = musicName.length >= 50 ? musicName.slice(0, 50) + '...' : musicName
   let albumName = musicName.length >= 30 ? musicName.slice(0, 30) + '...' : musicName
   const channelName = data.snippet.channelTitle.replace('Official', '').trim()
-  const itemId = data.id.videoId
+  const itemId = data.id.videoId || data.id
   const handlePlayPause = (e) => {
     dispatch(setNotPlayList())
     e.stopPropagation()
@@ -34,8 +34,9 @@ export default function PlaylistSearchItem({ data }) {
   const handleAddMusic = async (e) => {
     e.stopPropagation()
     if (isAuth) {
+      console.log(`collection/${authKey}/playlists/${currentPLId}/items/${itemId}`)
       dispatch(addCollection(`collection/${authKey}/playlists/${currentPLId}/items/${itemId}`, data))
-      dispatch(getCollection(`collection/${authKey}/playlists/${currentPLId}/items`))
+      dispatch(getCollection(`collection/${authKey}/playlists/${currentPLId}/items/${itemId}`))
       dispatch(setShow('Added to your Playlist'))
     } else {
       dispatch(setShow('Please Login First !!'))

@@ -3,16 +3,17 @@ import { PlayIcon, PauseIcon, ClockIcon } from './Icon'
 import PlayListItem from './PlayListItem'
 import { getCollection } from './collection/collectionAction'
 import { setPlayList, setPlayPauseMusic, showMusicPlayer } from './music_player/musicPlayerSlice'
-import { loadItemsSuccess } from './collection/collectionSlice'
-export default function PlaylistsBody({ data }) {
+import { loadItemsSuccess, setCurrentId } from './collection/collectionSlice'
+import { useRouter } from 'next/router'
+export default function PlaylistsBody({ data, path, currentPlId }) {
   const dispatch = useDispatch()
-  const isPlayList = useSelector((state) => state.player.isPlayList)
+  const router = useRouter()
+  const playListId = router.query.id
   const isPlay = useSelector((state) => state.player.isPlay)
-  const authKey = useSelector((state) => state.auth.authKey)
-
   const handlePlay = () => {
-    if (!isPlayList) {
+    if (currentPlId == playListId) {
       dispatch(setPlayList())
+      dispatch(setCurrentId({ index: 0 }))
       data.map((item, index) => {
         if (index == 0) {
           let musicId = typeof item.id == 'object' ? item.id.videoId : item.id
@@ -20,26 +21,31 @@ export default function PlaylistsBody({ data }) {
             musicData: item,
             musicId,
           }
-          dispatch(getCollection(`collection/${authKey}/items`))
+          dispatch(getCollection(path))
           dispatch(showMusicPlayer(musicInfo))
         }
       })
       dispatch(loadItemsSuccess(data))
-    } else if (isPlayList) {
-      dispatch(setPlayPauseMusic())
     }
+  }
+  const handlePause = () => {
+    dispatch(setPlayPauseMusic())
   }
   return (
     <div className='flex px-9 -top-40 relative pt-4 bg-resultBg flex-col '>
-      <div
-        onClick={handlePlay}
-        className='p-4 bg-playIconBg hover:bg-activeIconHover rounded-full hover:scale-105 mb-8 w-fit cursor-pointer'>
-        {isPlay && isPlayList ? (
+      {isPlay && currentPlId == playListId ? (
+        <div
+          onClick={handlePause}
+          className='p-4 bg-playIconBg hover:bg-activeIconHover rounded-full hover:scale-105 mb-8 w-fit cursor-pointer'>
           <PauseIcon className='fill-black' width='24' height='24' />
-        ) : (
+        </div>
+      ) : (
+        <div
+          onClick={handlePlay}
+          className='p-4 bg-playIconBg hover:bg-activeIconHover rounded-full hover:scale-105 mb-8 w-fit cursor-pointer'>
           <PlayIcon className='fill-black' width='24' height='24' />
-        )}
-      </div>
+        </div>
+      )}
       <div className='flex px-6 pb-2'>
         <div className='text-iconColor text-sm w-[3%]'>#</div>
         <div className='text-iconColor text-sm w-2/5'>NAME</div>

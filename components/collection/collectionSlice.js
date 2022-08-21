@@ -16,6 +16,7 @@ export const collectionSlice = createSlice({
     },
     loadItemsSuccess: (state, action) => {
       state.items = action.payload.data
+      console.log(action.payload.data)
     },
     endLoading: (state) => {
       state.isLoading = false
