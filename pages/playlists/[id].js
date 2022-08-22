@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
 import { getAllPlaylistMusics } from '../../lib/firebaseAction'
 import { loadSearchMusic, loadTrendingMusic } from '../../lib/loadData'
-import { setEnded, showMusicPlayer } from '../../components/music_player/musicPlayerSlice'
 import { SearchIcon, EmptyIcon, MusicIconV2 } from '../../components/Icon'
 import { setCurrentPlayList } from '../../components/collection/collectionSlice'
 import PlaylistSearchItem from '../../components/PlaylistSearchItem'
@@ -21,7 +20,6 @@ export default function PlayList() {
   const authKey = useSelector((state) => state.auth.authKey)
   const allMusic = useSelector((state) => state.collection.items)
   const isPlayList = useSelector((state) => state.player.isPlayList)
-  const currentId = useSelector((state) => state.collection.currentId)
   useEffect(() => {
     dispatch(setCurrentPlayList(playListId))
     const getPlaylist = async () => {
@@ -30,26 +28,8 @@ export default function PlayList() {
       const recData = await loadTrendingMusic('VN')
       setRecData(recData.items)
     }
-    console.log(1)
     getPlaylist()
   }, [allMusic, playListId])
-  useEffect(() => {
-    if (isPlayList) {
-      !!data &&
-        data.map((item, index) => {
-          if (index == currentId) {
-            let musicId = typeof item.id == 'object' ? item.id.videoId : item.id
-            const musicInfo = {
-              musicData: item,
-              musicId,
-            }
-            dispatch(showMusicPlayer(musicInfo))
-            document.title = item.snippet.title
-          }
-        })
-      dispatch(setEnded())
-    }
-  }, [currentId])
   const handleSumbit = async () => {
     const musicData = await loadSearchMusic(inputValue, 10, '&order=viewCount')
     setSearchData(musicData.items)
@@ -64,7 +44,7 @@ export default function PlayList() {
     }
   }
   return (
-    <div className='bg-bgColor left-[16.666%] w-[82.5vw] overflow-hidden relative'>
+    <div className='bg-bgColor left-[16.666%] w-[82.5vw] overflow-hidden relative select-none'>
       <div className='pt-20 pb-48 px-9 flex bg-greyBg items-end'>
         <div className='w-60 h-60 shadow-3xl bg-itemActiveBg flex items-center justify-center'>
           <MusicIconV2 width='65' height='65' className='fill-textBreakLine' />

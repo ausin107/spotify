@@ -1,4 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { useRouter } from 'next/router'
 import Image from 'next/image'
 import DateConvert from './DateConvert'
 import Duration from './Duration'
@@ -6,12 +8,9 @@ import LoveButton from './LoveButton'
 import { PlayIcon, PauseIcon, TrashCanIcon } from './Icon'
 import { loadMusicData } from '../lib/loadData'
 import { getCollection, deleteCollection } from './collection/collectionAction'
-import { setPlayPauseMusic, setPlayList, setEnded } from './music_player/musicPlayerSlice'
+import { setPlayPauseMusic, setPlayList } from './music_player/musicPlayerSlice'
 import { setShow } from './toast/toastSlice'
-import { setCurrentId } from './collection/collectionSlice'
-import { useSelector, useDispatch } from 'react-redux'
-import { useRouter } from 'next/router'
-export default function PlayListItem({ data, index }) {
+export default function PlayListItem({ data, path, index }) {
   const [duration, setDuration] = useState('')
   const [isHover, setHover] = useState(false)
   const [isFocus, setFocus] = useState(false)
@@ -19,10 +18,11 @@ export default function PlayListItem({ data, index }) {
   const isShow = useSelector((state) => state.player.isShow)
   const isPlay = useSelector((state) => state.player.isPlay)
   const musicId = useSelector((state) => state.player.musicId)
+  const currentPLId = useSelector((state) => state.collection.currentPlaylist)
+  const currentId = useSelector((state) => state.collection.currentId)
   const dispatch = useDispatch()
   const trashRef = useRef()
   const router = useRouter()
-  const currentPLId = useSelector((state) => state.collection.currentPlaylist)
   const title = data.snippet.title
   let musicName = title.replace('Official Music Video', '').replace('(', '').replace(')', '').replaceAll('|', '')
   musicName = musicName.length >= 30 ? musicName.slice(0, 30) + '...' : musicName
@@ -47,10 +47,9 @@ export default function PlayListItem({ data, index }) {
     if (isShow && musicId == itemId) {
       dispatch(setPlayPauseMusic())
     } else if (!isShow) {
-      dispatch(setCurrentId({ index: index }))
+      dispatch(getCollection(path, index))
     } else if (musicId != itemId) {
-      dispatch(setEnded())
-      dispatch(setCurrentId({ index: index }))
+      dispatch(getCollection(path, index))
     }
   }
   const handleHover = () => {
@@ -69,7 +68,7 @@ export default function PlayListItem({ data, index }) {
   const hanldeRemove = (e) => {
     e.stopPropagation()
     dispatch(deleteCollection(`collection/${authKey}/playlists/${currentPLId}/items/${itemId}`))
-    dispatch(getCollection(`collection/${authKey}/playlists/${currentPLId}/items`))
+    dispatch(getCollection(`collection/${authKey}/playlists/${currentPLId}/items`, currentId))
     dispatch(setShow('Removed from your Favorite Songs'))
   }
   return (

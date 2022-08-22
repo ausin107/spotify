@@ -16,7 +16,7 @@ export const collectionSlice = createSlice({
     },
     loadItemsSuccess: (state, action) => {
       state.items = action.payload.data
-      console.log(action.payload.data)
+      state.currentId = action.payload.index
     },
     endLoading: (state) => {
       state.isLoading = false

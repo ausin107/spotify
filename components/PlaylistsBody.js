@@ -13,7 +13,6 @@ export default function PlaylistsBody({ data, path, currentPlId }) {
   const handlePlay = () => {
     if (currentPlId == playListId) {
       dispatch(setPlayList())
-      dispatch(setCurrentId({ index: 0 }))
       data.map((item, index) => {
         if (index == 0) {
           let musicId = typeof item.id == 'object' ? item.id.videoId : item.id
@@ -25,7 +24,6 @@ export default function PlaylistsBody({ data, path, currentPlId }) {
           dispatch(showMusicPlayer(musicInfo))
         }
       })
-      dispatch(loadItemsSuccess(data))
     }
   }
   const handlePause = () => {
@@ -58,7 +56,7 @@ export default function PlaylistsBody({ data, path, currentPlId }) {
       </div>
       <div className='border-t border-searchChildBg flex flex-col pt-4 pb-4'>
         {data.map((item, index) => {
-          return <PlayListItem key={index} data={item} index={index} />
+          return <PlayListItem key={index} data={item} path={path} index={index} />
         })}
       </div>
     </div>

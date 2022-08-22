@@ -3,15 +3,12 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getAllFavoriteMusic } from '../lib/firebaseAction'
 import Image from 'next/image'
 import Link from 'next/link'
-import { showMusicPlayer, setEnded } from '../components/music_player/musicPlayerSlice'
 import { MusicIcon } from '../components/Icon'
 import PlaylistsBody from '../components/PlaylistsBody'
 export default function Collection() {
   const [data, setData] = useState('')
   const dispatch = useDispatch()
   const authKey = useSelector((state) => state.auth.authKey)
-  const isPlayList = useSelector((state) => state.player.isPlayList)
-  const currentId = useSelector((state) => state.collection.currentId)
   const allMusic = useSelector((state) => state.collection.items)
   useEffect(() => {
     const getData = async () => {
@@ -21,23 +18,6 @@ export default function Collection() {
     getData()
     document.title = 'Spotify - Favorite'
   }, [allMusic])
-  useEffect(() => {
-    if (isPlayList) {
-      !!data &&
-        data.map((item, index) => {
-          if (index == currentId) {
-            let musicId = typeof item.id == 'object' ? item.id.videoId : item.id
-            const musicInfo = {
-              musicData: item,
-              musicId,
-            }
-            dispatch(showMusicPlayer(musicInfo))
-            document.title = item.snippet.title
-          }
-        })
-      dispatch(setEnded())
-    }
-  }, [currentId])
   return (
     <div className='bg-bgColor left-[16.666%] w-[82.5vw] overflow-hidden relative'>
       <div className='pt-20 pb-48 px-9 flex bg-likedBg items-end'>

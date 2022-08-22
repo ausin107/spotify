@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { showMusicPlayer, setPlayPauseMusic, setPlayList, setEnded } from '../components/music_player/musicPlayerSlice'
+import { showMusicPlayer, setPlayPauseMusic, setPlayList } from '../components/music_player/musicPlayerSlice'
 import { getCollection } from '../components/collection/collectionAction'
 import { useDispatch, useSelector } from 'react-redux'
 import { getAllFavoriteMusic } from '../lib/firebaseAction'
@@ -12,7 +12,6 @@ export default function Library() {
   const isPlay = useSelector((state) => state.player.isPlay)
   const isPlayList = useSelector((state) => state.player.isPlayList)
   const allMusic = useSelector((state) => state.collection.items)
-  const currentId = useSelector((state) => state.collection.currentId)
   useEffect(() => {
     const getData = async () => {
       const result = await getAllFavoriteMusic(`collection/${authKey}/items`)
@@ -21,23 +20,6 @@ export default function Library() {
     getData()
     document.title = 'Spotify - Library'
   }, [allMusic])
-  useEffect(() => {
-    if (isPlayList) {
-      !!data &&
-        data.map((item, index) => {
-          if (index == currentId) {
-            let musicId = typeof item.id == 'object' ? item.id.videoId : item.id
-            const musicInfo = {
-              musicData: item,
-              musicId,
-            }
-            dispatch(showMusicPlayer(musicInfo))
-            document.title = item.snippet.title
-          }
-        })
-      dispatch(setEnded())
-    }
-  }, [currentId])
   const handlePlay = (e) => {
     e.stopPropagation()
     if (!isPlayList) {

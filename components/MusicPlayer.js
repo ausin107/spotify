@@ -1,5 +1,5 @@
 import ReactPlayer from 'react-player'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import {
   PlayIcon,
   PauseIcon,
@@ -17,10 +17,11 @@ import {
 } from './Icon'
 import LoveButton from './LoveButton'
 import Duration from './Duration'
-import { setPlayPauseMusic, setEnded } from './music_player/musicPlayerSlice'
+import { setPlayPauseMusic, showMusicPlayer } from './music_player/musicPlayerSlice'
 import { useSelector, useDispatch } from 'react-redux'
 import { increaseCurrentId, decreaseCurrentId } from './collection/collectionSlice'
 import SekeletonPlayer from './SekeletonPlayer'
+import { useRouter } from 'next/router'
 export default function MusicPlayer() {
   const [isLoop, setLoop] = useState(false)
   const [isPIP, setPIP] = useState(false)
@@ -39,8 +40,12 @@ export default function MusicPlayer() {
   const isShow = useSelector((state) => state.player.isShow)
   const musicData = useSelector((state) => state.player.musicData)
   const musicId = useSelector((state) => state.player.musicId)
+  const allMusic = useSelector((state) => state.collection.items)
+  const router = useRouter()
+  const playListId = router.query.id
   const isPlay = useSelector((state) => state.player.isPlay)
   const isPlayList = useSelector((state) => state.player.isPlayList)
+  const currentId = useSelector((state) => state.collection.currentId)
   const title =
     musicData?.snippet.title.length > 55 ? musicData?.snippet.title.slice(0, 55) + '...' : musicData?.snippet.title
   const handleReady = () => {
@@ -127,10 +132,25 @@ export default function MusicPlayer() {
   }
   const handleEnded = () => {
     if (isPlayList) {
-      dispatch(setEnded())
       dispatch(increaseCurrentId())
     }
   }
+  useEffect(() => {
+    if (isPlayList) {
+      !!allMusic &&
+        allMusic.map((item, index) => {
+          if (index == currentId) {
+            let musicId = typeof item.id == 'object' ? item.id.videoId : item.id
+            const musicInfo = {
+              musicData: item,
+              musicId,
+            }
+            dispatch(showMusicPlayer(musicInfo))
+            document.title = item.snippet.title
+          }
+        })
+    }
+  }, [currentId])
   return (
     <div id='music-player' className='fixed bottom-0 left-0 w-screen h-[6.5rem] z-30'>
       {isShow ? (
@@ -220,7 +240,9 @@ export default function MusicPlayer() {
             </div>
             <div className='flex w-[15%] items-center justify-center'>
               <div className='flex items-center'>
-                <div onClick={handleMuted}>{volumeIcon}</div>
+                <div onClick={handleMuted} className='cursor-pointer'>
+                  {volumeIcon}
+                </div>
                 <input
                   className='w-24 h-1 mx-2 cursor-pointer'
                   type='range'

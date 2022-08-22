@@ -1,4 +1,4 @@
-import { setPlayPauseMusic, setPlayList, setEnded } from './musicPlayerSlice'
+import { setPlayPauseMusic, setPlayList } from './musicPlayerSlice'
 import { setCurrentId } from '../collection/collectionSlice'
 export const handlePlayPause = (isShow, musicId, itemId, index) => async (dispatch) => {
   dispatch(setPlayList())
@@ -7,7 +7,6 @@ export const handlePlayPause = (isShow, musicId, itemId, index) => async (dispat
   } else if (!isShow) {
     dispatch(setCurrentId({ index: index }))
   } else if (musicId != itemId) {
-    dispatch(setEnded())
     dispatch(setCurrentId({ index: index }))
   }
 }

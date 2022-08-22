@@ -11,6 +11,7 @@ export default function PlaylistSearchItem({ data }) {
   const isShow = useSelector((state) => state.player.isShow)
   const authKey = useSelector((state) => state.auth.authKey)
   const isAuth = useSelector((state) => state.auth.isAuth)
+  const currentId = useSelector((state) => state.collection.currentId)
   const currentPLId = useSelector((state) => state.collection.currentPlaylist)
   const title = data.snippet.title
   let musicName = title.replace('Official Music Video', '').replace('(', '').replace(')', '').replaceAll('|', '')
@@ -34,9 +35,8 @@ export default function PlaylistSearchItem({ data }) {
   const handleAddMusic = async (e) => {
     e.stopPropagation()
     if (isAuth) {
-      console.log(`collection/${authKey}/playlists/${currentPLId}/items/${itemId}`)
       dispatch(addCollection(`collection/${authKey}/playlists/${currentPLId}/items/${itemId}`, data))
-      dispatch(getCollection(`collection/${authKey}/playlists/${currentPLId}/items/${itemId}`))
+      dispatch(getCollection(`collection/${authKey}/playlists/${currentPLId}/items/${itemId}`, currentId))
       dispatch(setShow('Added to your Playlist'))
     } else {
       dispatch(setShow('Please Login First !!'))

@@ -1,12 +1,12 @@
 import { startLoading, loadItemsSuccess, endLoading } from './collectionSlice'
 import { addFavoriteMusic, getAllFavoriteMusic, removeFavoriteMusic } from '../../lib/firebaseAction'
-export const getCollection = (path) => async (dispatch) => {
+export const getCollection = (path, index) => async (dispatch) => {
   dispatch(startLoading())
   try {
     const allMusics = await getAllFavoriteMusic(path)
     const result = {
       data: allMusics,
-      index: 0,
+      index: index || 0,
     }
     dispatch(loadItemsSuccess(result))
     dispatch(endLoading())

@@ -7,7 +7,7 @@ import { setShow } from './toast/toastSlice'
 export default function LoveButton({ musicId, musicData }) {
   const [isLove, setLove] = useState(false)
   const dispatch = useDispatch()
-  const musicIdShowed = useSelector((state) => state.player.musicId)
+  const currentId = useSelector((state) => state.collection.currentId)
   const isAuth = useSelector((state) => state.auth.isAuth)
   const authKey = useSelector((state) => state.auth.authKey)
   const isLoading = useSelector((state) => state.collection.isLoading)
@@ -16,12 +16,12 @@ export default function LoveButton({ musicId, musicData }) {
     if (isAuth) {
       if (isLove) {
         dispatch(deleteCollection(`collection/${authKey}/items/${musicId}`))
-        dispatch(getCollection(`collection/${authKey}/items`))
+        dispatch(getCollection(`collection/${authKey}/items`, currentId))
         dispatch(setShow('Removed from your Favorite Songs'))
         setLove(false)
       } else {
         dispatch(addCollection(`collection/${authKey}/items/${musicId}`, musicData))
-        dispatch(getCollection(`collection/${authKey}/items`))
+        dispatch(getCollection(`collection/${authKey}/items`, currentId))
         dispatch(setShow('Added to your Favorite Songs'))
         setLove(true)
       }
