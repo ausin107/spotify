@@ -14,17 +14,19 @@ import {
   MinimizeBrowserIcon,
   Next15s,
   Back15s,
+  Playlists,
 } from './Icon'
 import LoveButton from './LoveButton'
 import Duration from './Duration'
 import { setPlayPauseMusic, showMusicPlayer } from './music_player/musicPlayerSlice'
 import { useSelector, useDispatch } from 'react-redux'
-import { increaseCurrentId, decreaseCurrentId } from './collection/collectionSlice'
+import { increaseCurrentId, decreaseCurrentId, loadItemsSuccess } from './collection/collectionSlice'
 import SekeletonPlayer from './SekeletonPlayer'
 import { useRouter } from 'next/router'
+import { getCollection } from './collection/collectionAction'
 export default function MusicPlayer() {
   const [isLoop, setLoop] = useState(false)
-  const [isPIP, setPIP] = useState(false)
+  const [isMix, setMixMusic] = useState(false)
   const [played, setPlayed] = useState(0)
   const [duration, setDuration] = useState(0)
   const [volume, setVolume] = useState(0.5)
@@ -34,13 +36,14 @@ export default function MusicPlayer() {
   const musicInput = useRef()
   const loopIConRef = useRef()
   const playerRef = useRef()
+  const mixMusicRef = useRef()
   const volumeRef = useRef()
-  const pipRef = useRef()
   const dispatch = useDispatch()
   const isShow = useSelector((state) => state.player.isShow)
   const musicData = useSelector((state) => state.player.musicData)
   const musicId = useSelector((state) => state.player.musicId)
   const allMusic = useSelector((state) => state.collection.items)
+  const authKey = useSelector((state) => state.auth.authKey)
   const router = useRouter()
   const playListId = router.query.id
   const isPlay = useSelector((state) => state.player.isPlay)
@@ -66,17 +69,6 @@ export default function MusicPlayer() {
       setLoop(true)
       loopIConRef.current.classList.add('fill-activeIcon', 'hover:fill-activeIconHover')
       loopIConRef.current.classList.remove('fill-musicPlayer', 'hover:fill-white')
-    }
-  }
-  const handlePIP = () => {
-    if (isPIP) {
-      setPIP(false)
-      pipRef.current.classList.remove('fill-activeIcon', 'hover:fill-activeIconHover')
-      pipRef.current.classList.add('fill-musicPlayer', 'hover:fill-white')
-    } else {
-      setPIP(true)
-      pipRef.current.classList.add('fill-activeIcon', 'hover:fill-activeIconHover')
-      pipRef.current.classList.remove('fill-musicPlayer', 'hover:fill-white')
     }
   }
   const handleProgress = (state) => {
@@ -135,6 +127,27 @@ export default function MusicPlayer() {
       dispatch(increaseCurrentId())
     }
   }
+  const handleMixMusic = () => {
+    if (isPlayList) {
+      if (isMix) {
+        setMixMusic(false)
+        mixMusicRef.current.classList.remove('fill-activeIcon', 'hover:fill-activeIconHover')
+        mixMusicRef.current.classList.add('fill-musicPlayer', 'hover:fill-white')
+        !!playListId
+          ? dispatch(getCollection(`collection/${authKey}/playlists/${playListId}/items`, currentId))
+          : dispatch(getCollection(`collection/${authKey}/items`, currentId))
+      } else {
+        let mixMusic = [...allMusic]
+        mixMusic.sort(function () {
+          return 0.5 - Math.random()
+        })
+        setMixMusic(true)
+        dispatch(loadItemsSuccess({ data: [...mixMusic], index: currentId }))
+        mixMusicRef.current.classList.add('fill-activeIcon', 'hover:fill-activeIconHover')
+        mixMusicRef.current.classList.remove('fill-musicPlayer', 'hover:fill-white')
+      }
+    }
+  }
   useEffect(() => {
     if (isPlayList) {
       !!allMusic &&
@@ -168,7 +181,6 @@ export default function MusicPlayer() {
             ref={playerRef}
             loop={isLoop}
             volume={parseFloat(volume)}
-            pip={isPIP}
           />
           <div className='flex flex-row justify-between'>
             <div className='flex items-center w-[30%]'>
@@ -183,15 +195,18 @@ export default function MusicPlayer() {
                   className='fill-musicPlayer hover:fill-white cursor-pointer'
                   width='16'
                   height='16'
-                  onClick={handlePIP}
-                  pipRef={pipRef}
                 />
               </div>
             </div>
             <div className='flex flex-col items-center justify-around w-[55%]'>
               <div className='flex items-center'>
-                <div className='px-3 cursor-pointer'>
-                  <MixMusic className='fill-musicPlayer hover:fill-white' width='16' height='16' />
+                <div className='px-3 cursor-pointer' onClick={handleMixMusic}>
+                  <MixMusic
+                    className='fill-musicPlayer hover:fill-white'
+                    width='16'
+                    height='16'
+                    iconRef={mixMusicRef}
+                  />
                 </div>
                 <div className='px-3 cursor-pointer pr-6' onClick={handleBack}>
                   {isPlayList ? (
@@ -239,6 +254,7 @@ export default function MusicPlayer() {
               </div>
             </div>
             <div className='flex w-[15%] items-center justify-center'>
+              <Playlists width='16' height='16' className='fill-musicPlayer hover:fill-white mr-4' />
               <div className='flex items-center'>
                 <div onClick={handleMuted} className='cursor-pointer'>
                   {volumeIcon}

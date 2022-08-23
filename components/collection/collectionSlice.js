@@ -27,6 +27,8 @@ export const collectionSlice = createSlice({
     increaseCurrentId: (state) => {
       if (state.currentId < state.items.length - 1) {
         state.currentId += 1
+      } else {
+        state.currentId = 0
       }
     },
     decreaseCurrentId: (state) => {
