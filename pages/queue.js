@@ -31,13 +31,13 @@ export default function Queue() {
           <div className='mb-6'>
             <div className='text-iconColor font-semibold mb-2'>Next Musics</div>
             {waitingMs.map((item, index) => {
-              return <PlayListItem data={item} index={index + 1} />
+              return <PlayListItem key={index} data={item} index={index + 1} />
             })}
           </div>
         </div>
       ) : (
         <div className='pt-48 pb-48 px-9 flex flex-col border-b border-searchChildBg mb-28 items-center'>
-          <Playlists width='56' height='56' className='fill-musicPlayer hover:fill-white mb-6' />
+          <Playlists width='56' height='56' className='fill-musicPlayer mb-6' />
           <div className='text-white text-3xl font-bold mb-6'>Add to waiting list</div>
           <div className='text-iconColor font-semibold mb-6'>
             Click "Add to waitlist" from a post's menu to include it here

@@ -338,10 +338,24 @@ export const TrashCanIcon = ({ className }) => {
     </svg>
   )
 }
-export const Playlists = ({ className, width, height, onClick }) => {
+export const Playlists = ({ className, width, height, onClick, iconRef }) => {
   return (
-    <svg role='img' height={height} width={width} className={className} onClick={onClick} viewBox='0 0 16 16'>
+    <svg
+      role='img'
+      height={height}
+      width={width}
+      className={className}
+      onClick={onClick}
+      ref={iconRef}
+      viewBox='0 0 16 16'>
       <path d='M15 15H1v-1.5h14V15zm0-4.5H1V9h14v1.5zm-14-7A2.5 2.5 0 013.5 1h9a2.5 2.5 0 010 5h-9A2.5 2.5 0 011 3.5zm2.5-1a1 1 0 000 2h9a1 1 0 100-2h-9z'></path>
+    </svg>
+  )
+}
+export const OptionIcons = ({ className, width, height, onClick }) => {
+  return (
+    <svg role='img' eight={height} width={width} className={className} onClick={onClick} viewBox='0 0 24 24'>
+      <path d='M4.5 13.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3zm15 0a1.5 1.5 0 100-3 1.5 1.5 0 000 3zm-7.5 0a1.5 1.5 0 100-3 1.5 1.5 0 000 3z'></path>
     </svg>
   )
 }

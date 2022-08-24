@@ -39,6 +39,7 @@ export default function MusicPlayer() {
   const playerRef = useRef()
   const mixMusicRef = useRef()
   const volumeRef = useRef()
+  const queueRef = useRef()
   const dispatch = useDispatch()
   const isShow = useSelector((state) => state.player.isShow)
   const musicData = useSelector((state) => state.player.musicData)
@@ -166,6 +167,24 @@ export default function MusicPlayer() {
         })
     }
   }, [currentId, allMusic])
+  useEffect(() => {
+    if (!!queueRef.current) {
+      if (router.pathname == '/queue') {
+        queueRef.current.classList.add('fill-activeIcon', 'hover:fill-activeIconHover')
+        queueRef.current.classList.remove('fill-musicPlayer', 'hover:fill-white')
+      } else {
+        queueRef.current.classList.remove('fill-activeIcon', 'hover:fill-activeIconHover')
+        queueRef.current.classList.add('fill-musicPlayer', 'hover:fill-white')
+      }
+    }
+  }, [router.pathname])
+  const handleQueue = () => {
+    if (router.pathname == '/queue') {
+      window.history.back()
+    } else {
+      router.push('/queue')
+    }
+  }
   return (
     <div id='music-player' className='fixed bottom-0 left-0 w-screen h-[6.5rem] z-30'>
       {isShow ? (
@@ -256,9 +275,13 @@ export default function MusicPlayer() {
               </div>
             </div>
             <div className='flex w-[15%] items-center justify-center'>
-              <Link href='/queue'>
-                <Playlists width='16' height='16' className='fill-musicPlayer hover:fill-white mr-4' />
-              </Link>
+              <Playlists
+                width='16'
+                height='16'
+                className='fill-musicPlayer hover:fill-white mr-4 cursor-pointer'
+                onClick={handleQueue}
+                iconRef={queueRef}
+              />
               <div className='flex items-center'>
                 <div onClick={handleMuted} className='cursor-pointer'>
                   {volumeIcon}
