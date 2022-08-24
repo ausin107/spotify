@@ -24,6 +24,7 @@ import { increaseCurrentId, decreaseCurrentId, loadItemsSuccess } from './collec
 import SekeletonPlayer from './SekeletonPlayer'
 import { useRouter } from 'next/router'
 import { getCollection } from './collection/collectionAction'
+import Link from 'next/link'
 export default function MusicPlayer() {
   const [isLoop, setLoop] = useState(false)
   const [isMix, setMixMusic] = useState(false)
@@ -134,15 +135,16 @@ export default function MusicPlayer() {
         mixMusicRef.current.classList.remove('fill-activeIcon', 'hover:fill-activeIconHover')
         mixMusicRef.current.classList.add('fill-musicPlayer', 'hover:fill-white')
         !!playListId
-          ? dispatch(getCollection(`collection/${authKey}/playlists/${playListId}/items`, currentId))
-          : dispatch(getCollection(`collection/${authKey}/items`, currentId))
+          ? dispatch(getCollection(`collection/${authKey}/playlists/${playListId}/items`))
+          : dispatch(getCollection(`collection/${authKey}/items`))
       } else {
         let mixMusic = [...allMusic]
         mixMusic.sort(function () {
           return 0.5 - Math.random()
         })
+        let currentMusic = allMusic.filter((index) => index == currentId)
         setMixMusic(true)
-        dispatch(loadItemsSuccess({ data: [...mixMusic], index: currentId }))
+        dispatch(loadItemsSuccess({ data: [...currentMusic, ...mixMusic], index: currentId }))
         mixMusicRef.current.classList.add('fill-activeIcon', 'hover:fill-activeIconHover')
         mixMusicRef.current.classList.remove('fill-musicPlayer', 'hover:fill-white')
       }
@@ -163,7 +165,7 @@ export default function MusicPlayer() {
           }
         })
     }
-  }, [currentId])
+  }, [currentId, allMusic])
   return (
     <div id='music-player' className='fixed bottom-0 left-0 w-screen h-[6.5rem] z-30'>
       {isShow ? (
@@ -254,7 +256,9 @@ export default function MusicPlayer() {
               </div>
             </div>
             <div className='flex w-[15%] items-center justify-center'>
-              <Playlists width='16' height='16' className='fill-musicPlayer hover:fill-white mr-4' />
+              <Link href='/queue'>
+                <Playlists width='16' height='16' className='fill-musicPlayer hover:fill-white mr-4' />
+              </Link>
               <div className='flex items-center'>
                 <div onClick={handleMuted} className='cursor-pointer'>
                   {volumeIcon}

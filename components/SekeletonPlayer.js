@@ -1,4 +1,4 @@
-import { MixMusic, BackMusic, PlayIcon, NextMusic, VolumeIconMedium, LoopMusic } from './Icon'
+import { MixMusic, BackMusic, PlayIcon, NextMusic, VolumeIconMedium, LoopMusic, Playlists } from './Icon'
 import Duration from './Duration'
 export default function SekeletonPlayer() {
   return (
@@ -30,6 +30,7 @@ export default function SekeletonPlayer() {
           </div>
         </div>
         <div className='flex w-[15%] justify-center'>
+          <Playlists width='16' height='16' className='fill-musicPlayer hover:fill-white mr-4' />
           <div className='flex items-center'>
             <VolumeIconMedium className='fill-musicPlayer hover:fill-white' width='16' height='16' />
             <input
