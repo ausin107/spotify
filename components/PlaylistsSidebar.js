@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { useSelector } from 'react-redux'
-import { getPlaylistsInfo, addMusicToPlayList, getPlaylist } from '../lib/firebaseAction'
+import { addMusicToPlayList, getPlaylist } from '../lib/firebaseAction'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 export default function PlaylistsSidebar({ allPlaylists }) {
@@ -23,7 +23,7 @@ export default function PlaylistsSidebar({ allPlaylists }) {
               <div
                 className='text-iconColor font-semibold mb-2 cursor-pointer icon-class'
                 ref={(el) => (playlistRef.current[index] = el)}>
-                My playlists #{index + 1}
+                {item.title}
               </div>
             </Link>
           )

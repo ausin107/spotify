@@ -28,6 +28,8 @@ module.exports = {
         banner2LoginBg: '#0d72ea',
         toastsBg: '#2e77d0',
         optionText: '#e0e0e0',
+        inputPlBorder: '#535353',
+        inputPlBg: '#333',
       },
       backgroundImage: {
         loveIconBg: 'linear-gradient(299deg, rgb(39,73,167) 0%, rgba(145,41,161,1) 45%, rgba(33,55,168,1) 100%)',

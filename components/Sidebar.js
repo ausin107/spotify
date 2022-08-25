@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
 import { useState, useRef, useEffect } from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import {
   SpotifyLogo,
   HomeIcon,
@@ -14,21 +14,32 @@ import {
 } from '../components/Icon'
 import Link from 'next/link'
 import PlaylistsSidebar from './PlaylistsSidebar'
-import { addMusicToPlayList } from '../lib/firebaseAction'
-import { getPlaylistsInfo } from '../lib/firebaseAction'
+import { addMusicToPlayList, getAllPlaylistsInfo } from '../lib/firebaseAction'
+import { loadAllPlaylist } from './playlists/playlistSlice'
 export default function Sidebar() {
   const [playlists, setPlaylists] = useState('')
   const router = useRouter()
+  const dispatch = useDispatch()
   const isAuth = useSelector((state) => state.auth.isAuth)
   const authKey = useSelector((state) => state.auth.authKey)
+  const allPlaylist = useSelector((state) => state.playlist.allPlaylist)
   const bannerRef = useRef([])
   const linkRef = useRef([])
   const hanldeAuth = async (bannerId, path) => {
     if (isAuth) {
       if (path == '/playlists') {
-        const playlistId = await addMusicToPlayList(`collection/${authKey}/playlists`, {})
-        const newPlaylist = await getPlaylistsInfo(`collection/${authKey}/playlists`)
+        let newPLInfo = {}
+        if (playlists.length == 0) {
+          newPLInfo.title = 'My Playlist #1'
+          newPLInfo.description = ''
+        } else {
+          newPLInfo.title = 'My Playlist #' + (playlists.length + 1)
+          newPLInfo.description = ''
+        }
+        const playlistId = await addMusicToPlayList(`collection/${authKey}/playlists`, newPLInfo)
+        const newPlaylist = await getAllPlaylistsInfo(`collection/${authKey}/playlists`)
         setPlaylists(newPlaylist)
+        dispatch(loadAllPlaylist(newPlaylist))
         router.push(`/playlists/${playlistId}`)
       } else {
         router.push(path)
@@ -54,8 +65,15 @@ export default function Sidebar() {
   }, [router.pathname])
   useEffect(() => {
     const getAllPlaylists = async () => {
-      const result = await getPlaylistsInfo(`collection/${authKey}/playlists`)
+      const result = await getAllPlaylistsInfo(`collection/${authKey}/playlists`)
       setPlaylists(result)
+    }
+    getAllPlaylists()
+  }, [allPlaylist])
+  useEffect(() => {
+    const getAllPlaylists = async () => {
+      const result = await getAllPlaylistsInfo(`collection/${authKey}/playlists`)
+      dispatch(loadAllPlaylist(result))
     }
     getAllPlaylists()
   }, [])

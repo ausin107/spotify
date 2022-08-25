@@ -1,5 +1,6 @@
 import { startLoading, loadItemsSuccess, endLoading } from './collectionSlice'
-import { addFavoriteMusic, getAllFavoriteMusic, removeFavoriteMusic } from '../../lib/firebaseAction'
+import { addFavoriteMusic, getAllFavoriteMusic, removeDocument } from '../../lib/firebaseAction'
+import { setShow } from '../toast/toastSlice'
 export const getCollection = (path, index) => async (dispatch) => {
   dispatch(startLoading())
   try {
@@ -23,10 +24,11 @@ export const addCollection = (path, data) => async (dispatch) => {
     dispatch(endLoading())
   }
 }
-export const deleteCollection = (path) => async (dispatch) => {
+export const deleteCollection = (path, notify) => async (dispatch) => {
   dispatch(startLoading())
   try {
-    await removeFavoriteMusic(path)
+    await removeDocument(path)
+    dispatch(setShow(notify))
     dispatch(endLoading())
   } catch (e) {
     dispatch(endLoading())

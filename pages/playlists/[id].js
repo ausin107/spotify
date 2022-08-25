@@ -7,6 +7,7 @@ import { SearchIcon, EmptyIcon, MusicIconV2 } from '../../components/Icon'
 import { setCurrentPlayList } from '../../components/collection/collectionSlice'
 import PlaylistSearchItem from '../../components/PlaylistSearchItem'
 import PlaylistsBody from '../../components/PlaylistsBody'
+import PlaylistHeader from '../../components/PlaylistHeader'
 export default function PlayList() {
   const [data, setData] = useState('')
   const [isShow, setShow] = useState(true)
@@ -45,31 +46,12 @@ export default function PlayList() {
   }
   return (
     <div className='bg-bgColor left-[16.666%] w-[82.5vw] overflow-hidden relative select-none'>
-      <div className='pt-20 pb-48 px-9 flex bg-greyBg items-end'>
-        <div className='w-60 h-60 shadow-3xl bg-itemActiveBg flex items-center justify-center'>
-          <MusicIconV2 width='65' height='65' className='fill-textBreakLine' />
-        </div>
-        <div className='px-6'>
-          <div
-            className='uppercase text-white font-bold text-xs mb-2'
-            style={{ textShadow: '4px -1px 46px rgb(0 0 0 / 75%)' }}>
-            Playlist
-          </div>
-          <div className='text-white font-bold text-8xl mb-12' style={{ textShadow: '4px -1px 46px rgb(0 0 0 / 75%)' }}>
-            My Playlist
-          </div>
-          <div className='text-white text-xs font-bold' style={{ textShadow: '4px -1px 46px rgb(0 0 0 / 75%)' }}>
-            User - {data.length} song
-          </div>
-        </div>
-      </div>
-      {data.length > 0 && (
-        <PlaylistsBody
-          data={data}
-          path={`collection/${authKey}/playlists/${playListId}/items`}
-          currentPlId={playListId}
-        />
-      )}
+      <PlaylistHeader data={data} path={`collection/${authKey}/playlists/${playListId}`} />
+      <PlaylistsBody
+        data={data}
+        path={`collection/${authKey}/playlists/${playListId}/items`}
+        currentPlId={playListId}
+      />
       {isShow ? (
         <div className='bg-resultBg px-8 pt-20 relative -top-40'>
           <div className='border-t border-searchChildBg mb-8'></div>

@@ -1,11 +1,11 @@
+import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { PlayIcon, PauseIcon, ClockIcon, OptionIcons } from './Icon'
 import PlayListItem from './PlayListItem'
 import { getCollection } from './collection/collectionAction'
+import { deletePlaylist } from './playlists/playlistAction'
 import { setPlayList, setPlayPauseMusic, showMusicPlayer } from './music_player/musicPlayerSlice'
-import { loadItemsSuccess, setCurrentId } from './collection/collectionSlice'
 import { useRouter } from 'next/router'
-import { useState } from 'react'
 export default function PlaylistsBody({ data, path, currentPlId }) {
   const [isShow, setShow] = useState(false)
   const dispatch = useDispatch()
@@ -35,26 +35,36 @@ export default function PlaylistsBody({ data, path, currentPlId }) {
     const containerRef = document.querySelector('#container')
     if (isShow) {
       setShow(false)
-      containerRef.classList.toggle('h-screen')
+      containerRef.classList.toggle('!h-screen')
     } else {
       setShow(true)
-      containerRef.classList.toggle('h-screen')
+      containerRef.classList.toggle('!h-screen')
     }
+  }
+  const handleRemovePL = async () => {
+    let pathName = path.replace('/items', '')
+    dispatch(deletePlaylist(pathName, 'Deleted from Library'))
+    handleShowOption()
+    router.back()
   }
   return (
     <div className='flex px-9 -top-40 relative pt-4 bg-resultBg flex-col '>
       <div className='flex items-center mb-8'>
-        {isPlay && currentPlId == playListId ? (
-          <div
-            onClick={handlePause}
-            className='p-4 bg-playIconBg hover:bg-activeIconHover rounded-full hover:scale-105 w-fit cursor-pointer'>
-            <PauseIcon className='fill-black' width='24' height='24' />
-          </div>
-        ) : (
-          <div
-            onClick={handlePlay}
-            className='p-4 bg-playIconBg hover:bg-activeIconHover rounded-full hover:scale-105 w-fit cursor-pointer'>
-            <PlayIcon className='fill-black' width='24' height='24' />
+        {data.length > 0 && (
+          <div>
+            {isPlay && currentPlId == playListId ? (
+              <div
+                onClick={handlePause}
+                className='p-4 bg-playIconBg hover:bg-activeIconHover rounded-full hover:scale-105 w-fit cursor-pointer'>
+                <PauseIcon className='fill-black' width='24' height='24' />
+              </div>
+            ) : (
+              <div
+                onClick={handlePlay}
+                className='p-4 bg-playIconBg hover:bg-activeIconHover rounded-full hover:scale-105 w-fit cursor-pointer'>
+                <PlayIcon className='fill-black' width='24' height='24' />
+              </div>
+            )}
           </div>
         )}
         {router.pathname != '/collection' && (
@@ -77,7 +87,9 @@ export default function PlaylistsBody({ data, path, currentPlId }) {
                     <div className='px-4 pr-16 py-2 text-optionText font-semibold hover:bg-searchChildBg rounded-sm'>
                       Edit details
                     </div>
-                    <div className='px-4 pr-16 py-2 text-optionText font-semibold hover:bg-searchChildBg rounded-sm'>
+                    <div
+                      className='px-4 pr-16 py-2 text-optionText font-semibold hover:bg-searchChildBg rounded-sm'
+                      onClick={handleRemovePL}>
                       Delete playlist
                     </div>
                   </div>
@@ -90,21 +102,25 @@ export default function PlaylistsBody({ data, path, currentPlId }) {
           </div>
         )}
       </div>
-      <div className='flex px-6 pb-2'>
-        <div className='text-iconColor text-sm w-[3%]'>#</div>
-        <div className='text-iconColor text-sm w-2/5'>NAME</div>
-        <div className='text-iconColor text-sm w-1/4'>ALBUM</div>
-        <div className='text-iconColor text-sm w-1/5'>DATE</div>
-        <div className='text-iconColor text-sm w-[10%] flex justify-end'>
-          <ClockIcon width='16' height='16' className='fill-iconColor hover:fill-white' />
+      {data.length > 0 && (
+        <div>
+          <div className='flex px-6 pb-2'>
+            <div className='text-iconColor text-sm w-[3%]'>#</div>
+            <div className='text-iconColor text-sm w-2/5'>NAME</div>
+            <div className='text-iconColor text-sm w-1/4'>ALBUM</div>
+            <div className='text-iconColor text-sm w-1/5'>DATE</div>
+            <div className='text-iconColor text-sm w-[10%] flex justify-end'>
+              <ClockIcon width='16' height='16' className='fill-iconColor hover:fill-white' />
+            </div>
+            <div className='text-iconColor text-sm w-[3%]'></div>
+          </div>
+          <div className='border-t border-searchChildBg flex flex-col pt-4 pb-4'>
+            {data.map((item, index) => {
+              return <PlayListItem key={index} data={item} path={path} index={index} />
+            })}
+          </div>
         </div>
-        <div className='text-iconColor text-sm w-[3%]'></div>
-      </div>
-      <div className='border-t border-searchChildBg flex flex-col pt-4 pb-4'>
-        {data.map((item, index) => {
-          return <PlayListItem key={index} data={item} path={path} index={index} />
-        })}
-      </div>
+      )}
     </div>
   )
 }
