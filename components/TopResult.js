@@ -37,7 +37,7 @@ export default function TopResult({ musicData }) {
     }
   }
   return (
-    <div className='flex pt-24 relative px-8 w-screen mb-10'>
+    <div className='flex pt-28 relative px-8 w-screen mb-10'>
       <div className='w-[30%]' onClick={handleShow}>
         <div className='text-2xl font-bold text-white mb-7'>Top Result</div>
         <div className='group bg-itemBg hover:bg-itemActiveBg rounded pl-5 py-5 relative transition-all duration-300'>

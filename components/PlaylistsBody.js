@@ -3,14 +3,18 @@ import { useDispatch, useSelector } from 'react-redux'
 import { PlayIcon, PauseIcon, ClockIcon, OptionIcons } from './Icon'
 import PlayListItem from './PlayListItem'
 import { getCollection } from './collection/collectionAction'
-import { deletePlaylist } from './playlists/playlistAction'
+import { getAllPlaylistsInfo, removeDocument } from '../lib/firebaseAction'
 import { setPlayList, setPlayPauseMusic, showMusicPlayer } from './music_player/musicPlayerSlice'
 import { useRouter } from 'next/router'
+import { loadAllPlaylist } from './playlists/playlistSlice'
+import { setShow } from './toast/toastSlice'
+import MusicsList from './MusicsList'
 export default function PlaylistsBody({ data, path, currentPlId }) {
-  const [isShow, setShow] = useState(false)
+  const [isShowPlMenu, setShowPlMenu] = useState(false)
   const dispatch = useDispatch()
   const router = useRouter()
   const playListId = router.query.id
+  const authKey = useSelector((state) => state.auth.authKey)
   const isPlay = useSelector((state) => state.player.isPlay)
   const handlePlay = () => {
     if (currentPlId == playListId) {
@@ -33,19 +37,21 @@ export default function PlaylistsBody({ data, path, currentPlId }) {
   }
   const handleShowOption = () => {
     const containerRef = document.querySelector('#container')
-    if (isShow) {
-      setShow(false)
+    if (isShowPlMenu) {
+      setShowPlMenu(false)
       containerRef.classList.toggle('!h-screen')
     } else {
-      setShow(true)
+      setShowPlMenu(true)
       containerRef.classList.toggle('!h-screen')
     }
   }
   const handleRemovePL = async () => {
-    let pathName = path.replace('/items', '')
-    dispatch(deletePlaylist(pathName, 'Deleted from Library'))
-    handleShowOption()
+    await removeDocument(path.replace('/items', ''))
+    const newPlaylist = await getAllPlaylistsInfo(`collection/${authKey}/playlists`)
+    dispatch(loadAllPlaylist(newPlaylist))
     router.back()
+    handleShowOption()
+    dispatch(setShow('Deleted from Library'))
   }
   return (
     <div className='flex px-9 -top-40 relative pt-4 bg-resultBg flex-col '>
@@ -75,7 +81,7 @@ export default function PlaylistsBody({ data, path, currentPlId }) {
               className='fill-iconColor hover:fill-white'
               onClick={handleShowOption}
             />
-            {isShow && (
+            {isShowPlMenu && (
               <div className='fixed w-screen h-screen top-0 left-0 z-50' onClick={handleShowOption}>
                 <div
                   className='absolute bg-itemActiveBg p-1 rounded top-[27vw] left-[24vw] shadow-2xl'
@@ -102,25 +108,7 @@ export default function PlaylistsBody({ data, path, currentPlId }) {
           </div>
         )}
       </div>
-      {data.length > 0 && (
-        <div>
-          <div className='flex px-6 pb-2'>
-            <div className='text-iconColor text-sm w-[3%]'>#</div>
-            <div className='text-iconColor text-sm w-2/5'>NAME</div>
-            <div className='text-iconColor text-sm w-1/4'>ALBUM</div>
-            <div className='text-iconColor text-sm w-1/5'>DATE</div>
-            <div className='text-iconColor text-sm w-[10%] flex justify-end'>
-              <ClockIcon width='16' height='16' className='fill-iconColor hover:fill-white' />
-            </div>
-            <div className='text-iconColor text-sm w-[3%]'></div>
-          </div>
-          <div className='border-t border-searchChildBg flex flex-col pt-4 pb-4'>
-            {data.map((item, index) => {
-              return <PlayListItem key={index} data={item} path={path} index={index} />
-            })}
-          </div>
-        </div>
-      )}
+      {data.length > 0 && <MusicsList data={data} path={path} />}
     </div>
   )
 }

@@ -1,12 +1,7 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { SpotifyLogo, FacebookIcon, GoogleIcon, SpinIcon } from '../components/Icon'
 import { useRouter } from 'next/router'
-import {
-  signInWithEmailAndPassword,
-  GoogleAuthProvider,
-  FacebookAuthProvider,
-  signInWithPopup,
-} from 'firebase/auth'
+import { signInWithEmailAndPassword, GoogleAuthProvider, FacebookAuthProvider, signInWithPopup } from 'firebase/auth'
 import { useDispatch, useSelector } from 'react-redux'
 import { auth } from '../firebase'
 import { loginSuccess, loginFailed } from '../components/auth/authSlice'
@@ -111,9 +106,7 @@ export default function Login() {
       </div>
       <div className='text-black uppercase font-bold text-xs mb-6'>or</div>
       {!!error && <div className='alert-danger w-96 px-4 py-3 rounded border-2 mb-4'>{error}</div>}
-      {!!successMs && (
-        <div className='alert-success w-96 px-4 py-3 rounded border-2 mb-4'>{successMs}</div>
-      )}
+      {!!successMs && <div className='alert-success w-96 px-4 py-3 rounded border-2 mb-4'>{successMs}</div>}
       <form action='/' className='flex items-center flex-col mb-8' onSubmit={handleSubmit}>
         <div className=' mb-4'>
           <div className='text-black mb-2 font-bold'>Email address</div>

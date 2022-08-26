@@ -16,6 +16,7 @@ import Link from 'next/link'
 import PlaylistsSidebar from './PlaylistsSidebar'
 import { addMusicToPlayList, getAllPlaylistsInfo } from '../lib/firebaseAction'
 import { loadAllPlaylist } from './playlists/playlistSlice'
+import { setShow } from './toast/toastSlice'
 export default function Sidebar() {
   const [playlists, setPlaylists] = useState('')
   const router = useRouter()
@@ -41,6 +42,7 @@ export default function Sidebar() {
         setPlaylists(newPlaylist)
         dispatch(loadAllPlaylist(newPlaylist))
         router.push(`/playlists/${playlistId}`)
+        dispatch(setShow('Created new playlist to library'))
       } else {
         router.push(path)
       }

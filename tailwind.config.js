@@ -30,6 +30,8 @@ module.exports = {
         optionText: '#e0e0e0',
         inputPlBorder: '#535353',
         inputPlBg: '#333',
+        searchNavbarItem: '#232323',
+        hoverSearchItem: '#2a2a2a',
       },
       backgroundImage: {
         loveIconBg: 'linear-gradient(299deg, rgb(39,73,167) 0%, rgba(145,41,161,1) 45%, rgba(33,55,168,1) 100%)',

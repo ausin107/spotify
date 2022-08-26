@@ -8,7 +8,7 @@ import LoveButton from './LoveButton'
 import { PlayIcon, PauseIcon, TrashCanIcon } from './Icon'
 import { loadMusicData } from '../lib/loadData'
 import { getCollection, deleteCollection } from './collection/collectionAction'
-import { setPlayPauseMusic, setPlayList } from './music_player/musicPlayerSlice'
+import { setPlayPauseMusic, setPlayList, setNotPlayList, showMusicPlayer } from './music_player/musicPlayerSlice'
 import { setShow } from './toast/toastSlice'
 export default function PlayListItem({ data, path, index }) {
   const [duration, setDuration] = useState('')
@@ -20,6 +20,7 @@ export default function PlayListItem({ data, path, index }) {
   const musicId = useSelector((state) => state.player.musicId)
   const currentPLId = useSelector((state) => state.collection.currentPlaylist)
   const currentId = useSelector((state) => state.collection.currentId)
+  const isPlayList = useSelector((state) => state.player.isPlayList)
   const dispatch = useDispatch()
   const trashRef = useRef()
   const router = useRouter()
@@ -36,20 +37,29 @@ export default function PlayListItem({ data, path, index }) {
       setDuration(duration)
     }
     getDuration()
-    if (router.pathname == '/collection') {
+    if (router.pathname == '/collection' || router.pathname == '/search/musics') {
       trashRef.current.classList.add('hidden')
     } else {
       trashRef.current.classList.remove('hidden')
     }
   }, [])
   const handlePlayPause = () => {
-    dispatch(setPlayList())
-    if (isShow && musicId == itemId) {
-      dispatch(setPlayPauseMusic())
-    } else if (!isShow) {
-      dispatch(getCollection(path, index))
-    } else if (musicId != itemId) {
-      dispatch(getCollection(path, index))
+    if (router.pathname == '/collection' || router.pathname.includes('/playlists/')) {
+      dispatch(setPlayList())
+      if (isShow && musicId == itemId) {
+        dispatch(setPlayPauseMusic())
+      } else if (!isShow) {
+        dispatch(getCollection(path, index))
+      } else if (musicId != itemId) {
+        dispatch(getCollection(path, index))
+      }
+    } else {
+      dispatch(setNotPlayList())
+      if (isShow && musicId == itemId) {
+        dispatch(setPlayPauseMusic())
+      } else if (musicId != itemId) {
+        dispatch(showMusicPlayer({ musicData: data, musicId: itemId }))
+      }
     }
   }
   const handleHover = () => {
@@ -101,7 +111,7 @@ export default function PlayListItem({ data, path, index }) {
       <DateConvert className='text-iconColor font-semibold text-sm w-1/5' data={date} />
       <div className='flex justify-end items-center w-[10%]'>
         <LoveButton musicId={itemId} musicData={data} />
-        <Duration isoTime={duration} className='text-navbarColor font-semibold' />
+        <Duration isoTime={duration} className='text-navbarColor font-semibold w-[35%]' />
       </div>
       <div
         className='w-[3%] flex justify-end invisible group-hover:visible group-focus:visible cursor-pointer'

@@ -47,7 +47,7 @@ export default function Navbar() {
     router.reload()
   }
   const handleSumbit = async () => {
-    const musicData = await loadSearchMusic(inputValue, 12, '')
+    const musicData = await loadSearchMusic(inputValue, 50, '')
     dispatch(updateSearchData({ musicData: musicData.items }))
   }
   const handleClear = () => {
