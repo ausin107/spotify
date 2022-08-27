@@ -19,7 +19,7 @@ export default function Collection() {
     document.title = 'Spotify - Favorite'
   }, [allMusic])
   return (
-    <div className='bg-bgColor left-[16.666%] w-[82.5vw] overflow-hidden relative'>
+    <div className=''>
       <div className='pt-20 pb-48 px-9 flex bg-likedBg items-end'>
         <div className='w-60 h-60 shadow-3xl'>
           <Image src='/loveImg.png' width='240' height='240' className='' />

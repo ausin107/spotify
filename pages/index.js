@@ -18,7 +18,7 @@ export default function Home({ VietNamTrendingMusic, KoreaTrendingMusic, GlobalT
     document.title = 'Spotify - Home'
   }, [])
   return (
-    <div className='left-[16.666%] w-[82vw] overflow-hidden h-full relative bg-bgColor pb-24'>
+    <div className='pb-24'>
       <div className='h-80 bg-mainContainerBg absolute w-screen'></div>
       <div className='pt-16 relative z-10'>
         <Row title='Top Thịnh Hành Tại Việt Nam' data={VietNamTrendingMusic} />

@@ -45,7 +45,7 @@ export default function PlayList() {
     }
   }
   return (
-    <div className='bg-bgColor left-[16.666%] w-[82.5vw] overflow-hidden relative select-none'>
+    <div className=''>
       <PlaylistHeader data={data} path={`collection/${authKey}/playlists/${playListId}`} />
       <PlaylistsBody
         data={data}

@@ -17,7 +17,7 @@ export default function SearchPageLayout({ children }) {
       <Sidebar />
       <Navbar />
       <SearchNavBar />
-      <div className='bg-bgColor h-fit overflow-hidden flex flex-col' id='container'>
+      <div className='bg-bgColor overflow-hidden flex flex-col left-[16.666%] w-[82vw] h-full relative' id='container'>
         {children}
       </div>
       <Toasts />

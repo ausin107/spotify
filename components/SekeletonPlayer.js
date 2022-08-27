@@ -2,7 +2,7 @@ import { MixMusic, BackMusic, PlayIcon, NextMusic, VolumeIconMedium, LoopMusic, 
 import Duration from './Duration'
 export default function SekeletonPlayer() {
   return (
-    <div className=' w-screen h-[6.5rem] bg-itemBg border-t-[0.5px] border-itemActiveBg px-4 pr-8 py-2 select-none'>
+    <div className=' w-screen h-[6.5rem] bg-itemBg border-t-[0.5px] border-itemActiveBg px-4 pr-8 py-2'>
       <div className='flex flex-row h-full items-center'>
         <div className='w-[20%]'></div>
         <div className='flex flex-col items-center justify-around w-[65%] h-full'>

@@ -13,20 +13,15 @@ export default function Search() {
     document.title = 'Spotify - Search'
   }, [])
   useEffect(() => {
-    let showData = musicData.filter((item, index) => {
-      if (index < 12) {
-        return item
-      }
-    })
-    setMusic(showData)
+    setMusic(musicData)
   }, [musicData])
   return (
-    <div className='left-[16.666%] w-[82vw] overflow-hidden h-full relative bg-bgColor pb-24'>
+    <div className='pb-24'>
       {!!music ? (
         <>
           <TopResult musicData={music} />
           <ChannelRow artistData={music} />
-          <MusicSearchRow musicData={music} />
+          <MusicSearchRow musicData={music} title='All Music' />
         </>
       ) : (
         <DefaultSearch />

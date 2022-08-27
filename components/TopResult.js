@@ -12,7 +12,7 @@ export default function TopResult({ musicData }) {
     .replace('(', '')
     .replace(')', '')
     .replaceAll('|', '')
-  musicName = musicName.length >= 30 ? musicName.slice(0, 30) + '...' : musicName
+  musicName = musicName.length >= 25 ? musicName.slice(0, 30) + '...' : musicName
   const handleShow = () => {
     dispatch(setNotPlayList())
     const musicInfo = {

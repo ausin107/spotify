@@ -40,8 +40,8 @@ export default function Library() {
     }
   }
   return (
-    <div className='left-[16.666%] w-[82vw] overflow-hidden h-full relative bg-bgColor pb-80 pt-12'>
-      <div className='m-8 pb-16 border-b border-searchChildBg select-none'>
+    <div className='pb-80 pt-12'>
+      <div className='m-8 pb-16 border-b border-searchChildBg'>
         <div className='text-white font-bold mb-6 text-2xl'>Playlist</div>
         <div className='grid '>
           <Link href='/collection'>

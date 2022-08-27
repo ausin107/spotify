@@ -8,7 +8,7 @@ export default function MusicsList({ data, path }) {
         <div className='text-iconColor text-sm w-2/5'>NAME</div>
         <div className='text-iconColor text-sm w-1/4'>ALBUM</div>
         <div className='text-iconColor text-sm w-1/5'>DATE</div>
-        <div className='text-iconColor text-sm w-[10%] flex justify-end'>
+        <div className='text-iconColor text-sm w-[7%] flex justify-end'>
           <ClockIcon width='16' height='16' className='fill-iconColor hover:fill-white' />
         </div>
         <div className='text-iconColor text-sm w-[3%]'></div>

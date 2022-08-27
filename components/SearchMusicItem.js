@@ -21,7 +21,7 @@ export default function SearchMusicItem({ musicData }) {
   useEffect(() => {
     const getDuration = async () => {
       let data = await loadMusicData(musicData.id.videoId)
-      let duration = data.items[0].contentDetails.duration
+      let duration = data.items[0]?.contentDetails.duration
       setDuration(duration)
     }
     getDuration()
@@ -48,11 +48,11 @@ export default function SearchMusicItem({ musicData }) {
   }
   return (
     <div
-      className='flex p-3 justify-between hover:bg-searchChildBg focus:bg-searchChildBg rounded items-center group cursor-pointer select-none'
+      className='flex p-3 justify-between w-full hover:bg-searchChildBg focus:bg-searchChildBg rounded items-center group cursor-pointer select-none'
       onClick={handlePlay}
       ref={itemRef}
       tabIndex={0}>
-      <div className='flex items-center'>
+      <div className='flex items-center w-[70%]'>
         <div
           className='h-10 w-[4.5rem] bg-cover '
           style={{ backgroundImage: `url(${musicData.snippet.thumbnails.medium.url})` }}>
@@ -81,11 +81,11 @@ export default function SearchMusicItem({ musicData }) {
           </div>
         </div>
       </div>
-      <div className='flex items-center'>
+      <div className='flex items-center w-[30%] justify-end'>
         <div onClick={(e) => handleLoved(e)} className='mr-8'>
           <LoveButton musicData={musicData} musicId={musicData.id.videoId} />
         </div>
-        <Duration isoTime={duration} className='text-navbarColor font-semibold' />
+        <Duration isoTime={duration} className='text-navbarColor font-semibold w-2/5' />
       </div>
     </div>
   )

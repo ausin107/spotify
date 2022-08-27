@@ -30,6 +30,7 @@ export default function PlayListItem({ data, path, index }) {
   const channelName = data.snippet.channelTitle.replace('Official', '').trim()
   const date = data.snippet.publishedAt.slice(0, 10)
   let itemId = typeof data.id == 'object' ? data.id.videoId : data.id
+  itemId = itemId.length > 15 ? data.snippet.resourceId.videoId : itemId
   useEffect(() => {
     const getDuration = async () => {
       const result = await loadMusicData(itemId)

@@ -1,9 +1,9 @@
 import React from 'react'
 import RowItem from './RowItem'
-export default function MusicSearchRow({ musicData }) {
+export default function MusicSearchRow({ musicData, title }) {
   return (
     <div className='mb-20 px-8'>
-      <div className='text-white font-bold text-2xl mb-8'>All Music</div>
+      {!!title && <div className='text-white font-bold text-2xl mb-8'>{title}</div>}
       <div className='grid grid-cols-4 gap-4'>
         {musicData.map((item, index) => {
           return <RowItem key={index} data={item} />

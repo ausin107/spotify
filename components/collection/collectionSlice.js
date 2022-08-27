@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 const initialState = {
   authKey: null,
-  collectionKey: null,
+  collectionData: null,
   isLoading: false,
   currentId: null,
   currentPlaylist: null,
@@ -37,6 +37,9 @@ export const collectionSlice = createSlice({
     setCurrentPlayList: (state, action) => {
       state.currentPlaylist = action.payload
     },
+    updateCollectionInfo: (state, action) => {
+      state.collectionData = action.payload
+    },
   },
 })
 export const {
@@ -47,6 +50,7 @@ export const {
   increaseCurrentId,
   decreaseCurrentId,
   setCurrentPlayList,
+  updateCollectionInfo,
 } = collectionSlice.actions
 
 export default collectionSlice.reducer
