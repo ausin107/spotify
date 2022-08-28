@@ -52,7 +52,7 @@ export default function PlaylistSearchItem({ data }) {
         )}
       </div>
       <div className='flex w-3/5'>
-        <img src={data.snippet.thumbnails.medium.url} className=' h-11 shadow-2xl mr-4' />
+        <img src={data.snippet.thumbnails.medium.url} className=' h-11 w-11 object-cover shadow-2xl mr-4' />
         <div className=''>
           <div className='font-semibold'>
             {musicId == itemId ? (

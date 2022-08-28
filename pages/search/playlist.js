@@ -5,6 +5,7 @@ import { MusicIcon } from '../../components/Icon'
 import { useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
 import { loadPlaylistItems } from '../../lib/loadData'
+import { data } from 'autoprefixer'
 export default function Playlist() {
   const [plData, setPlData] = useState()
   const authKey = useSelector((state) => state.auth.authKey)
@@ -27,7 +28,7 @@ export default function Playlist() {
       {!!plData && (
         <div className='pt-20 pb-48 px-9 flex bg-greyBg items-end'>
           <div className='w-60 h-60 shadow-3xl'>
-            <img src={playlistInfo.snippet.thumbnails.medium.url} className='w-[240px] h-[240px] object-cover' />
+            <img src={playlistInfo.snippet.thumbnails.medium.url} className='w-60 h-60 object-cover' />
           </div>
           <div className='px-6'>
             <div
@@ -46,7 +47,7 @@ export default function Playlist() {
           </div>
         </div>
       )}
-      {!!plData && <PlaylistsBody data={plData} />}
+      {!!plData && <PlaylistsBody data={plData} collectionId={playlistInfo.id.playlistId} />}
     </div>
   )
 }

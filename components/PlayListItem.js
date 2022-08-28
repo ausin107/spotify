@@ -92,7 +92,7 @@ export default function PlayListItem({ data, path, index }) {
       tabIndex={0}>
       <div className='text-iconColor font-semibold w-[3%] text-lg'>{handleHover()}</div>
       <div className='flex w-2/5'>
-        <img src={data.snippet.thumbnails.medium.url} className=' h-11 shadow-2xl mr-4' />
+        <img src={data.snippet.thumbnails.medium.url} className='h-11 w-11 object-cover shadow-2xl mr-4' />
         <div className=''>
           <div>
             {musicId == itemId ? (

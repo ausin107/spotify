@@ -9,7 +9,8 @@ import { useRouter } from 'next/router'
 import { loadAllPlaylist } from './playlists/playlistSlice'
 import { setShow } from './toast/toastSlice'
 import MusicsList from './MusicsList'
-export default function PlaylistsBody({ data, path, currentPlId }) {
+import { loadItemsSuccess } from './collection/collectionSlice'
+export default function PlaylistsBody({ data, path, currentPlId, collectionId }) {
   const [isShowPlMenu, setShowPlMenu] = useState(false)
   const dispatch = useDispatch()
   const router = useRouter()
@@ -17,7 +18,7 @@ export default function PlaylistsBody({ data, path, currentPlId }) {
   const authKey = useSelector((state) => state.auth.authKey)
   const isPlay = useSelector((state) => state.player.isPlay)
   const handlePlay = () => {
-    if (currentPlId == playListId) {
+    if (currentPlId == playListId && !collectionId) {
       dispatch(setPlayList())
       data.map((item, index) => {
         if (index == 0) {
@@ -27,6 +28,19 @@ export default function PlaylistsBody({ data, path, currentPlId }) {
             musicId,
           }
           dispatch(getCollection(path))
+          dispatch(showMusicPlayer(musicInfo))
+        }
+      })
+    } else if (!!collectionId) {
+      dispatch(setPlayList())
+      data.map((item, index) => {
+        if (index == 0) {
+          let musicId = item.snippet.resourceId.videoId
+          const musicInfo = {
+            musicData: item,
+            musicId,
+          }
+          dispatch(loadItemsSuccess({ data: data, index: 0 }))
           dispatch(showMusicPlayer(musicInfo))
         }
       })
@@ -53,26 +67,31 @@ export default function PlaylistsBody({ data, path, currentPlId }) {
     handleShowOption()
     dispatch(setShow('Deleted from Library'))
   }
+  const buttonStatus = () => {
+    if (data.length > 0) {
+      if (isPlay && (currentPlId == playListId || !!collectionId)) {
+        return (
+          <div
+            onClick={handlePause}
+            className='p-4 bg-playIconBg hover:bg-activeIconHover rounded-full hover:scale-105 w-fit cursor-pointer'>
+            <PauseIcon className='fill-black' width='24' height='24' />
+          </div>
+        )
+      } else {
+        return (
+          <div
+            onClick={handlePlay}
+            className='p-4 bg-playIconBg hover:bg-activeIconHover rounded-full hover:scale-105 w-fit cursor-pointer'>
+            <PlayIcon className='fill-black' width='24' height='24' />
+          </div>
+        )
+      }
+    }
+  }
   return (
     <div className='flex px-9 -top-40 relative pt-4 bg-resultBg flex-col '>
       <div className='flex items-center mb-8'>
-        {data.length > 0 && (
-          <div>
-            {isPlay && currentPlId == playListId ? (
-              <div
-                onClick={handlePause}
-                className='p-4 bg-playIconBg hover:bg-activeIconHover rounded-full hover:scale-105 w-fit cursor-pointer'>
-                <PauseIcon className='fill-black' width='24' height='24' />
-              </div>
-            ) : (
-              <div
-                onClick={handlePlay}
-                className='p-4 bg-playIconBg hover:bg-activeIconHover rounded-full hover:scale-105 w-fit cursor-pointer'>
-                <PlayIcon className='fill-black' width='24' height='24' />
-              </div>
-            )}
-          </div>
-        )}
+        {buttonStatus()}
         {router.pathname != '/collection' && (
           <div className='ml-8 cursor-pointer'>
             <OptionIcons

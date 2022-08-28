@@ -157,6 +157,7 @@ export default function MusicPlayer() {
         allMusic.map((item, index) => {
           if (index == currentId) {
             let musicId = typeof item.id == 'object' ? item.id.videoId : item.id
+            musicId = musicId.length > 15 ? item.snippet.resourceId.videoId : musicId
             const musicInfo = {
               musicData: item,
               musicId,
@@ -203,9 +204,13 @@ export default function MusicPlayer() {
             loop={isLoop}
             volume={parseFloat(volume)}
           />
-          <div className='flex flex-row justify-between'>
+          <div className='flex flex-row justify-between h-full items-center'>
             <div className='flex items-center w-[30%]'>
-              <img draggable={false} className='rounded w-36 h-18 mr-4' src={musicData.snippet.thumbnails.medium.url} />
+              <img
+                draggable={false}
+                className='h-16 w-16 object-cover mr-4'
+                src={musicData.snippet.thumbnails.medium.url}
+              />
               <div>
                 <div className='text-white text-sm font-semibold mb-2 w-60'>{title}</div>
                 <div className='text-iconColor text-sm'>{musicData.snippet.channelTitle}</div>
