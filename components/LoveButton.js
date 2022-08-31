@@ -11,6 +11,7 @@ export default function LoveButton({ musicId, musicData }) {
   const isAuth = useSelector((state) => state.auth.isAuth)
   const authKey = useSelector((state) => state.auth.authKey)
   const isLoading = useSelector((state) => state.collection.isLoading)
+  const allMusic = useSelector((state) => state.collection.items)
   const handleLoveMusic = async (e) => {
     e.stopPropagation()
     if (isAuth) {
@@ -39,7 +40,7 @@ export default function LoveButton({ musicId, musicData }) {
       }
     }
     getData()
-  }, [isLoading, musicId])
+  }, [allMusic, musicId])
   return (
     <div onClick={(e) => handleLoveMusic(e)}>
       {isLove ? (

@@ -41,7 +41,7 @@ export default function TopResult({ musicData }) {
       <div className='w-[30%]' onClick={handleShow}>
         <div className='text-2xl font-bold text-white mb-7'>Top Result</div>
         <div className='group bg-itemBg hover:bg-itemActiveBg rounded pl-5 py-5 relative transition-all duration-300'>
-          <img className='rounded w-48 mb-8 shadow-2xl' src={musicData[0].snippet.thumbnails.medium.url} />
+          <img className='rounded w-48 mb-8 shadow-2xl' src={musicData[0].snippet.thumbnails.medium.url} alt='' />
           <div className='font-bold text-2xl text-white mb-4'>{musicName}</div>
           <div className='flex items-center'>
             <div className='text-iconColor text-sm font-bold mr-3'>

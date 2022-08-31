@@ -5,6 +5,7 @@ import searchSlice from './components/search/searchSlice'
 import collectionSlice from './components/collection/collectionSlice'
 import toastSlice from './components/toast/toastSlice'
 import playlistSlice from './components/playlists/playlistSlice'
+import extPlaylistsSlice from './components/extPlaylists/extPlaylistsSlice'
 export const store = configureStore({
   reducer: {
     //gán cho auth bằng initialState thuộc authReducer
@@ -16,5 +17,6 @@ export const store = configureStore({
     collection: collectionSlice,
     toast: toastSlice,
     playlist: playlistSlice,
+    extplaylist: extPlaylistsSlice,
   },
 })

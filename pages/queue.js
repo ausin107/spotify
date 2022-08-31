@@ -20,7 +20,7 @@ export default function Queue() {
     setWaitingMs(waitingList)
   }, [allMusics, currentMsId])
   return (
-    <div className='bg-bgColor left-[16.666%] w-[82.5vw] overflow-hidden relative'>
+    <div className=''>
       {!!playingMs && !!waitingMs ? (
         <div className='pt-28 pb-48 px-9 flex flex-col border-b border-searchChildBg mb-28'>
           <div className='text-white text-2xl font-bold mb-6'>Waiting list</div>

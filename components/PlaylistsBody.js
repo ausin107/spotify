@@ -1,16 +1,18 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { PlayIcon, PauseIcon, ClockIcon, OptionIcons } from './Icon'
 import PlayListItem from './PlayListItem'
 import { getCollection } from './collection/collectionAction'
-import { getAllPlaylistsInfo, removeDocument } from '../lib/firebaseAction'
+import { getAllPlaylistsInfo, removeDocument, addFavoriteMusic } from '../lib/firebaseAction'
 import { setPlayList, setPlayPauseMusic, showMusicPlayer } from './music_player/musicPlayerSlice'
 import { useRouter } from 'next/router'
 import { loadAllPlaylist } from './playlists/playlistSlice'
+import { loadAllExtPlaylists } from './extPlaylists/extPlaylistsSlice'
 import { setShow } from './toast/toastSlice'
 import MusicsList from './MusicsList'
 import { loadItemsSuccess } from './collection/collectionSlice'
-export default function PlaylistsBody({ data, path, currentPlId, collectionId }) {
+import LoveButton from './LoveButton'
+export default function PlaylistsBody({ data, path, currentPlId, collectionId, isLovedPl }) {
   const [isShowPlMenu, setShowPlMenu] = useState(false)
   const dispatch = useDispatch()
   const router = useRouter()
@@ -67,6 +69,20 @@ export default function PlaylistsBody({ data, path, currentPlId, collectionId })
     handleShowOption()
     dispatch(setShow('Deleted from Library'))
   }
+  const handleAddPLinLib = async () => {
+    handleShowOption()
+    await addFavoriteMusic(`collection/${authKey}/extplaylists/${collectionId}`, { playListId: collectionId })
+    dispatch(setShow('Saved to Your Library'))
+    const data = await getAllPlaylistsInfo(`collection/${authKey}/extplaylists`)
+    dispatch(loadAllExtPlaylists(data))
+  }
+  const handleRemovePLinLib = async () => {
+    handleShowOption()
+    await removeDocument(`collection/${authKey}/extplaylists/${collectionId}`)
+    dispatch(setShow('Removed from Your Library'))
+    const data = await getAllPlaylistsInfo(`collection/${authKey}/extplaylists`)
+    dispatch(loadAllExtPlaylists(data))
+  }
   const buttonStatus = () => {
     if (data.length > 0) {
       if (isPlay && (currentPlId == playListId || !!collectionId)) {
@@ -83,6 +99,35 @@ export default function PlaylistsBody({ data, path, currentPlId, collectionId })
             onClick={handlePlay}
             className='p-4 bg-playIconBg hover:bg-activeIconHover rounded-full hover:scale-105 w-fit cursor-pointer'>
             <PlayIcon className='fill-black' width='24' height='24' />
+          </div>
+        )
+      }
+    }
+  }
+  const optionMenu = () => {
+    if (currentPlId == playListId && !collectionId) {
+      return (
+        <div
+          className='px-4 pr-16 py-2 text-optionText font-semibold hover:bg-searchChildBg rounded-sm'
+          onClick={handleRemovePL}>
+          Delete playlist
+        </div>
+      )
+    } else {
+      if (!isLovedPl) {
+        return (
+          <div
+            className='px-4 pr-16 py-2 text-optionText font-semibold hover:bg-searchChildBg rounded-sm'
+            onClick={handleAddPLinLib}>
+            Add to Your Library
+          </div>
+        )
+      } else {
+        return (
+          <div
+            className='px-4 pr-16 py-2 text-optionText font-semibold hover:bg-searchChildBg rounded-sm'
+            onClick={handleRemovePLinLib}>
+            Remove from Your Library
           </div>
         )
       }
@@ -110,13 +155,9 @@ export default function PlaylistsBody({ data, path, currentPlId, collectionId })
                   </div>
                   <div className='border-searchChildBg border-y'>
                     <div className='px-4 pr-16 py-2 text-optionText font-semibold hover:bg-searchChildBg rounded-sm'>
-                      Edit details
+                      Report
                     </div>
-                    <div
-                      className='px-4 pr-16 py-2 text-optionText font-semibold hover:bg-searchChildBg rounded-sm'
-                      onClick={handleRemovePL}>
-                      Delete playlist
-                    </div>
+                    {optionMenu()}
                   </div>
                   <div className='px-4 pr-16 py-2 text-optionText font-semibold hover:bg-searchChildBg rounded-sm'>
                     Share

@@ -26,7 +26,8 @@ export default function PlayListItem({ data, path, index }) {
   const router = useRouter()
   const title = data.snippet.title
   let musicName = title.replace('Official Music Video', '').replace('(', '').replace(')', '').replaceAll('|', '')
-  musicName = musicName.length >= 30 ? musicName.slice(0, 30) + '...' : musicName
+  musicName = musicName.length >= 45 ? musicName.slice(0, 45) + '...' : musicName
+  let albumName = musicName.length >= 30 ? musicName.slice(0, 30) + '...' : musicName
   const channelName = data.snippet.channelTitle.replace('Official', '').trim()
   const date = data.snippet.publishedAt.slice(0, 10)
   let itemId = typeof data.id == 'object' ? data.id.videoId : data.id
@@ -107,7 +108,7 @@ export default function PlayListItem({ data, path, index }) {
         </div>
       </div>
       <div className='w-1/4 text-iconColor font-semibold text-sm group-hover:text-white group-focus:text-white'>
-        {musicName}
+        {albumName}
       </div>
       <DateConvert className='text-iconColor font-semibold text-sm w-1/5' data={date} />
       <div className='flex justify-end items-center w-[10%]'>

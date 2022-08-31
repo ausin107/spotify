@@ -10,6 +10,7 @@ export default function SearchMusicItem({ musicData }) {
   const [isLoved, setLoved] = useState(false)
   const isPlay = useSelector((state) => state.player.isPlay)
   const musicId = useSelector((state) => state.player.musicId)
+  const authKey = useSelector((state) => state.auth.authKey)
   const dispatch = useDispatch()
   const itemRef = useRef()
   let musicName = musicData.snippet.title
@@ -83,7 +84,11 @@ export default function SearchMusicItem({ musicData }) {
       </div>
       <div className='flex items-center w-[30%] justify-end'>
         <div onClick={(e) => handleLoved(e)} className='mr-8'>
-          <LoveButton musicData={musicData} musicId={musicData.id.videoId} />
+          <LoveButton
+            musicData={musicData}
+            dataPath={`collection/${authKey}/items/${musicData.id.videoId}`}
+            notify={{ added: 'Added to your Favorite Songs', deleted: 'Removed from your Favorite Songs' }}
+          />
         </div>
         <Duration isoTime={duration} className='text-navbarColor font-semibold w-2/5' />
       </div>

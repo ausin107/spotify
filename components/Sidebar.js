@@ -16,14 +16,17 @@ import Link from 'next/link'
 import PlaylistsSidebar from './PlaylistsSidebar'
 import { addMusicToPlayList, getAllPlaylistsInfo } from '../lib/firebaseAction'
 import { loadAllPlaylist } from './playlists/playlistSlice'
+import { loadAllExtPlaylists } from './extPlaylists/extPlaylistsSlice'
 import { setShow } from './toast/toastSlice'
 export default function Sidebar() {
   const [playlists, setPlaylists] = useState('')
+  const [extPlaylists, setExtPlaylists] = useState('')
   const router = useRouter()
   const dispatch = useDispatch()
   const isAuth = useSelector((state) => state.auth.isAuth)
   const authKey = useSelector((state) => state.auth.authKey)
   const allPlaylist = useSelector((state) => state.playlist.allPlaylist)
+  const allExtPlaylist = useSelector((state) => state.extplaylist.allExtPlaylist)
   const bannerRef = useRef([])
   const linkRef = useRef([])
   const hanldeAuth = async (bannerId, path) => {
@@ -67,15 +70,19 @@ export default function Sidebar() {
   }, [router.pathname])
   useEffect(() => {
     const getAllPlaylists = async () => {
-      const result = await getAllPlaylistsInfo(`collection/${authKey}/playlists`)
-      setPlaylists(result)
+      const playlists = await getAllPlaylistsInfo(`collection/${authKey}/playlists`)
+      setPlaylists(playlists)
+      const extplaylists = await getAllPlaylistsInfo(`collection/${authKey}/extplaylists`)
+      setExtPlaylists(extplaylists)
     }
     getAllPlaylists()
-  }, [allPlaylist])
+  }, [allPlaylist, allExtPlaylist])
   useEffect(() => {
     const getAllPlaylists = async () => {
       const result = await getAllPlaylistsInfo(`collection/${authKey}/playlists`)
       dispatch(loadAllPlaylist(result))
+      const extplaylists = await getAllPlaylistsInfo(`collection/${authKey}/extplaylists`)
+      dispatch(loadAllExtPlaylists(extplaylists))
     }
     getAllPlaylists()
   }, [])
