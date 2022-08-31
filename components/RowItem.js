@@ -8,7 +8,12 @@ import { useRouter } from 'next/router'
 export default function RowItem({ data }) {
   const dispatch = useDispatch()
   const musicState = useSelector((state) => state.player)
-  const title = data.snippet.title.length > 60 ? data.snippet.title.slice(0, 60) + '...' : data.snippet.title
+  let title = data.snippet.title
+    .replace('Official Music Video', '')
+    .replace('(', '')
+    .replace(')', '')
+    .replaceAll('|', '')
+  title = title.length > 30 ? title.slice(0, 30) + '...' : title
   const musicId = data.id.videoId || data.id
   const router = useRouter()
   const handleShow = () => {
@@ -29,10 +34,15 @@ export default function RowItem({ data }) {
     }
   }
   return (
-    <div className='text-white p-4 w-full cursor-pointer relative group bg-itemBg hover:bg-itemActiveBg mr-3 rounded h-full select-none'>
-      <img draggable={false} className='rounded mb-4 shadow-2xl' src={data.snippet.thumbnails.medium.url} alt='' />
+    <div className='text-white p-4 pb-5 w-full cursor-pointer relative group bg-itemBg hover:bg-itemActiveBg mr-3 rounded h-full select-none'>
+      <img
+        draggable={false}
+        className='rounded mb-4 shadow-2xl w-48 h-44 object-cover'
+        src={data.snippet.thumbnails.medium.url}
+        alt=''
+      />
       <div
-        className='group-hover:visible group-hover:translate-y-0 hover:scale-105 group-hover:opacity-100 transition-all duration-300 invisible translate-y-5 opacity-0 p-3 d-flex bg-playIconBg absolute rounded-full right-6 bottom-[5.5rem]'
+        className='group-hover:visible group-hover:translate-y-0 hover:scale-105 group-hover:opacity-100 transition-all duration-300 invisible translate-y-2 opacity-0 p-3 d-flex bg-playIconBg absolute rounded-full right-6 bottom-24'
         onClick={handleShow}>
         {musicState.isPlay && musicState.musicId == musicId ? (
           <PauseIcon width='24' height='24' className='fill-black' />
@@ -40,7 +50,7 @@ export default function RowItem({ data }) {
           <PlayIcon width='24' height='24' className='fill-black' />
         )}
       </div>
-      <div>{title}</div>
+      <div className='text-white font-semibold'>{title}</div>
     </div>
   )
 }

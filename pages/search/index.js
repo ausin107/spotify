@@ -4,7 +4,6 @@ import ChannelRow from '../../components/ChannelRow'
 import MusicSearchRow from '../../components/MusicSearchRow'
 import TopResult from '../../components/TopResult'
 import DefaultSearch from '../../components/DefaultSearch'
-import SearchNavBar from '../../components/SearchNavBar'
 import SearchPageLayout from '../../components/SearchPageLayout'
 export default function Search() {
   const [music, setMusic] = useState()

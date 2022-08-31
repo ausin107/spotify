@@ -55,7 +55,7 @@ export default function SearchMusicItem({ musicData }) {
       tabIndex={0}>
       <div className='flex items-center w-[70%]'>
         <div
-          className='h-10 w-[4.5rem] bg-cover '
+          className='h-11 w-11 bg-center bg-cover '
           style={{ backgroundImage: `url(${musicData.snippet.thumbnails.medium.url})` }}>
           <div
             onClick={(e) => handlePlayPause(e)}
