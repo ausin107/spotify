@@ -3,6 +3,7 @@ import { BackIcon, EmptyIcon, LogoutIcon, NextIcon, SearchIcon } from './Icon'
 import { useRouter } from 'next/router'
 import { useSelector, useDispatch } from 'react-redux'
 import { logoutSuccess } from './auth/authSlice'
+import { loadAllMusicArtics } from '../lib/loadData'
 import { updatePLSearchData, updateSearchData, updateArtiscData } from './search/searchSlice'
 import { loadSearchMusic, loadSearchPlaylists } from '../lib/loadData'
 export default function Navbar() {
@@ -52,6 +53,11 @@ export default function Navbar() {
     dispatch(updateSearchData({ musicData: musicData.items }))
     const plData = await loadSearchPlaylists(inputValue, 15)
     dispatch(updatePLSearchData({ playlistData: plData.items }))
+    const artistsId = musicData.items.map((item) => {
+      return item.snippet.channelId
+    })
+    const allArtistData = await loadAllMusicArtics(artistsId)
+    dispatch(updateArtiscData({ actistsData: allArtistData }))
   }
   const handleClear = () => {
     setInputValue('')
@@ -65,7 +71,7 @@ export default function Navbar() {
   return (
     <div
       ref={navbarRef}
-      className='bg-navbarBg flex flex-row h-16 w-10/12 fixed left-[16.666%] justify-between items-center z-20 transition-all duration-500 select-none'>
+      className='bg-navbarBg flex flex-row h-16 w-10/12 fixed left-[16.666%] justify-between items-center z-20 transition-all duration-500'>
       <div className='flex items-center ml-8'>
         <div
           className='bg-black opacity-70 py-1 px-1 mr-4 rounded-full cursor-pointer'

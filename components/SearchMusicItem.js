@@ -49,7 +49,7 @@ export default function SearchMusicItem({ musicData }) {
   }
   return (
     <div
-      className='flex p-3 justify-between w-full hover:bg-searchChildBg focus:bg-searchChildBg rounded items-center group cursor-pointer select-none'
+      className='flex p-3 justify-between w-full hover:bg-searchChildBg focus:bg-searchChildBg rounded items-center group cursor-pointer'
       onClick={handlePlay}
       ref={itemRef}
       tabIndex={0}>

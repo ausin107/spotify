@@ -2,7 +2,6 @@ import { useRef, useState, useEffect } from 'react'
 import { PlayIcon, PauseIcon } from './Icon'
 import { useDispatch, useSelector } from 'react-redux/'
 import { showMusicPlayer, setPlayPauseMusic, setNotPlayList } from './music_player/musicPlayerSlice'
-import { updateCollectionInfo } from './collection/collectionSlice'
 import { updateCurrentPlInfo } from './extPlaylists/extPlaylistsSlice'
 import { useRouter } from 'next/router'
 export default function RowItem({ data }) {
@@ -34,7 +33,7 @@ export default function RowItem({ data }) {
     }
   }
   return (
-    <div className='text-white p-4 pb-5 w-full cursor-pointer relative group bg-itemBg hover:bg-itemActiveBg mr-3 rounded h-full select-none'>
+    <div className='text-white p-4 pb-5 w-full cursor-pointer relative group bg-itemBg hover:bg-itemActiveBg mr-3 rounded h-full'>
       <img
         draggable={false}
         className='rounded mb-4 shadow-2xl w-48 h-44 object-cover'

@@ -24,7 +24,6 @@ import { increaseCurrentId, decreaseCurrentId, loadItemsSuccess } from './collec
 import SekeletonPlayer from './SekeletonPlayer'
 import { useRouter } from 'next/router'
 import { getCollection } from './collection/collectionAction'
-import Link from 'next/link'
 export default function MusicPlayer() {
   const [isLoop, setLoop] = useState(false)
   const [isMix, setMixMusic] = useState(false)
@@ -190,7 +189,7 @@ export default function MusicPlayer() {
     <div id='music-player' className='fixed bottom-0 left-0 w-screen h-[6.5rem] z-30'>
       {isShow ? (
         <div
-          className=' w-screen h-[6.5rem] bg-itemBg border-t-[0.5px] border-itemActiveBg px-4 pr-8 py-2 select-none'
+          className=' w-screen h-[6.5rem] bg-itemBg border-t-[0.5px] border-itemActiveBg px-4 pr-8 py-2'
           onMouseDown={(e) => e.stopPropagation()}>
           <ReactPlayer
             width='0px'

@@ -4,6 +4,7 @@ import MusicPlayer from './MusicPlayer'
 import Navbar from './Navbar'
 import AdvertisementBanner from './AdvertisementBanner'
 import Toasts from './Toasts'
+import SearchNavBar from './SearchNavBar'
 import { useSelector, useDispatch } from 'react-redux'
 export default function Layout({ children }) {
   const [auth, setAuth] = useState(false)
@@ -12,12 +13,13 @@ export default function Layout({ children }) {
     setAuth(isAuth)
   }, [])
   return (
-    <div className='bg-bgColor h-fit flex flex-col'>
+    <div className='bg-bgColor h-fit flex flex-col select-none'>
       <Sidebar />
       <Navbar />
       <div
-        className='bg-bgColor overflow-hidden flex flex-col left-[16.666%] w-[82.4vw] h-full relative select-none'
+        className='bg-bgColor overflow-hidden flex flex-col left-[16.666%] w-[82.4vw] h-full relative'
         id='container'>
+        <SearchNavBar />
         {children}
       </div>
       <Toasts />

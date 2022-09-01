@@ -88,7 +88,7 @@ export default function Login() {
       })
   }
   return (
-    <div className='flex flex-col items-center overflow-hidden'>
+    <div className='flex flex-col items-center overflow-hidden select-none'>
       <SpotifyLogo className='w-48 my-8' />
       <div className='w-screen border-t border-breakLine mb-8'></div>
       <div className='text-black font-bold text-sm mb-4'>To continue, sign in to Spotify.</div>

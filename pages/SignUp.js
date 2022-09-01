@@ -103,11 +103,9 @@ export default function SignUp() {
       })
   }
   return (
-    <div className='flex flex-col items-center'>
+    <div className='flex flex-col items-center select-none'>
       <SpotifyLogo className='fill-black my-12 w-36' />
-      <div className='text-3xl w-96 text-center text-black font-bold mb-8'>
-        Đăng ký miễn phí để bắt đầu nghe.
-      </div>
+      <div className='text-3xl w-96 text-center text-black font-bold mb-8'>Đăng ký miễn phí để bắt đầu nghe.</div>
       <div
         onClick={handleFBLogin}
         className='bg-facebookBg flex py-3 px-20 rounded-full hover:scale-105 hover:font-bold hover:bg-facebookBgActive cursor-pointer mb-6'>
@@ -122,9 +120,7 @@ export default function SignUp() {
       </div>
       <div className='tracking-wider font-semibold text-textBreakLine mb-6'>hoặc</div>
       {!!error && <div className='alert-danger w-96 px-4 py-3 rounded border-2 mb-4'>{error}</div>}
-      {!!successMs && (
-        <div className='alert-success w-96 px-4 py-3 rounded border-2 mb-4'>{successMs}</div>
-      )}
+      {!!successMs && <div className='alert-success w-96 px-4 py-3 rounded border-2 mb-4'>{successMs}</div>}
       <form className='flex flex-col items-center mb-8' action='/login' onSubmit={handleSubmit}>
         <div className='flex flex-col w-96 mb-4'>
           <div className='text-black font-semibold mb-2'>Email của bạn là gì?</div>

@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
-import SearchPageLayout from '../../components/SearchPageLayout'
 import MusicSearchRow from '../../components/MusicSearchRow'
 export default function Playlist() {
   const [plData, setPlData] = useState()
@@ -10,4 +9,3 @@ export default function Playlist() {
   }, [playlistData])
   return <div className='pb-32 pt-32 px-8'>{!!plData && <MusicSearchRow musicData={plData} />}</div>
 }
-Playlist.getLayout = (page) => <SearchPageLayout>{page}</SearchPageLayout>

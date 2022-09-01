@@ -65,6 +65,8 @@ export default function Sidebar() {
       linkRef.current[x].classList.remove('!text-white', '!font-bold')
       if (pathName[x] == router.pathname) {
         linkRef.current[x].classList.add('!text-white', '!font-bold')
+      } else if (pathName[x] == '/search' && router.pathname.includes('search')) {
+        linkRef.current[x].classList.add('!text-white', '!font-bold')
       }
     }
   }, [router.pathname])
@@ -87,7 +89,7 @@ export default function Sidebar() {
     getAllPlaylists()
   }, [])
   return (
-    <div className='bg-black fixed h-screen lg:w-2/12 z-20 select-none'>
+    <div className='bg-black fixed h-screen lg:w-2/12 z-20'>
       <div className='p-6 pb-4'>
         <SpotifyLogo
           onClick={() => router.push('/')}
@@ -96,20 +98,20 @@ export default function Sidebar() {
         <div className='mb-8'>
           <Link href='/'>
             <div className='text-iconColor mb-4 flex font-semibold icon-class' ref={(el) => (linkRef.current[0] = el)}>
-              {router.pathname != '/' ? (
-                <HomeIcon className='fill-iconColor mr-4 font-semibold' />
-              ) : (
+              {router.pathname == '/' ? (
                 <HomeIconActive className='fill-white mr-4' />
+              ) : (
+                <HomeIcon className='fill-iconColor mr-4 font-semibold' />
               )}
               Home page
             </div>
           </Link>
           <Link href='/search'>
             <div className='text-iconColor mb-4 flex font-semibold icon-class' ref={(el) => (linkRef.current[1] = el)}>
-              {router.pathname != '/search' ? (
-                <SearchIcon height='24' width='24' className='fill-iconColor mr-4 font-semibold ' />
-              ) : (
+              {router.pathname.includes('search') ? (
                 <SearchIconActive className='fill-white mr-4' />
+              ) : (
+                <SearchIcon height='24' width='24' className='fill-iconColor mr-4 font-semibold ' />
               )}
               Search
             </div>
@@ -119,10 +121,10 @@ export default function Sidebar() {
               onClick={() => hanldeAuth(0, '/library')}
               className='text-iconColor mb-4 flex font-semibold icon-class'
               ref={(el) => (linkRef.current[2] = el)}>
-              {router.pathname != '/library' ? (
-                <LibraryIcon className='fill-iconColor mr-4 font-semibold' />
-              ) : (
+              {router.pathname == '/library' ? (
                 <LibraryIconActive className='fill-white mr-4' />
+              ) : (
+                <LibraryIcon className='fill-iconColor mr-4 font-semibold' />
               )}
               Library
             </div>

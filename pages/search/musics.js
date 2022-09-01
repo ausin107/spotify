@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import PlaylistsBody from '../../components/PlaylistsBody'
-import SearchPageLayout from '../../components/SearchPageLayout'
 import { useSelector } from 'react-redux'
 import MusicsList from '../../components/MusicsList'
 export default function Musics() {
@@ -12,4 +11,3 @@ export default function Musics() {
   }, [musicData])
   return <div className='pb-32 pt-32 px-8'>{searchData?.length > 0 && <MusicsList data={searchData} />}</div>
 }
-Musics.getLayout = (page) => <SearchPageLayout>{page}</SearchPageLayout>
