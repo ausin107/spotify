@@ -223,7 +223,7 @@ export default function MusicPlayer() {
                 />
               </div>
             </div>
-            <div className='flex flex-col items-center justify-around w-[55%]'>
+            <div className='flex flex-col items-center justify-evenly w-[55%] h-full'>
               <div className='flex items-center'>
                 <div className='px-3 cursor-pointer' onClick={handleMixMusic}>
                   <MixMusic
