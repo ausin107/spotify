@@ -1,11 +1,8 @@
 import { useState, useEffect } from 'react'
 import PlaylistsBody from '../../components/PlaylistsBody'
-import Link from 'next/link'
-import { MusicIcon } from '../../components/Icon'
 import { useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
 import { loadPlaylistItems } from '../../lib/loadData'
-import { loadAllExtPlaylists } from '../../components/extPlaylists/extPlaylistsSlice'
 import { getSingleFavoriteMusic } from '../../lib/firebaseAction'
 export default function Playlist() {
   const [plData, setPlData] = useState()

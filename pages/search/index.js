@@ -1,4 +1,4 @@
-import { useEffect, useState, useLayoutEffect } from 'react'
+import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import ChannelRow from '../../components/ChannelRow'
 import MusicSearchRow from '../../components/MusicSearchRow'

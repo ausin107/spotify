@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import PlaylistsBody from '../../components/PlaylistsBody'
 import { useSelector } from 'react-redux'
 import MusicsList from '../../components/MusicsList'
 export default function Musics() {

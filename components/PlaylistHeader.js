@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef } from 'react'
 import { MusicIconV2 } from './Icon'
-import { getSinglePlaylistsInfo, updateSinglePlaylistsInfo } from '../lib/firebaseAction'
+import { getSinglePlaylistsInfo } from '../lib/firebaseAction'
 import { useRouter } from 'next/router'
-import { useSelector } from 'react-redux/es/hooks/useSelector'
+import { useSelector } from 'react-redux'
 import EditPlaylistDetail from './EditPlaylistDetail'
 export default function PlaylistHeader({ data, path }) {
   const [isShowEditForm, setShow] = useState(false)

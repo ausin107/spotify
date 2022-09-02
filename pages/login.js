@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { SpotifyLogo, FacebookIcon, GoogleIcon, SpinIcon } from '../components/Icon'
 import { useRouter } from 'next/router'
 import { signInWithEmailAndPassword, GoogleAuthProvider, FacebookAuthProvider, signInWithPopup } from 'firebase/auth'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { auth } from '../firebase'
 import { loginSuccess, loginFailed } from '../components/auth/authSlice'
 export default function Login() {

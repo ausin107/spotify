@@ -1,10 +1,8 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState } from 'react'
 import { EmptyIcon, MusicIconV2 } from './Icon'
-import { useDispatch, useSelector } from 'react-redux/es/exports'
-import { getSinglePlaylistsInfo, updateSinglePlaylistsInfo, getAllPlaylistsInfo } from '../lib/firebaseAction'
-import { useRouter } from 'next/router'
-import Image from 'next/image'
-import { loadAllPlaylist, reloadAllPlaylist } from './playlists/playlistSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import { updateSinglePlaylistsInfo, getAllPlaylistsInfo } from '../lib/firebaseAction'
+import { loadAllPlaylist } from './playlists/playlistSlice'
 export default function EditPlaylistDetail({ currentData, path, handleClose }) {
   const [title, setTitle] = useState(currentData.title)
   const [description, setDescription] = useState(currentData.description || '')

@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { PlayIcon, PauseIcon, ClockIcon, OptionIcons } from './Icon'
-import PlayListItem from './PlayListItem'
 import { getCollection } from './collection/collectionAction'
 import { getAllPlaylistsInfo, removeDocument, addFavoriteMusic } from '../lib/firebaseAction'
 import { setPlayList, setPlayPauseMusic, showMusicPlayer } from './music_player/musicPlayerSlice'
