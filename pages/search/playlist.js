@@ -46,7 +46,7 @@ export default function Playlist() {
             <div
               className='text-white font-bold text-8xl mb-12'
               style={{ textShadow: '4px -1px 46px rgb(0 0 0 / 75%)' }}>
-              {currentExtPlaylist.snippet.title.slice(0, 18)}
+              {currentExtPlaylist.snippet.title.slice(0, 13)}
             </div>
             <div className='text-white text-xs font-bold' style={{ textShadow: '4px -1px 46px rgb(0 0 0 / 75%)' }}>
               User - {plData.length} song
@@ -54,8 +54,8 @@ export default function Playlist() {
           </div>
         </div>
       )}
-      {!!plData && (
-        <PlaylistsBody data={plData} collectionId={currentExtPlaylist.id.playlistId} isLovedPl={isLovedPl} />
+      {!!plData && !!currentExtPlaylist && (
+        <PlaylistsBody playlistItems={plData} extPlaylistInfo={currentExtPlaylist} isLovedPl={isLovedPl} />
       )}
     </div>
   )

@@ -20,7 +20,6 @@ export default function PlayList() {
   const playListId = router.query.id
   const authKey = useSelector((state) => state.auth.authKey)
   const allMusic = useSelector((state) => state.collection.items)
-  const isPlayList = useSelector((state) => state.player.isPlayList)
   useEffect(() => {
     dispatch(setCurrentPlayList(playListId))
     const getPlaylist = async () => {
@@ -48,7 +47,7 @@ export default function PlayList() {
     <div className=''>
       <PlaylistHeader data={data} path={`collection/${authKey}/playlists/${playListId}`} />
       <PlaylistsBody
-        data={data}
+        playlistItems={data}
         path={`collection/${authKey}/playlists/${playListId}/items`}
         currentPlId={playListId}
       />

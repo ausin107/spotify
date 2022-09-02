@@ -4,23 +4,25 @@ import { useSelector } from 'react-redux'
 export default function SearchNavBar() {
   const router = useRouter()
   const itemsRef = useRef([])
+  const navbarRef = useRef()
   const musicData = useSelector((state) => state.search.musicData)
   useEffect(() => {
     if (router.pathname.includes('search')) {
       const items = ['/search', '/search/playlists', '/search/musics', '/search/artists']
       itemsRef.current.map((item) => {
-        item.classList.remove('!text-black', '!bg-white')
+        item?.classList.remove('!text-black', '!bg-white')
       })
       items.map((item, index) => {
         if (item == router.pathname) {
           itemsRef.current[index]?.classList.add('!text-black', '!bg-white')
+          navbarRef?.current?.classList.remove('hidden')
         }
       })
     }
   }, [router.pathname, musicData])
   return (
     <>
-      {!!musicData && router.pathname.includes('search') && (
+      {!!musicData && router.pathname.includes('search') && router.pathname != '/search/playlist' && (
         <div className='bg-bgColor flex flex-row h-12 w-10/12 fixed left-[16.666%] top-16 px-8 items-center z-20 transition-all duration-500'>
           <div
             ref={(el) => (itemsRef.current[0] = el)}

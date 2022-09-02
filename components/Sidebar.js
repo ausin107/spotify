@@ -90,7 +90,7 @@ export default function Sidebar() {
   }, [])
   return (
     <div className='bg-black fixed h-screen lg:w-2/12 z-20'>
-      <div className='p-6 pb-4'>
+      <div className='pt-6 pb-4 mb-4 border-b mx-6 border-itemActiveBg'>
         <SpotifyLogo
           onClick={() => router.push('/')}
           className='text-white text-sm w-[60%] sm:mb-8 hover:cursor-pointer'
@@ -216,7 +216,8 @@ export default function Sidebar() {
           </div>
         </div>
       </div>
-      {!!playlists && <PlaylistsSidebar allPlaylists={playlists} />}
+      {!!playlists && <PlaylistsSidebar allPlaylists={playlists} path='/playlists/' />}
+      {!!extPlaylists && <PlaylistsSidebar allPlaylists={extPlaylists} path='/extplaylists/' />}
     </div>
   )
 }

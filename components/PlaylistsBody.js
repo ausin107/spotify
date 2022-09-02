@@ -11,17 +11,18 @@ import { setShow } from './toast/toastSlice'
 import MusicsList from './MusicsList'
 import { loadItemsSuccess } from './collection/collectionSlice'
 import LoveButton from './LoveButton'
-export default function PlaylistsBody({ data, path, currentPlId, collectionId, isLovedPl }) {
+export default function PlaylistsBody({ playlistItems, path, currentPlId, extPlaylistInfo, isLovedPl }) {
   const [isShowPlMenu, setShowPlMenu] = useState(false)
   const dispatch = useDispatch()
   const router = useRouter()
   const playListId = router.query.id
   const authKey = useSelector((state) => state.auth.authKey)
   const isPlay = useSelector((state) => state.player.isPlay)
+  const extPlId = typeof extPlaylistInfo?.id == 'object' ? extPlaylistInfo?.id?.playlistId : extPlaylistInfo?.id
   const handlePlay = () => {
-    if (currentPlId == playListId && !collectionId) {
+    if (currentPlId == playListId && !extPlaylistInfo) {
       dispatch(setPlayList())
-      data.map((item, index) => {
+      playlistItems.map((item, index) => {
         if (index == 0) {
           let musicId = typeof item.id == 'object' ? item.id.videoId : item.id
           const musicInfo = {
@@ -32,16 +33,16 @@ export default function PlaylistsBody({ data, path, currentPlId, collectionId, i
           dispatch(showMusicPlayer(musicInfo))
         }
       })
-    } else if (!!collectionId) {
+    } else if (!!extPlaylistInfo) {
       dispatch(setPlayList())
-      data.map((item, index) => {
+      playlistItems.map((item, index) => {
         if (index == 0) {
           let musicId = item.snippet.resourceId.videoId
           const musicInfo = {
             musicData: item,
             musicId,
           }
-          dispatch(loadItemsSuccess({ data: data, index: 0 }))
+          dispatch(loadItemsSuccess({ data: playlistItems, index: 0 }))
           dispatch(showMusicPlayer(musicInfo))
         }
       })
@@ -70,21 +71,24 @@ export default function PlaylistsBody({ data, path, currentPlId, collectionId, i
   }
   const handleAddPLinLib = async () => {
     handleShowOption()
-    await addFavoriteMusic(`collection/${authKey}/extplaylists/${collectionId}`, { playListId: collectionId })
+    await addFavoriteMusic(`collection/${authKey}/extplaylists/${extPlId}`, {
+      playListId: extPlId,
+      title: extPlaylistInfo.snippet.title,
+    })
     dispatch(setShow('Saved to Your Library'))
     const data = await getAllPlaylistsInfo(`collection/${authKey}/extplaylists`)
     dispatch(loadAllExtPlaylists(data))
   }
   const handleRemovePLinLib = async () => {
     handleShowOption()
-    await removeDocument(`collection/${authKey}/extplaylists/${collectionId}`)
+    await removeDocument(`collection/${authKey}/extplaylists/${extPlId}`)
     dispatch(setShow('Removed from Your Library'))
     const data = await getAllPlaylistsInfo(`collection/${authKey}/extplaylists`)
     dispatch(loadAllExtPlaylists(data))
   }
   const buttonStatus = () => {
-    if (data.length > 0) {
-      if (isPlay && (currentPlId == playListId || !!collectionId)) {
+    if (playlistItems.length > 0) {
+      if (isPlay && (currentPlId == playListId || !!extPlId)) {
         return (
           <div
             onClick={handlePause}
@@ -104,7 +108,7 @@ export default function PlaylistsBody({ data, path, currentPlId, collectionId, i
     }
   }
   const optionMenu = () => {
-    if (currentPlId == playListId && !collectionId) {
+    if (currentPlId == playListId && !extPlaylistInfo) {
       return (
         <div
           className='px-4 pr-16 py-2 text-optionText font-semibold hover:bg-searchChildBg rounded-sm'
@@ -167,7 +171,7 @@ export default function PlaylistsBody({ data, path, currentPlId, collectionId, i
           </div>
         )}
       </div>
-      {data.length > 0 && <MusicsList data={data} path={path} />}
+      {playlistItems.length > 0 && <MusicsList data={playlistItems} path={path} />}
     </div>
   )
 }

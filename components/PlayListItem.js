@@ -35,7 +35,7 @@ export default function PlayListItem({ data, path, index }) {
   useEffect(() => {
     const getDuration = async () => {
       const result = await loadMusicData(itemId)
-      const duration = result.items[0].contentDetails.duration
+      const duration = result.items[0]?.contentDetails?.duration
       setDuration(duration)
     }
     getDuration()
@@ -93,7 +93,7 @@ export default function PlayListItem({ data, path, index }) {
       tabIndex={0}>
       <div className='text-iconColor font-semibold w-[3%] text-lg'>{handleHover()}</div>
       <div className='flex w-2/5'>
-        <img src={data.snippet.thumbnails.medium.url} className='h-11 w-11 object-cover shadow-2xl mr-4' />
+        <img src={data?.snippet?.thumbnails?.medium?.url} className='h-11 w-11 object-cover shadow-2xl mr-4' />
         <div className=''>
           <div>
             {musicId == itemId ? (

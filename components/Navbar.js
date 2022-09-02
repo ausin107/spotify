@@ -34,7 +34,8 @@ export default function Navbar() {
       router.pathname == '/library' ||
       router.pathname == '/queue' ||
       router.pathname == '/search/playlist' ||
-      router.pathname.includes('/playlists')
+      router.pathname.includes('/playlists') ||
+      router.pathname.includes('/extplaylists')
     ) {
       navbarRef.current.classList.add('bg-transparent')
       navbarRef.current.classList.remove('bg-navbarBg')

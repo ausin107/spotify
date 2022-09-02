@@ -39,7 +39,7 @@ export default function Collection() {
         </div>
       </div>
       {data.length > 0 ? (
-        <PlaylistsBody data={data} path={`collection/${authKey}/items`} />
+        <PlaylistsBody playlistItems={data} path={`collection/${authKey}/items`} />
       ) : (
         <div className='flex px-9 -top-40 relative pt-14 bg-resultBg flex-col items-center'>
           <MusicIcon width='64' height='64' className='fill-white mb-10' />
