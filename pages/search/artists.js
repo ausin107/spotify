@@ -1,11 +1,15 @@
-import React from 'react'
+import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 
 export default function Artists() {
+  const [artists, setArtists] = useState()
   const artistData = useSelector((state) => state.search.articsData)
+  useEffect(() => {
+    setArtists(artistData)
+  }, [artistData])
   return (
     <div className='grid grid-cols-5 gap-6 pb-40 pt-32 px-8'>
-      {artistData.map((item, index) => {
+      {artists?.map((item, index) => {
         return (
           <div
             key={index}

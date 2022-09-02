@@ -14,15 +14,15 @@ export default function Playlist() {
   useEffect(() => {
     const getData = async () => {
       const isLovedPl = await getSingleFavoriteMusic(
-        `collection/${authKey}/extplaylists/${currentExtPlaylist.id.playlistId}`
+        `collection/${authKey}/extplaylists/${currentExtPlaylist?.id?.playlistId}`
       )
       if (!!isLovedPl) {
-        const plId = isLovedPl.playListId
+        const plId = isLovedPl?.playListId
         const data = await loadPlaylistItems(plId, 50)
         setPlData(data.items)
         setLovedPl(true)
       } else {
-        const plId = currentExtPlaylist.id.playlistId
+        const plId = currentExtPlaylist?.id.playlistId
         const data = await loadPlaylistItems(plId, 50)
         setPlData(data.items)
         setLovedPl(false)
