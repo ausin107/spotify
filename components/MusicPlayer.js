@@ -79,6 +79,7 @@ export default function MusicPlayer() {
   const handleChange = (e) => {
     setPlayed(e.target.value)
     musicInput.current.style.backgroundSize = e.target.value * 100 + '%'
+    playerRef.current.seekTo(e.target.value, 'fraction')
   }
   const handleSeekMouseUp = (e) => {
     playerRef.current.seekTo(e.target.value, 'fraction')
@@ -186,7 +187,7 @@ export default function MusicPlayer() {
     }
   }
   return (
-    <div id='music-player' className='fixed bottom-0 left-0 w-screen h-[6.5rem] z-30'>
+    <div id='music-player' className='fixed bottom-0 left-0 w-screen h-[6.5rem] z-30 hidden lg:block'>
       {isShow ? (
         <div
           className=' w-screen h-[6.5rem] bg-itemBg border-t-[0.5px] border-itemActiveBg px-4 pr-8 py-2'

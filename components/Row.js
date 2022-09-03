@@ -30,7 +30,7 @@ export default function Row({ title, data }) {
     },
   }
   return (
-    <div className='p-6 w-[83.333vw]'>
+    <div className='p-6 lg:w-[83.333vw] w-screen'>
       <h2 className='text-white font-bold text-2xl mb-6'>{title}</h2>
       <Carousel
         ssr={true}

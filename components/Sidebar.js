@@ -89,7 +89,7 @@ export default function Sidebar() {
     getAllPlaylists()
   }, [])
   return (
-    <div className='bg-black fixed h-screen lg:w-2/12 z-20'>
+    <div className='bg-black fixed h-screen lg:w-2/12 hidden lg:block z-20'>
       <div className='pt-6 pb-4 mb-4 border-b mx-6 border-itemActiveBg'>
         <SpotifyLogo
           onClick={() => router.push('/')}

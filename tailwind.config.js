@@ -43,6 +43,8 @@ module.exports = {
         resultBg: 'linear-gradient(180deg, rgba(18,18,18,0.3) 0%, rgba(18,18,18,0.3) 50%, rgba(18,18,18,0.3) 100%);',
         favoriteBg: 'linear-gradient(146deg, rgba(74,19,243,1) 0%, rgba(106,76,237,1) 50%, rgba(137,134,230,1) 100%)',
         greyBg: 'linear-gradient(180deg, rgba(85,85,85,1) 0%, rgba(66,66,66,1) 50%, rgba(18,18,18,1) 100%)',
+        bottomBarBg:
+          'linear-gradient(180deg, rgba(3,3,3,0.7021359569218313) 0%, rgba(2,2,2,0.895413267846201) 50%, rgba(0,0,0,1) 100%)',
       },
       boxShadow: {
         '3xl': '-1px 1px 59px 18px rgba(0,0,0,0.3)',

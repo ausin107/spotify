@@ -26,9 +26,10 @@ export default function Login() {
         setPassword('')
         setSuccessMs('Login successful !!!')
         setError()
+        router.push('/')
         setTimeout(() => {
-          router.push('/')
-        }, 2000)
+          router.reload()
+        }, 700)
       })
       .catch((err) => {
         dispatch(loginFailed())
