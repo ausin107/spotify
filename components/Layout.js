@@ -17,7 +17,6 @@ export default function Layout({ children }) {
       </div>
       <Toasts />
       <MusicPlayer />
-      {/* <MobileMusicPlayer /> */}
       <BottomBar />
     </div>
   )

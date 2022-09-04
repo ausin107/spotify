@@ -49,6 +49,22 @@ input[type='range']#music-time-input:hover {
 input[type='range']#music-time-input:hover::-webkit-slider-thumb {
   visibility: visible;
 }
+input[type='range']#music-time-mobile-input {
+  -webkit-appearance: none;
+  background: hsla(0, 0%, 100%, 0.3);
+  background-image: linear-gradient(#fff, #fff);
+  background-size: 0%;
+  background-repeat: no-repeat;
+  border-radius: 2px;
+}
+input[type='range']#music-time-mobile-input::-webkit-slider-thumb {
+  visibility: hidden;
+  -webkit-appearance: none;
+  background: white;
+  height: 12px;
+  width: 12px;
+  border-radius: 50%;
+}
 input[type='range']#music-volume-input {
   -webkit-appearance: none;
   background: hsla(0, 0%, 100%, 0.3);

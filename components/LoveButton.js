@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { addCollection, deleteCollection, getCollection } from './collection/collectionAction'
 import { getSingleFavoriteMusic } from '../lib/firebaseAction'
 import { setShow } from './toast/toastSlice'
-export default function LoveButton({ musicId, musicData }) {
+export default function LoveButton({ musicId, musicData, className, width, height }) {
   const [isLove, setLove] = useState(false)
   const dispatch = useDispatch()
   const currentId = useSelector((state) => state.collection.currentId)
@@ -42,15 +42,15 @@ export default function LoveButton({ musicId, musicData }) {
     getData()
   }, [allMusic, musicId])
   return (
-    <div onClick={(e) => handleLoveMusic(e)}>
+    <div onClick={(e) => handleLoveMusic(e)} className={className}>
       {isLove ? (
         <LoveMusicActive
           className='fill-activeIcon hover:fill-activeIconHover mr-4 cursor-pointer'
-          width='16'
-          height='16'
+          width={width}
+          height={height}
         />
       ) : (
-        <LoveMusic className='fill-musicPlayer hover:fill-white mr-4 cursor-pointer' width='16' height='16' />
+        <LoveMusic className='fill-musicPlayer hover:fill-white mr-4 cursor-pointer' width={width} height={height} />
       )}
     </div>
   )

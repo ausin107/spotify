@@ -187,128 +187,170 @@ export default function MusicPlayer() {
     }
   }
   return (
-    <div id='music-player' className='fixed bottom-0 left-0 w-screen h-[6.5rem] z-30 hidden lg:block'>
-      {isShow ? (
-        <div
-          className=' w-screen h-[6.5rem] bg-itemBg border-t-[0.5px] border-itemActiveBg px-4 pr-8 py-2'
-          onMouseDown={(e) => e.stopPropagation()}>
-          <ReactPlayer
-            width='0px'
-            height='0px'
-            url={handleMusicUrl()}
-            playing={isPlay}
-            onReady={handleReady}
-            onProgress={(state) => handleProgress(state)}
-            onEnded={handleEnded}
-            ref={playerRef}
-            loop={isLoop}
-            volume={parseFloat(volume)}
-          />
-          <div className='flex flex-row justify-between h-full items-center'>
-            <div className='flex items-center w-[30%]'>
-              <img
-                draggable={false}
-                className='h-16 w-16 object-cover mr-4'
-                src={musicData.snippet.thumbnails.medium.url}
-              />
-              <div>
-                <div className='text-white text-sm font-semibold mb-2 w-60'>{title}</div>
-                <div className='text-iconColor text-sm'>{musicData.snippet.channelTitle}</div>
+    <>
+      <div id='music-player' className='fixed bottom-0 left-0 w-screen h-[6.5rem] z-30 hidden lg:block'>
+        {isShow ? (
+          <div
+            className=' w-screen h-[6.5rem] bg-itemBg border-t-[0.5px] border-itemActiveBg px-4 pr-8 py-2'
+            onMouseDown={(e) => e.stopPropagation()}>
+            <ReactPlayer
+              width='0px'
+              height='0px'
+              url={handleMusicUrl()}
+              playing={isPlay}
+              onReady={handleReady}
+              onProgress={(state) => handleProgress(state)}
+              onEnded={handleEnded}
+              ref={playerRef}
+              loop={isLoop}
+              volume={parseFloat(volume)}
+            />
+            <div className='flex flex-row justify-between h-full items-center'>
+              <div className='flex items-center w-[30%]'>
+                <img
+                  draggable={false}
+                  className='h-16 w-16 object-cover mr-4'
+                  src={musicData.snippet.thumbnails.medium.url}
+                />
+                <div>
+                  <div className='text-white text-sm font-semibold mb-2 w-60'>{title}</div>
+                  <div className='text-iconColor text-sm'>{musicData.snippet.channelTitle}</div>
+                </div>
+                <div className='flex'>
+                  <LoveButton musicId={musicId} musicData={musicData} width='16' height='16' />
+                  <MinimizeBrowserIcon
+                    className='fill-musicPlayer hover:fill-white cursor-pointer'
+                    width='16'
+                    height='16'
+                  />
+                </div>
               </div>
-              <div className='flex'>
-                <LoveButton musicId={musicId} musicData={musicData} />
-                <MinimizeBrowserIcon
-                  className='fill-musicPlayer hover:fill-white cursor-pointer'
+              <div className='flex flex-col items-center justify-evenly w-[55%] h-full'>
+                <div className='flex items-center'>
+                  <div className='px-3 cursor-pointer' onClick={handleMixMusic}>
+                    <MixMusic
+                      className='fill-musicPlayer hover:fill-white'
+                      width='16'
+                      height='16'
+                      iconRef={mixMusicRef}
+                    />
+                  </div>
+                  <div className='px-3 cursor-pointer pr-6' onClick={handleBack}>
+                    {isPlayList ? (
+                      <BackMusic className='fill-musicPlayer hover:fill-white' width='16' height='16' />
+                    ) : (
+                      <Back15s className='fill-musicPlayer hover:fill-white' width='16' height='16' />
+                    )}
+                  </div>
+                  <div
+                    className='bg-white p-2 w-fit rounded-full cursor-pointer hover:scale-105'
+                    onClick={handlePlayPause}>
+                    {isPlay ? <PauseIcon width='16' height='16' /> : <PlayIcon width='16' height='16' />}
+                  </div>
+                  <div className='px-3 cursor-pointer pl-6' onClick={handleNext}>
+                    {isPlayList ? (
+                      <NextMusic className='fill-musicPlayer hover:fill-white' width='16' height='16' />
+                    ) : (
+                      <Next15s className='fill-musicPlayer hover:fill-white' width='16' height='16' />
+                    )}
+                  </div>
+                  <div className='px-3 cursor-pointer' onClick={handleLoopMusic}>
+                    <LoopMusic
+                      className='fill-musicPlayer hover:fill-white'
+                      width='16'
+                      height='16'
+                      iconRef={loopIConRef}
+                    />
+                  </div>
+                </div>
+                <div className='flex items-center'>
+                  <Duration time={parseInt(played * duration)} className='text-navbarColor text-xs' />
+                  <input
+                    className='w-[32rem] h-1 mx-2 cursor-pointer'
+                    type='range'
+                    min={0}
+                    max={0.999999}
+                    step='any'
+                    value={played}
+                    onChange={(e) => handleChange(e)}
+                    onMouseUp={(e) => handleSeekMouseUp(e)}
+                    id='music-time-input'
+                    ref={musicInput}
+                  />
+                  <Duration time={duration} className='text-navbarColor text-xs' />
+                </div>
+              </div>
+              <div className='flex w-[15%] items-center justify-center'>
+                <Playlists
                   width='16'
                   height='16'
+                  className='fill-musicPlayer hover:fill-white mr-4 cursor-pointer'
+                  onClick={handleQueue}
+                  iconRef={queueRef}
                 />
-              </div>
-            </div>
-            <div className='flex flex-col items-center justify-evenly w-[55%] h-full'>
-              <div className='flex items-center'>
-                <div className='px-3 cursor-pointer' onClick={handleMixMusic}>
-                  <MixMusic
-                    className='fill-musicPlayer hover:fill-white'
-                    width='16'
-                    height='16'
-                    iconRef={mixMusicRef}
+                <div className='flex items-center'>
+                  <div onClick={handleMuted} className='cursor-pointer'>
+                    {volumeIcon}
+                  </div>
+                  <input
+                    className='w-24 h-1 mx-2 cursor-pointer'
+                    type='range'
+                    min={0}
+                    max={1}
+                    step='any'
+                    value={volume}
+                    id='music-volume-input'
+                    onChange={(e) => handleSetVolume(e)}
+                    ref={volumeRef}
                   />
                 </div>
-                <div className='px-3 cursor-pointer pr-6' onClick={handleBack}>
-                  {isPlayList ? (
-                    <BackMusic className='fill-musicPlayer hover:fill-white' width='16' height='16' />
-                  ) : (
-                    <Back15s className='fill-musicPlayer hover:fill-white' width='16' height='16' />
-                  )}
-                </div>
-                <div
-                  className='bg-white p-2 w-fit rounded-full cursor-pointer hover:scale-105'
-                  onClick={handlePlayPause}>
-                  {isPlay ? <PauseIcon width='16' height='16' /> : <PlayIcon width='16' height='16' />}
-                </div>
-                <div className='px-3 cursor-pointer pl-6' onClick={handleNext}>
-                  {isPlayList ? (
-                    <NextMusic className='fill-musicPlayer hover:fill-white' width='16' height='16' />
-                  ) : (
-                    <Next15s className='fill-musicPlayer hover:fill-white' width='16' height='16' />
-                  )}
-                </div>
-                <div className='px-3 cursor-pointer' onClick={handleLoopMusic}>
-                  <LoopMusic
-                    className='fill-musicPlayer hover:fill-white'
-                    width='16'
-                    height='16'
-                    iconRef={loopIConRef}
-                  />
-                </div>
-              </div>
-              <div className='flex items-center'>
-                <Duration time={parseInt(played * duration)} className='text-navbarColor text-xs' />
-                <input
-                  className='w-[32rem] h-1 mx-2 cursor-pointer'
-                  type='range'
-                  min={0}
-                  max={0.999999}
-                  step='any'
-                  value={played}
-                  onChange={(e) => handleChange(e)}
-                  onMouseUp={(e) => handleSeekMouseUp(e)}
-                  id='music-time-input'
-                  ref={musicInput}
-                />
-                <Duration time={duration} className='text-navbarColor text-xs' />
-              </div>
-            </div>
-            <div className='flex w-[15%] items-center justify-center'>
-              <Playlists
-                width='16'
-                height='16'
-                className='fill-musicPlayer hover:fill-white mr-4 cursor-pointer'
-                onClick={handleQueue}
-                iconRef={queueRef}
-              />
-              <div className='flex items-center'>
-                <div onClick={handleMuted} className='cursor-pointer'>
-                  {volumeIcon}
-                </div>
-                <input
-                  className='w-24 h-1 mx-2 cursor-pointer'
-                  type='range'
-                  min={0}
-                  max={1}
-                  step='any'
-                  value={volume}
-                  id='music-volume-input'
-                  onChange={(e) => handleSetVolume(e)}
-                  ref={volumeRef}
-                />
               </div>
             </div>
           </div>
-        </div>
-      ) : (
-        <SekeletonPlayer />
-      )}
-    </div>
+        ) : (
+          <SekeletonPlayer />
+        )}
+      </div>
+      <div className='lg:hidden fixed bottom-20 left-0 w-screen z-30 '>
+        {isShow && (
+          <div className='bg-itemBg h-14 w-[98%] mx-2 flex flex-col justify-end rounded px-2'>
+            <div className='flex w-full mb-2 justify-between'>
+              <div className='flex items-center'>
+                <img
+                  draggable={false}
+                  className='h-10 w-10 rounded object-cover mr-4'
+                  src={musicData.snippet.thumbnails.medium.url}
+                />
+                <div>
+                  <div className='text-white text-sm font-semibold w-60'>{title}</div>
+                  <div className='text-iconColor text-sm'>{musicData.snippet.channelTitle}</div>
+                </div>
+              </div>
+              <div className='flex items-center mr-4'>
+                <LoveButton musicId={musicId} musicData={musicData} width='24' height='24' />
+                <div className='cursor-pointer hover:scale-105' onClick={handlePlayPause}>
+                  {isPlay ? (
+                    <PauseIcon width='20' height='20' className='fill-white' />
+                  ) : (
+                    <PlayIcon width='20' height='20' className='fill-white' />
+                  )}
+                </div>
+              </div>
+            </div>
+            <input
+              className='w-[98%] h-[2.5px]'
+              type='range'
+              min={0}
+              max={0.999999}
+              step='any'
+              value={played}
+              id='music-time-mobile-input'
+              readOnly
+              ref={musicInput}
+            />
+          </div>
+        )}
+      </div>
+    </>
   )
 }
