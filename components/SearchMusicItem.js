@@ -83,13 +83,7 @@ export default function SearchMusicItem({ musicData }) {
         </div>
       </div>
       <div className='flex items-center w-[30%] justify-end'>
-        <div onClick={(e) => handleLoved(e)} className='mr-8'>
-          <LoveButton
-            musicData={musicData}
-            dataPath={`collection/${authKey}/items/${musicData.id.videoId}`}
-            notify={{ added: 'Added to your Favorite Songs', deleted: 'Removed from your Favorite Songs' }}
-          />
-        </div>
+        <LoveButton musicData={musicData} className='mr-4 cursor-pointer' />
         <Duration isoTime={duration} className='text-navbarColor font-semibold w-2/5' />
       </div>
     </div>

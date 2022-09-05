@@ -112,7 +112,7 @@ export default function PlayListItem({ data, path, index }) {
       </div>
       <DateConvert className='text-iconColor font-semibold text-sm w-1/5' data={date} />
       <div className='flex justify-end items-center w-[10%]'>
-        <LoveButton musicId={itemId} musicData={data} />
+        <LoveButton musicId={itemId} musicData={data} className='mr-4 cursor-pointer' />
         <Duration isoTime={duration} className='text-navbarColor font-semibold w-[35%]' />
       </div>
       <div

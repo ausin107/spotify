@@ -30,13 +30,13 @@ export default function Row({ title, data }) {
     },
   }
   return (
-    <div className='p-6 lg:w-[83.333vw] w-screen'>
-      <h2 className='text-white font-bold text-2xl mb-6'>{title}</h2>
+    <div className='lg:p-6 sm:mb-8 sm:p-2 lg:w-[83.333vw] w-screen'>
+      <h2 className='text-white font-bold lg:text-2xl sm:text-lg sm:ml-2 lg:mb-6 sm:mb-3'>{title}</h2>
       <Carousel
         ssr={true}
         slidesToSlide={3}
         containerClass=''
-        itemClass='text-white px-3'
+        itemClass='text-white lg:px-3 sm:px-2'
         keyBoardControl
         removeArrowOnDeviceType={['tablet', 'mobile']}
         responsive={responsive}>

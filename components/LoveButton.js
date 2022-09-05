@@ -44,13 +44,9 @@ export default function LoveButton({ musicId, musicData, className, width, heigh
   return (
     <div onClick={(e) => handleLoveMusic(e)} className={className}>
       {isLove ? (
-        <LoveMusicActive
-          className='fill-activeIcon hover:fill-activeIconHover mr-4 cursor-pointer'
-          width={width}
-          height={height}
-        />
+        <LoveMusicActive className='fill-activeIcon hover:fill-activeIconHover' width={width} height={height} />
       ) : (
-        <LoveMusic className='fill-musicPlayer hover:fill-white mr-4 cursor-pointer' width={width} height={height} />
+        <LoveMusic className='fill-musicPlayer hover:fill-white' width={width} height={height} />
       )}
     </div>
   )

@@ -10,7 +10,6 @@ import { loadAllExtPlaylists } from './extPlaylists/extPlaylistsSlice'
 import { setShow } from './toast/toastSlice'
 import MusicsList from './MusicsList'
 import { loadItemsSuccess } from './collection/collectionSlice'
-import LoveButton from './LoveButton'
 export default function PlaylistsBody({ playlistItems, path, currentPlId, extPlaylistInfo, isLovedPl }) {
   const [isShowPlMenu, setShowPlMenu] = useState(false)
   const dispatch = useDispatch()
