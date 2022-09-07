@@ -3,7 +3,7 @@ import { ClockIcon } from './Icon'
 export default function MusicsList({ data, path }) {
   return (
     <div>
-      <div className='flex px-6 pb-2'>
+      <div className='lg:flex px-6 pb-2 hidden'>
         <div className='text-iconColor text-sm w-[3%]'>#</div>
         <div className='text-iconColor text-sm w-2/5'>NAME</div>
         <div className='text-iconColor text-sm w-1/4'>ALBUM</div>
@@ -13,7 +13,7 @@ export default function MusicsList({ data, path }) {
         </div>
         <div className='text-iconColor text-sm w-[3%]'></div>
       </div>
-      <div className='border-t border-searchChildBg flex flex-col pt-4 pb-4'>
+      <div className='lg:border-t border-searchChildBg flex flex-col pt-4 pb-4'>
         {data.map((item, index) => {
           return <PlayListItem key={index} data={item} path={path} index={index} />
         })}

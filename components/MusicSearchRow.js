@@ -7,23 +7,10 @@ import { setNotPlayList, setPlayPauseMusic, showMusicPlayer } from './music_play
 export default function MusicSearchRow({ musicData, title }) {
   const router = useRouter()
   const dispatch = useDispatch()
-  const musicState = useSelector((state) => state.player)
-  const handleShow = (musicId, data) => {
-    if (router.pathname == '/search/playlists') {
-      dispatch(updateCurrentPlInfo(data))
-      router.push('/search/playlist')
-    } else {
-      dispatch(setNotPlayList())
-      const musicInfo = {
-        musicId,
-        musicData: data,
-      }
-      if (musicState.musicId != musicId) {
-        dispatch(showMusicPlayer(musicInfo))
-      } else if (musicState.musicId == musicId) {
-        dispatch(setPlayPauseMusic())
-      }
-    }
+  const handleShow = (data) => {
+    dispatch(updateCurrentPlInfo(data))
+    console.log(data)
+    router.push('/search/playlist')
   }
   return (
     <>
@@ -44,7 +31,7 @@ export default function MusicSearchRow({ musicData, title }) {
             .replaceAll('|', '')
           title = title.length > 80 ? title.slice(0, 80) + '...' : title
           return (
-            <div key={index} className='flex mb-4 items-center' onClick={() => handleShow(item.id.videoId, item)}>
+            <div key={index} className='flex mb-4 items-center' onClick={() => handleShow(item)}>
               <img
                 draggable={false}
                 className='shadow-2xl h-14 w-14 object-cover mr-4'

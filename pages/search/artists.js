@@ -8,7 +8,7 @@ export default function Artists() {
     setArtists(artistData)
   }, [artistData])
   return (
-    <div className='grid grid-cols-5 gap-6 pb-40 pt-32 px-8'>
+    <div className='grid lg:grid-cols-5 sm:grid-cols-3 gap-6 pb-40 pt-32 lg:px-8 sm:px-4'>
       {artists?.map((item, index) => {
         return (
           <div
