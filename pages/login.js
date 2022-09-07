@@ -135,7 +135,7 @@ export default function Login() {
           disabled={isLoading}
           type='submit'
           className='w-36 flex items-center justify-center bg-activeIcon hover:bg-activeIconHover hover:scale-105 text-lg font-semibold px-4 py-3 rounded-full'>
-          {isLoading && <SpinIcon />}
+          {isLoading && <SpinIcon className='animate-spin -ml-1 mr-3 text-white' width={20} />}
           LOGIN
         </button>
       </form>

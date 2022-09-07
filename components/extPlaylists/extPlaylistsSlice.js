@@ -2,11 +2,18 @@ import { createSlice } from '@reduxjs/toolkit'
 const initialState = {
   allExtPlaylist: null,
   currentPlInfo: null,
+  isLoading: false,
 }
 export const extPlaylistsSlice = createSlice({
   name: 'ytPlaylist',
   initialState,
   reducers: {
+    startLoading: (state) => {
+      state.isLoading = true
+    },
+    endLoading: (state) => {
+      state.isLoading = false
+    },
     loadAllExtPlaylists: (state, action) => {
       state.allExtPlaylist = action.payload
     },
@@ -16,5 +23,5 @@ export const extPlaylistsSlice = createSlice({
   },
 })
 
-export const { loadAllExtPlaylists, updateCurrentPlInfo } = extPlaylistsSlice.actions
+export const { loadAllExtPlaylists, updateCurrentPlInfo, startLoading, endLoading } = extPlaylistsSlice.actions
 export default extPlaylistsSlice.reducer

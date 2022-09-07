@@ -2,7 +2,7 @@ import { useRef, useState, useEffect } from 'react'
 import { PlayIcon, PauseIcon } from './Icon'
 import { useDispatch, useSelector } from 'react-redux/'
 import { showMusicPlayer, setPlayPauseMusic, setNotPlayList } from './music_player/musicPlayerSlice'
-import { updateCurrentPlInfo } from './extPlaylists/extPlaylistsSlice'
+import { updateCurrentPlInfo, startLoading } from './extPlaylists/extPlaylistsSlice'
 import { useRouter } from 'next/router'
 export default function RowItem({ data }) {
   const dispatch = useDispatch()
@@ -17,6 +17,7 @@ export default function RowItem({ data }) {
   const router = useRouter()
   const handleShow = () => {
     if (router.pathname == '/search/playlists') {
+      dispatch(startLoading())
       dispatch(updateCurrentPlInfo(data))
       router.push('/search/playlist')
     } else {

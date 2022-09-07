@@ -66,9 +66,9 @@ export const LoveIcon = ({ className }) => {
     </svg>
   )
 }
-export const BackIcon = ({ className }) => {
+export const BackIcon = ({ className, onClick }) => {
   return (
-    <svg role='img' height='24' width='24' className={className} viewBox='0 0 24 24'>
+    <svg role='img' height='24' width='24' className={className} onClick={onClick} viewBox='0 0 24 24'>
       <path d='M15.957 2.793a1 1 0 010 1.414L8.164 12l7.793 7.793a1 1 0 11-1.414 1.414L5.336 12l9.207-9.207a1 1 0 011.414 0z'></path>
     </svg>
   )
@@ -244,7 +244,9 @@ export const GoogleIcon = ({ className, width, height }) => {
 export const SpinIcon = ({ className, width, height }) => {
   return (
     <svg
-      className='animate-spin -ml-1 mr-3 h-5 w-5 text-white'
+      className={className}
+      width={width}
+      height={height}
       xmlns='http://www.w3.org/2000/svg'
       fill='none'
       viewBox='0 0 24 24'>
@@ -274,7 +276,7 @@ export const LogoutIcon = ({ className, width, height }) => {
 }
 export const EmptyIcon = ({ className, width, height, onClick }) => {
   return (
-    <svg role='img' hheight={height} width={width} className={className} onClick={onClick} viewBox='0 0 24 24'>
+    <svg role='img' height={height} width={width} className={className} onClick={onClick} viewBox='0 0 24 24'>
       <path d='M3.293 3.293a1 1 0 011.414 0L12 10.586l7.293-7.293a1 1 0 111.414 1.414L13.414 12l7.293 7.293a1 1 0 01-1.414 1.414L12 13.414l-7.293 7.293a1 1 0 01-1.414-1.414L10.586 12 3.293 4.707a1 1 0 010-1.414z'></path>
     </svg>
   )

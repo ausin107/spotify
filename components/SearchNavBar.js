@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useState, useEffect, useRef } from 'react'
 import { SearchIcon, EmptyIcon } from './Icon'
 import { loadSearchMusic, loadSearchPlaylists, loadAllMusicArtics } from '../lib/loadData'
-import { updatePLSearchData, updateSearchData, updateArtiscData } from './search/searchSlice'
+import { updatePLSearchData, updateSearchData, updateArtiscData, startLoading, endLoading } from './search/searchSlice'
 export default function SearchNavBar() {
   const [inputValue, setInputValue] = useState('')
   const dispatch = useDispatch()
@@ -13,6 +13,7 @@ export default function SearchNavBar() {
   const navbarRef = useRef()
   const inputRef = useRef()
   const handleSumbit = async () => {
+    dispatch(startLoading())
     const musicData = await loadSearchMusic(inputValue, 50, '')
     dispatch(updateSearchData({ musicData: musicData.items }))
     const plData = await loadSearchPlaylists(inputValue, 15)
@@ -22,6 +23,7 @@ export default function SearchNavBar() {
     })
     const allArtistData = await loadAllMusicArtics(artistsId)
     dispatch(updateArtiscData({ actistsData: allArtistData }))
+    dispatch(endLoading())
   }
   const handleClear = () => {
     setInputValue('')
@@ -48,7 +50,7 @@ export default function SearchNavBar() {
   }, [router.pathname, musicData])
   return (
     <>
-      {router.pathname.includes('search') && (
+      {router.pathname.includes('search') && router.pathname != '/search/playlist' && (
         <div className='flex fixed z-30 w-full lg:hidden items-center'>
           <div className='w-full bg-inputPlBorder flex py-3 px-3'>
             <SearchIcon height='24' width='24' className='fill-white mr-3' />

@@ -1,15 +1,14 @@
 import React from 'react'
 import RowItem from './RowItem'
-import { updateCurrentPlInfo } from './extPlaylists/extPlaylistsSlice'
+import { updateCurrentPlInfo, startLoading } from './extPlaylists/extPlaylistsSlice'
 import { useRouter } from 'next/router'
 import { useDispatch, useSelector } from 'react-redux'
-import { setNotPlayList, setPlayPauseMusic, showMusicPlayer } from './music_player/musicPlayerSlice'
 export default function MusicSearchRow({ musicData, title }) {
   const router = useRouter()
   const dispatch = useDispatch()
   const handleShow = (data) => {
+    dispatch(startLoading())
     dispatch(updateCurrentPlInfo(data))
-    console.log(data)
     router.push('/search/playlist')
   }
   return (

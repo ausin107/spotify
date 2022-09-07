@@ -159,7 +159,7 @@ export default function SignUp() {
           disabled={isLoading}
           type='submit'
           className='bg-activeIconHover text-black font-bold py-4 px-8 rounded-full hover:scale-105 cursor-pointer w-[45%] text-center flex items-center justify-center'>
-          {isLoading && <SpinIcon />}
+          {isLoading && <SpinIcon className='animate-spin -ml-1 mr-3 text-white' width={20} />}
           Đăng ký
         </button>
       </form>

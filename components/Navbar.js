@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import { useSelector, useDispatch } from 'react-redux'
 import { logoutSuccess } from './auth/authSlice'
 import { loadAllMusicArtics } from '../lib/loadData'
-import { updatePLSearchData, updateSearchData, updateArtiscData } from './search/searchSlice'
+import { updatePLSearchData, updateSearchData, updateArtiscData, startLoading, endLoading } from './search/searchSlice'
 import { loadSearchMusic, loadSearchPlaylists } from '../lib/loadData'
 export default function Navbar() {
   const [currentHeight, setCurrentHeight] = useState()
@@ -53,6 +53,7 @@ export default function Navbar() {
     }, 700)
   }
   const handleSumbit = async () => {
+    dispatch(startLoading())
     const musicData = await loadSearchMusic(inputValue, 50, '')
     dispatch(updateSearchData({ musicData: musicData.items }))
     const plData = await loadSearchPlaylists(inputValue, 15)
@@ -62,6 +63,7 @@ export default function Navbar() {
     })
     const allArtistData = await loadAllMusicArtics(artistsId)
     dispatch(updateArtiscData({ actistsData: allArtistData }))
+    dispatch(endLoading())
   }
   const handleClear = () => {
     setInputValue('')

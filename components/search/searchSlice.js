@@ -4,12 +4,19 @@ const initialState = {
   musicData: null,
   playlistData: null,
   articsData: null,
+  isLoading: false,
 }
 
 export const searchSlice = createSlice({
   name: 'search',
   initialState,
   reducers: {
+    startLoading: (state) => {
+      state.isLoading = true
+    },
+    endLoading: (state) => {
+      state.isLoading = false
+    },
     updateSearchData: (state, action) => {
       state.musicData = action.payload.musicData
     },
@@ -22,5 +29,5 @@ export const searchSlice = createSlice({
   },
 })
 
-export const { updateSearchData, updatePLSearchData, updateArtiscData } = searchSlice.actions
+export const { updateSearchData, updatePLSearchData, updateArtiscData, startLoading, endLoading } = searchSlice.actions
 export default searchSlice.reducer
