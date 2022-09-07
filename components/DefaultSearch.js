@@ -1,8 +1,7 @@
-import React from 'react'
 import { allSearchPageData } from './allSearchPageData'
 export default function DefaultSearch() {
   return (
-    <div className=' px-8 pt-24'>
+    <div className='px-8 sm:pt-14 lg:pt-24'>
       <div className='lg:text-2xl sm:text-lg font-bold text-white mb-8'>Browse all</div>
       <div className='grid lg:grid-cols-6 lg:gap-6 sm:grid-cols-2 sm:gap-4'>
         {allSearchPageData.map((item) => {

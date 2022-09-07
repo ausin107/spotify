@@ -18,7 +18,7 @@ export default function SearchMusicItem({ musicData }) {
     .replace('(', '')
     .replace(')', '')
     .replaceAll('|', '')
-  musicName = musicName.length >= 50 ? musicName.slice(0, 50) + '...' : musicName
+  musicName = musicName.length >= 35 ? musicName.slice(0, 35) + '...' : musicName
   useEffect(() => {
     const getDuration = async () => {
       let data = await loadMusicData(musicData.id.videoId)
@@ -53,9 +53,9 @@ export default function SearchMusicItem({ musicData }) {
       onClick={handlePlay}
       ref={itemRef}
       tabIndex={0}>
-      <div className='flex items-center w-[70%]'>
+      <div className='flex items-center w-[85%]'>
         <div
-          className='h-11 w-11 bg-center bg-cover '
+          className='lg:h-11 lg:w-11 sm:h-10 sm:w-10 bg-center bg-cover '
           style={{ backgroundImage: `url(${musicData.snippet.thumbnails.medium.url})` }}>
           <div
             onClick={(e) => handlePlayPause(e)}
@@ -82,7 +82,7 @@ export default function SearchMusicItem({ musicData }) {
           </div>
         </div>
       </div>
-      <div className='flex items-center w-[30%] justify-end'>
+      <div className='flex items-center w-[15%] '>
         <LoveButton musicData={musicData} className='mr-4 cursor-pointer' />
         <Duration isoTime={duration} className='text-navbarColor font-semibold w-2/5' />
       </div>

@@ -37,12 +37,16 @@ export default function TopResult({ musicData }) {
     }
   }
   return (
-    <div className='flex pt-28 relative px-8 w-screen mb-10'>
-      <div className='w-[30%]' onClick={handleShow}>
-        <div className='text-2xl font-bold text-white mb-7'>Top Result</div>
-        <div className='group bg-itemBg hover:bg-itemActiveBg rounded pl-5 py-5 relative transition-all duration-300'>
-          <img className='rounded w-48 mb-8 shadow-2xl' src={musicData[0].snippet.thumbnails.medium.url} alt='' />
-          <div className='font-bold text-2xl text-white mb-4'>{musicName}</div>
+    <div className='flex pt-28 relative lg:px-8 sm:px-4 w-screen lg:mb-10 sm:mb-7'>
+      <div className='lg:w-[30%] sm:w-[40%]' onClick={handleShow}>
+        <div className='text-2xl font-bold text-white lg:mb-7 sm:mb-3'>Top Result</div>
+        <div className='group bg-itemBg hover:bg-itemActiveBg rounded lg:pl-5 lg:py-5 sm:px-3 sm:py-3 relative transition-all duration-300'>
+          <img
+            className='rounded w-48 lg:mb-8 sm:mb-5 shadow-2xl'
+            src={musicData[0].snippet.thumbnails.medium.url}
+            alt=''
+          />
+          <div className='font-bold text-2xl text-white mb-4'>{musicName.slice(0, 15)}</div>
           <div className='flex items-center'>
             <div className='text-iconColor text-sm font-bold mr-3'>
               {musicData[0].snippet.channelTitle.replace('Official', '').trim()}
@@ -60,8 +64,8 @@ export default function TopResult({ musicData }) {
           </div>
         </div>
       </div>
-      <div className='w-[52%] pl-8'>
-        <div className='text-2xl font-bold text-white mb-7'>Music</div>
+      <div className='lg:w-[52%] sm:w-[60%] lg:pl-8 sm:pl-4'>
+        <div className='text-2xl font-bold text-white lg:mb-7 sm:mb-3'>Music</div>
         <div className='flex flex-col'>
           {musicData.map((item, index) => {
             if (index < 4) {

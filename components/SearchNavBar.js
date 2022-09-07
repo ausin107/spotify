@@ -1,11 +1,37 @@
 import { useRouter } from 'next/router'
-import { useEffect, useRef } from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { useState, useEffect, useRef } from 'react'
+import { SearchIcon, EmptyIcon } from './Icon'
+import { loadSearchMusic, loadSearchPlaylists, loadAllMusicArtics } from '../lib/loadData'
+import { updatePLSearchData, updateSearchData, updateArtiscData } from './search/searchSlice'
 export default function SearchNavBar() {
+  const [inputValue, setInputValue] = useState('')
+  const dispatch = useDispatch()
+  const musicData = useSelector((state) => state.search.musicData)
   const router = useRouter()
   const itemsRef = useRef([])
   const navbarRef = useRef()
-  const musicData = useSelector((state) => state.search.musicData)
+  const inputRef = useRef()
+  const handleSumbit = async () => {
+    const musicData = await loadSearchMusic(inputValue, 50, '')
+    dispatch(updateSearchData({ musicData: musicData.items }))
+    const plData = await loadSearchPlaylists(inputValue, 15)
+    dispatch(updatePLSearchData({ playlistData: plData.items }))
+    const artistsId = musicData.items.map((item) => {
+      return item.snippet.channelId
+    })
+    const allArtistData = await loadAllMusicArtics(artistsId)
+    dispatch(updateArtiscData({ actistsData: allArtistData }))
+  }
+  const handleClear = () => {
+    setInputValue('')
+    inputRef.current.focus()
+  }
+  const handleEnter = (e) => {
+    if (e.key == 'Enter') {
+      handleSumbit()
+    }
+  }
   useEffect(() => {
     if (router.pathname.includes('search')) {
       const items = ['/search', '/search/playlists', '/search/musics', '/search/artists']
@@ -22,8 +48,24 @@ export default function SearchNavBar() {
   }, [router.pathname, musicData])
   return (
     <>
+      {router.pathname.includes('search') && (
+        <div className='flex fixed z-30 w-full lg:hidden items-center'>
+          <div className='w-full bg-inputPlBorder flex py-3 px-3'>
+            <SearchIcon height='24' width='24' className='fill-white mr-3' />
+            <input
+              value={inputValue}
+              placeholder='Type music name...'
+              className='w-full outline-none font-semibold text-white bg-inputPlBorder'
+              onChange={(e) => setInputValue(e.target.value)}
+              onKeyDown={(e) => handleEnter(e)}
+              ref={inputRef}
+            />
+            <EmptyIcon className='fill-white' width='24' height='24' onClick={handleClear} />
+          </div>
+        </div>
+      )}
       {!!musicData && router.pathname.includes('search') && router.pathname != '/search/playlist' && (
-        <div className='bg-bgColor flex flex-row h-12 w-10/12 fixed left-[16.666%] top-16 px-8 items-center z-20 transition-all duration-500'>
+        <div className='bg-bgColor flex flex-row lg:h-12 sm:h-14 lg:w-10/12 w-full fixed lg:left-[16.666%] lg:top-16 sm:top-12 lg:px-8 sm:px-4 items-center z-20 transition-all duration-500'>
           <div
             ref={(el) => (itemsRef.current[0] = el)}
             onClick={() => router.push('/search')}
