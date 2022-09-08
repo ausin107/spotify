@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 import { BackIcon, SpinIcon } from '../../components/Icon'
 import { loadPlaylistItems } from '../../lib/loadData'
 import { getSingleFavoriteMusic } from '../../lib/firebaseAction'
-import { endLoading, startLoading } from '../../components/extPlaylists/extPlaylistsSlice'
+import { endLoading } from '../../components/extPlaylists/extPlaylistsSlice'
 export default function Playlist() {
   const [plData, setPlData] = useState()
   const [isLovedPl, setLovedPl] = useState(false)
@@ -37,8 +37,12 @@ export default function Playlist() {
   }, [currentExtPlaylist, allExtPlaylist])
   return (
     <>
-      <BackIcon width='24' height='24' className='fill-white absolute top-4 left-4' onClick={() => router.back()} />
-
+      <BackIcon
+        width='24'
+        height='24'
+        className='fill-white absolute top-4 left-4 block lg:hidden'
+        onClick={() => router.back()}
+      />
       {isLoading ? (
         <div className='w-full h-screen flex items-center justify-center'>
           <SpinIcon width={36} className='animate-spin text-white' />
@@ -46,28 +50,26 @@ export default function Playlist() {
       ) : (
         <>
           {!!plData && (
-            <div className='lg:pt-20 sm:pt-4 lg:pb-48 sm:pb-40 px-9 flex lg:flex-row flex-col bg-greyBg lg:items-end items-center'>
-              <div className='lg:w-60 lg:h-60 sm:w-64 sm:h-64 shadow-3xl lg:mb-0 sm:mb-2'>
+            <div className='lg:pt-20 sm:pt-16 lg:pb-48 sm:pb-40 px-9 flex lg:flex-row flex-col bg-greyBg lg:items-end'>
+              <div className='w-full lg:w-60 lg:h-60 sm:h-72 flex sm:justify-center lg:mb-0 sm:mb-3'>
                 <img
                   src={currentExtPlaylist.snippet.thumbnails.medium.url}
                   alt=''
-                  className='lg:w-60 lg:h-60 sm:w-64 sm:h-64 object-cover'
+                  className='lg:w-60 lg:h-60 sm:w-72 sm:h-72 object-cover shadow-3xl'
                 />
               </div>
-              <div className='px-6 sm:mb-4 lg:mb-0'>
+              <div className='lg:px-6 sm:mb-4 lg:mb-0'>
                 <div
                   className='uppercase text-white font-bold text-xs mb-2 lg:block hidden'
                   style={{ textShadow: '4px -1px 46px rgb(0 0 0 / 75%)' }}>
                   Playlist
                 </div>
                 <div
-                  className='text-white font-bold lg:text-8xl sm:text-2xl lg:mb-12 sm:mb-2 sm:uppercase lg:normal-case'
+                  className='text-white font-bold lg:text-8xl sm:text-2xl lg:mb-12 sm:mb-2 normal-case'
                   style={{ textShadow: '4px -1px 46px rgb(0 0 0 / 75%)' }}>
                   {currentExtPlaylist.snippet.title.slice(0, 15)}
                 </div>
-                <div
-                  className='text-white text-xs font-bold lg:block hidden'
-                  style={{ textShadow: '4px -1px 46px rgb(0 0 0 / 75%)' }}>
+                <div className='text-white text-xs font-bold' style={{ textShadow: '4px -1px 46px rgb(0 0 0 / 75%)' }}>
                   User - {plData.length} song
                 </div>
               </div>

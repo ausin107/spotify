@@ -81,8 +81,8 @@ export default function Sidebar() {
   }, [allPlaylist, allExtPlaylist])
   useEffect(() => {
     const getAllPlaylists = async () => {
-      const result = await getAllPlaylistsInfo(`collection/${authKey}/playlists`)
-      dispatch(loadAllPlaylist(result))
+      const playlists = await getAllPlaylistsInfo(`collection/${authKey}/playlists`)
+      dispatch(loadAllPlaylist(playlists))
       const extplaylists = await getAllPlaylistsInfo(`collection/${authKey}/extplaylists`)
       dispatch(loadAllExtPlaylists(extplaylists))
     }

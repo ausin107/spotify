@@ -42,7 +42,7 @@ export default function SearchNavBar() {
       })
       items.map((item, index) => {
         if (item == router.pathname) {
-          itemsRef.current[index]?.classList.add('!text-black', '!bg-white')
+          itemsRef.current[index]?.classList.add('!text-black', 'lg:!bg-white', 'sm:!bg-activeIconHover')
           navbarRef?.current?.classList.remove('hidden')
         }
       })

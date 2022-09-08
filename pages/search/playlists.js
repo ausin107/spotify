@@ -7,7 +7,5 @@ export default function Playlist() {
   useEffect(() => {
     setPlData(playlistData)
   }, [playlistData])
-  return (
-    <div className='lg:pb-32 sm:pb-20 pt-32 lg:px-8 sm:px-0'>{!!plData && <MusicSearchRow musicData={plData} />}</div>
-  )
+  return <div className='lg:py-32 sm:py-28 lg:px-8 sm:px-0'>{!!plData && <MusicSearchRow musicData={plData} />}</div>
 }

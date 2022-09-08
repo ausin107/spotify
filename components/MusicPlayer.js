@@ -17,6 +17,9 @@ import {
   Playlists,
   ClosePlayerIcon,
   OptionIcons,
+  ConnectDevice,
+  ConnectIcon,
+  ShareIcon,
 } from './Icon'
 import LoveButton from './LoveButton'
 import Duration from './Duration'
@@ -33,6 +36,7 @@ export default function MusicPlayer() {
   const [duration, setDuration] = useState(0)
   const [volume, setVolume] = useState(0.5)
   const [isShowPlayer, setShowPlayer] = useState(false)
+  const [isShowVolumn, setShowVolumn] = useState(false)
   const [volumeIcon, setVolumeIcon] = useState(
     <VolumeIconMedium className='fill-musicPlayer hover:fill-white' width='16' height='16' />
   )
@@ -40,7 +44,7 @@ export default function MusicPlayer() {
   const loopIConRef = useRef()
   const playerRef = useRef()
   const mixMusicRef = useRef()
-  const volumeRef = useRef()
+  const volumeRef = useRef([])
   const queueRef = useRef()
   const dispatch = useDispatch()
   const isShow = useSelector((state) => state.player.isShow)
@@ -98,7 +102,11 @@ export default function MusicPlayer() {
   }
   const handleSetVolume = (e) => {
     setVolume(e.target.value)
-    volumeRef.current.style.backgroundSize = e.target.value * 100 + '%'
+    volumeRef.current.map((item) => {
+      if (!!item) {
+        item.style.backgroundSize = e.target.value * 100 + '%'
+      }
+    })
     if (e.target.value > 0 && e.target.value < 0.3) {
       setVolumeIcon(<VolumeIconLow className='fill-musicPlayer hover:fill-white' width='16' height='16' />)
     } else if (e.target.value >= 0.3 && e.target.value < 0.6) {
@@ -111,11 +119,19 @@ export default function MusicPlayer() {
   }
   const handleMuted = () => {
     if (volume != 0) {
-      volumeRef.current.style.backgroundSize = '0%'
+      volumeRef.current.map((item) => {
+        if (!!item) {
+          item.style.backgroundSize = '0%'
+        }
+      })
       setVolume(0)
       setVolumeIcon(<VolumeIconMuted className='fill-musicPlayer hover:fill-white' width='16' height='16' />)
     } else {
-      volumeRef.current.style.backgroundSize = '50%'
+      volumeRef.current.map((item) => {
+        if (!!item) {
+          item.style.backgroundSize = '50%'
+        }
+      })
       setVolume(0.5)
       setVolumeIcon(<VolumeIconMedium className='fill-musicPlayer hover:fill-white' width='16' height='16' />)
     }
@@ -323,7 +339,7 @@ export default function MusicPlayer() {
                     value={volume}
                     id='music-volume-input'
                     onChange={(e) => handleSetVolume(e)}
-                    ref={volumeRef}
+                    ref={(el) => (volumeRef.current[0] = el)}
                   />
                 </div>
               </div>
@@ -376,6 +392,34 @@ export default function MusicPlayer() {
         )}
       </div>
       <div className='fixed z-50 lg:hidden top-0 left-0 select-none'>
+        {isShowVolumn && (
+          <div className='w-screen h-screen bg-black flex flex-col items-center'>
+            <ClosePlayerIcon
+              width='24'
+              height='24'
+              className='fill-white absolute top-4 left-4'
+              onClick={() => setShowVolumn(false)}
+            />
+            <ConnectDevice className='text-white w-4/5 mt-20 mb-4' />
+            <div className='text-white font-bold text-2xl mb-72'>Connect to a device</div>
+            <div className='flex items-center px-4 mb-8 w-full'>
+              <div onClick={handleMuted} className='cursor-pointer mr-4'>
+                {volumeIcon}
+              </div>
+              <input
+                className='w-full h-1 mx-2 cursor-pointer'
+                type='range'
+                min={0}
+                max={1}
+                step='any'
+                value={volume}
+                id='music-volume-input'
+                onChange={(e) => handleSetVolume(e)}
+                ref={(el) => (volumeRef.current[1] = el)}
+              />
+            </div>
+          </div>
+        )}
         {isShowPlayer && (
           <div className='bg-mobilePlayerBg w-screen h-screen flex flex-col p-6'>
             <div className='flex items-center justify-between'>
@@ -415,7 +459,7 @@ export default function MusicPlayer() {
                 <Duration time={duration} className='text-navbarColor text-xs font-semibold' />
               </div>
             </div>
-            <div className='flex mt-7 justify-between items-center'>
+            <div className='flex mt-7 mb-6 justify-between items-center'>
               <div className='' onClick={handleMixMusic}>
                 <MixMusic className='fill-white' width='24' height='24' iconRef={mixMusicRef} />
               </div>
@@ -439,6 +483,10 @@ export default function MusicPlayer() {
               <div className='' onClick={handleLoopMusic}>
                 <LoopMusic className='fill-white' width='24' height='24' iconRef={loopIConRef} />
               </div>
+            </div>
+            <div className='flex justify-between'>
+              <ConnectIcon width='16' heigth='16' className='fill-white' onClick={() => setShowVolumn(true)} />
+              <ShareIcon width='16' heigth='16' className='fill-white' />
             </div>
           </div>
         )}

@@ -375,3 +375,60 @@ export const ClosePlayerIcon = ({ className, width, height, onClick }) => {
     </svg>
   )
 }
+export const ConnectDevice = ({ className, width, height, onClick }) => {
+  return (
+    <svg viewBox='0 0 232 100' className={className}>
+      <title>Connect</title>
+      <defs>
+        <clipPath transform='translate(-64 -123.45)'>
+          <circle cx='284.93' cy='215.43' r='.96' fill='none'></circle>
+        </clipPath>
+        <clipPath id='devices-path-b' transform='translate(-64 -123.45)'>
+          <path fill='none' d='M0 0h360v640H0z'></path>
+        </clipPath>
+      </defs>
+      <path
+        fill='currentColor'
+        d='M0 94.1h89.32v2H0zm174-59.38h-2V3.65H44.02v30.24h-2V1.65H174v33.07zm-73.5 59.33h24.02v2H100.5z'></path>
+      <g clipPath='url(#devices-path-a)'>
+        <g clipPath='url(#devices-path-b)'>
+          <path fill='currentColor' d='M214.97 86.02h11.93v11.92h-11.93z'></path>
+        </g>
+      </g>
+      <path d='M160.28 77.73a2.09 2.09 0 1 0 2.1 2.09 2.1 2.1 0 0 0-2.1-2.09z' fill='currentColor'></path>
+      <path
+        d='M172.55 92.1l-3.86-18.13a5.84 5.84 0 0 0-5.71-4.62H141.7a5.84 5.84 0 0 0-5.71 4.62l-3.86 18.13a5.15 5.15 0 0 0 4 6.11 6.55 6.55 0 0 0 6.34-2.15l4.5-5.26h10.81l4.5 5.26a6.54 6.54 0 0 0 6.34 2.15 5.15 5.15 0 0 0 4-6.11zm-2.31 2.84a3.24 3.24 0 0 1-2.05 1.41 4.67 4.67 0 0 1-4.5-1.52l-4.57-5.34-.49-.58h-12.57L141 94.83a4.66 4.66 0 0 1-4.5 1.53 3.26 3.26 0 0 1-2.51-3.86l3.86-18.13a4 4 0 0 1 3.86-3.13H163a4 4 0 0 1 3.86 3.13l3.86 18.13a3.22 3.22 0 0 1-.48 2.44z'
+        fill='currentColor'></path>
+      <path
+        d='M145.6 79.12v-2.79h-1.9v2.79h-2.8v1.9h2.8v2.79h1.9v-2.79h2.8v-1.9zm41.15 11.43a12.54 12.54 0 1 1 12.55-12.54 12.56 12.56 0 0 1-12.55 12.54zm0-23.08a10.54 10.54 0 1 0 10.55 10.54 10.56 10.56 0 0 0-10.55-10.51z'
+        fill='currentColor'></path>
+      <circle cx='187.24' cy='53.03' r='1.44' fill='currentColor'></circle>
+      <path
+        d='M202.85 37.13H169.7a4.65 4.65 0 0 0-4.64 4.65v25.9h2v-25.9a2.65 2.65 0 0 1 2.64-2.65h33.15a2.65 2.65 0 0 1 2.64 2.65v51.77a2.66 2.66 0 0 1-2.66 2.65h-28.1v2h28.1a4.66 4.66 0 0 0 4.66-4.65V41.78a4.65 4.65 0 0 0-4.64-4.65zm26.72 28.42h-17.28a2.44 2.44 0 0 0-2.43 2.43v27.35a2.43 2.43 0 0 0 2.43 2.43h17.28a2.44 2.44 0 0 0 2.43-2.43V67.97a2.43 2.43 0 0 0-2.43-2.42zm.43 29.78a.44.44 0 0 1-.43.43h-17.28a.43.43 0 0 1-.43-.43V67.97a.44.44 0 0 1 .43-.43h17.28a.43.43 0 0 1 .43.43zM86.25 83.04h45.63v2H86.25zM80.1 36.21H7.73a2.43 2.43 0 0 0-2.43 2.43v45.84a3.66 3.66 0 0 0 3.65 3.65H80.1a3.65 3.65 0 0 0 3.65-3.65V39.86a3.66 3.66 0 0 0-3.65-3.65zm1.65 48.28a1.65 1.65 0 0 1-1.65 1.65H8.95a1.65 1.65 0 0 1-1.65-1.65V38.64a.43.43 0 0 1 .43-.44H80.1a1.65 1.65 0 0 1 1.65 1.65z'
+        fill='currentColor'></path>
+      <path fill='none' d='M0 0h232v100H0z'></path>
+    </svg>
+  )
+}
+export const ConnectIcon = ({ className, width, height, onClick }) => {
+  return (
+    <svg role='img' height={height} width={width} className={className} onClick={onClick} viewBox='0 0 16 16'>
+      <path d='M6 2.75C6 1.784 6.784 1 7.75 1h6.5c.966 0 1.75.784 1.75 1.75v10.5A1.75 1.75 0 0114.25 15h-6.5A1.75 1.75 0 016 13.25V2.75zm1.75-.25a.25.25 0 00-.25.25v10.5c0 .138.112.25.25.25h6.5a.25.25 0 00.25-.25V2.75a.25.25 0 00-.25-.25h-6.5zm-6 0a.25.25 0 00-.25.25v6.5c0 .138.112.25.25.25H4V11H1.75A1.75 1.75 0 010 9.25v-6.5C0 1.784.784 1 1.75 1H4v1.5H1.75zM4 15H2v-1.5h2V15z'></path>
+      <path d='M13 10a2 2 0 11-4 0 2 2 0 014 0zm-1-5a1 1 0 11-2 0 1 1 0 012 0z'></path>
+    </svg>
+  )
+}
+export const ShareIcon = ({ className, width, height, onClick }) => {
+  return (
+    <svg role='img' height={height} width={width} className={className} onClick={onClick} viewBox='0 0 16 16'>
+      <path d='M12.875 2a1.125 1.125 0 100 2.25 1.125 1.125 0 000-2.25zM10.25 3.125a2.625 2.625 0 11.754 1.841L5.75 8l5.254 3.034a2.625 2.625 0 11-.704 1.326l-5-2.889a2.625 2.625 0 110-2.943l5-2.888a2.634 2.634 0 01-.051-.516zm-7.125 3.75a1.125 1.125 0 100 2.25 1.125 1.125 0 000-2.25zm9.75 4.875a1.125 1.125 0 100 2.25 1.125 1.125 0 000-2.25z'></path>
+    </svg>
+  )
+}
+export const ArrowBackIcon = ({ className, width, height, onClick }) => {
+  return (
+    <svg role='img' height={height} width={width} className={className} onClick={onClick} viewBox='0 0 24 24'>
+      <path d='M13.414 3.5a.999.999 0 00-1.707-.707l-9.207 9.2 9.207 9.202a1 1 0 101.414-1.413L6.335 13H20.5a1 1 0 000-2H6.322l6.799-6.794a.999.999 0 00.293-.707z'></path>
+    </svg>
+  )
+}

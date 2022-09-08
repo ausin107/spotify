@@ -39,7 +39,7 @@ export default function PlayListItem({ data, path, index }) {
       setDuration(duration)
     }
     getDuration()
-    if (router.pathname == '/collection' || router.pathname == '/search/musics') {
+    if (router.pathname == '/collection' || router.pathname.includes('search')) {
       trashRef.current.classList.add('hidden')
     } else {
       trashRef.current.classList.remove('hidden')
@@ -112,11 +112,11 @@ export default function PlayListItem({ data, path, index }) {
       </div>
       <DateConvert className='text-iconColor font-semibold text-sm w-1/5 lg:block hidden' data={date} />
       <div className='flex justify-end items-center lg:w-[10%] sm:w-[25%]'>
-        <LoveButton musicId={itemId} musicData={data} className='mr-4 cursor-pointer' />
+        <LoveButton musicId={itemId} musicData={data} className='mr-4 cursor-pointer lg:w-[15%] sm:w-[11%]' />
         <Duration isoTime={duration} className='text-navbarColor font-semibold w-[35%]' />
       </div>
       <div
-        className='w-[3%] justify-end invisible group-hover:visible group-focus:visible cursor-pointer lg:flex hidden'
+        className='w-[3%] justify-end invisible group-hover:visible group-focus:visible cursor-pointer flex'
         onClick={hanldeRemove}
         ref={trashRef}>
         <TrashCanIcon className='text-iconColor w-4 hover:text-white' />

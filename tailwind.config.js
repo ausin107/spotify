@@ -46,6 +46,8 @@ module.exports = {
         bottomBarBg:
           'linear-gradient(180deg, rgba(3,3,3,0.7021359569218313) 0%, rgba(2,2,2,0.895413267846201) 50%, rgba(0,0,0,1) 100%)',
         mobilePlayerBg: 'linear-gradient(180deg, rgba(93,93,93,1) 0%, rgba(70,70,70,1) 50%, rgba(48,48,48,1) 100%);',
+        collectionMobileBg:
+          'linear-gradient(180deg, rgba(63,1,234,1) 0%, rgba(51,5,178,1) 30%, rgba(18,18,18,1) 100%);',
       },
       boxShadow: {
         '3xl': '-1px 1px 59px 18px rgba(0,0,0,0.3)',

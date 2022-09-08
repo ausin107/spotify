@@ -3,11 +3,13 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getAllFavoriteMusic } from '../lib/firebaseAction'
 import Image from 'next/image'
 import Link from 'next/link'
-import { MusicIcon } from '../components/Icon'
+import { MusicIcon, ArrowBackIcon } from '../components/Icon'
 import PlaylistsBody from '../components/PlaylistsBody'
+import { useRouter } from 'next/router'
 export default function Collection() {
   const [data, setData] = useState('')
   const dispatch = useDispatch()
+  const router = useRouter()
   const authKey = useSelector((state) => state.auth.authKey)
   const allMusic = useSelector((state) => state.collection.items)
   useEffect(() => {
@@ -20,23 +22,31 @@ export default function Collection() {
   }, [allMusic])
   return (
     <div className=''>
-      <div className='pt-20 pb-48 px-9 flex bg-likedBg items-end'>
-        <div className='w-60 h-60 shadow-3xl'>
+      <div className='lg:pt-20 sm:pt-16 pb-48 lg:px-9 sm:px-6 flex lg:bg-likedBg sm:bg-collectionMobileBg lg:items-end sm:items-start'>
+        <div className='w-60 h-60 shadow-3xl hidden lg:block'>
           <Image src='/loveImg.png' width='240' height='240' className='' />
         </div>
-        <div className='px-6'>
+        <div className='lg:px-6'>
           <div
-            className='uppercase text-white font-bold text-xs mb-2'
+            className='uppercase text-white font-bold text-xs mb-2 hidden lg:block'
             style={{ textShadow: '4px -1px 46px rgb(0 0 0 / 75%)' }}>
             Playlist
           </div>
-          <div className='text-white font-bold text-8xl mb-12' style={{ textShadow: '4px -1px 46px rgb(0 0 0 / 75%)' }}>
+          <div
+            className='text-white font-bold lg:text-8xl sm:text-3xl lg:mb-12 sm:mb-4'
+            style={{ textShadow: '4px -1px 46px rgb(0 0 0 / 75%)' }}>
             Favorite Song
           </div>
           <div className='text-white text-xs font-bold' style={{ textShadow: '4px -1px 46px rgb(0 0 0 / 75%)' }}>
             User - {data.length} song
           </div>
         </div>
+        <ArrowBackIcon
+          width='24'
+          height='24'
+          className='lg:hidden fill-white absolute top-4 left-4'
+          onClick={() => router.back()}
+        />
       </div>
       {data.length > 0 ? (
         <PlaylistsBody playlistItems={data} path={`collection/${authKey}/items`} />

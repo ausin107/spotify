@@ -7,9 +7,9 @@ export async function getStaticProps() {
   const GMusic = await loadTrendingMusic('')
   return {
     props: {
-      VNMusic: VNMusic.items,
-      KRMusic: KRMusic.items,
-      GMusic: GMusic.items,
+      VNMusic: VNMusic?.items,
+      KRMusic: KRMusic?.items,
+      GMusic: GMusic?.items,
     },
   }
 }
