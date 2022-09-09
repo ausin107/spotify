@@ -9,6 +9,7 @@ import { endLoading } from '../../components/extPlaylists/extPlaylistsSlice'
 export default function Playlist() {
   const [plData, setPlData] = useState()
   const [isLovedPl, setLovedPl] = useState(false)
+  const [plName, setPlName] = useState('')
   const dispatch = useDispatch()
   const authKey = useSelector((state) => state.auth.authKey)
   const allExtPlaylist = useSelector((state) => state.extplaylist.allExtPlaylist)
@@ -32,6 +33,15 @@ export default function Playlist() {
         setLovedPl(false)
       }
       dispatch(endLoading())
+      let plTitle = currentExtPlaylist?.snippet.title
+      if (window.innerWidth < 640) {
+        plTitle = plTitle?.length > 25 ? plTitle.slice(0, 25) + '...' : plTitle
+      } else if (window.innerWidth >= 640 && window.innerWidth < 1024) {
+        plTitle = plTitle?.length > 50 ? plTitle.slice(0, 50) + '...' : plTitle
+      } else {
+        plTitle = plTitle?.length > 13 ? plTitle.slice(0, 13) + '...' : plTitle
+      }
+      setPlName(plTitle)
     }
     getData()
   }, [currentExtPlaylist, allExtPlaylist])
@@ -50,24 +60,24 @@ export default function Playlist() {
       ) : (
         <>
           {!!plData && (
-            <div className='lg:pt-20 sm:pt-16 lg:pb-48 sm:pb-40 px-9 flex lg:flex-row flex-col bg-greyBg lg:items-end'>
-              <div className='w-full lg:w-60 lg:h-60 sm:h-72 flex sm:justify-center lg:mb-0 sm:mb-3'>
+            <div className='lg:pt-20 pt-16 lg:pb-48 pb-40 sm:px-9 px-4 flex lg:flex-row flex-col bg-greyBg lg:items-end'>
+              <div className='w-full lg:w-60 lg:h-60 sm:h-72 flex justify-center lg:mb-0 mb-3'>
                 <img
                   src={currentExtPlaylist.snippet.thumbnails.medium.url}
                   alt=''
-                  className='lg:w-60 lg:h-60 sm:w-72 sm:h-72 object-cover shadow-3xl'
+                  className='lg:w-60 lg:h-60 sm:w-72 sm:h-72 w-44 h-44 object-cover shadow-3xl'
                 />
               </div>
-              <div className='lg:px-6 sm:mb-4 lg:mb-0'>
+              <div className='lg:px-6 mb-4 lg:mb-0'>
                 <div
                   className='uppercase text-white font-bold text-xs mb-2 lg:block hidden'
                   style={{ textShadow: '4px -1px 46px rgb(0 0 0 / 75%)' }}>
                   Playlist
                 </div>
                 <div
-                  className='text-white font-bold lg:text-8xl sm:text-2xl lg:mb-12 sm:mb-2 normal-case'
+                  className='text-white font-bold lg:text-8xl text-2xl lg:mb-12 mb-2 normal-case'
                   style={{ textShadow: '4px -1px 46px rgb(0 0 0 / 75%)' }}>
-                  {currentExtPlaylist.snippet.title.slice(0, 15)}
+                  {plName}
                 </div>
                 <div className='text-white text-xs font-bold' style={{ textShadow: '4px -1px 46px rgb(0 0 0 / 75%)' }}>
                   User - {plData.length} song

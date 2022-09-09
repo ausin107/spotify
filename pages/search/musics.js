@@ -8,9 +8,5 @@ export default function Musics() {
   useEffect(() => {
     setSearchData(musicData)
   }, [musicData])
-  return (
-    <div className='pb-32 pt-32 lg:px-8 sm:px-4 sm:pt-24'>
-      {searchData?.length > 0 && <MusicsList data={searchData} />}
-    </div>
-  )
+  return <div className='pb-32 lg:px-8 px-4 pt-24'>{searchData?.length > 0 && <MusicsList data={searchData} />}</div>
 }

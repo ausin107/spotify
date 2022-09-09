@@ -52,13 +52,13 @@ export default function PlayList() {
         currentPlId={playListId}
       />
       {isShow ? (
-        <div className='bg-resultBg px-8 pt-20 relative -top-40'>
+        <div className='bg-resultBg sm:px-8 px-4 pt-20 relative -top-40'>
           <div className='border-t border-searchChildBg mb-8'></div>
-          <div className='flex items-center justify-between'>
+          <div className='flex items-center justify-between relative'>
             <div className=''>
-              <div className='text-white text-2xl font-bold mb-6'>Search your music and podcast now</div>
+              <div className='text-white sm:text-2xl text-xl font-bold mb-6'>Search your music and podcast now</div>
               <div className='flex items-center'>
-                <div className='w-[26rem] bg-searchChildBg rounded flex py-2 px-3 mr-2 items-center'>
+                <div className='sm:w-[26rem] w-[20rem] bg-searchChildBg rounded flex py-2 px-3 mr-2 items-center'>
                   <SearchIcon height='16' width='16' className='fill-iconColor mr-2' />
                   <input
                     value={inputValue}
@@ -77,7 +77,7 @@ export default function PlayList() {
                 </button>
               </div>
             </div>
-            <div className='mr-2'>
+            <div className='sm:mr-2 absolute top-0 right-0'>
               <EmptyIcon
                 onClick={() => setShow(false)}
                 className='fill-iconColor cursor-pointer hover:fill-white'
@@ -102,8 +102,8 @@ export default function PlayList() {
           </div>
         </div>
       )}
-      <div className=' lg:px-8 sm:px-6 pt-10 relative -top-40'>
-        <div className='text-white text-2xl font-bold mb-2'>Recommend</div>
+      <div className=' lg:px-8 sm:px-6 px-4 pt-10 relative -top-40'>
+        <div className='text-white sm:text-2xl text-xl font-bold mb-2'>Recommend</div>
         <div className='text-sm text-iconColor font-semibold mb-8'>Based on the content included in this playlist</div>
         {recData &&
           recData.map((item, index) => {

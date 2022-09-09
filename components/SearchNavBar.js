@@ -38,11 +38,11 @@ export default function SearchNavBar() {
     if (router.pathname.includes('search')) {
       const items = ['/search', '/search/playlists', '/search/musics', '/search/artists']
       itemsRef.current.map((item) => {
-        item?.classList.remove('!text-black', '!bg-white')
+        item?.classList.remove('!text-black', 'lg:!bg-white', '!bg-activeIconHover')
       })
       items.map((item, index) => {
         if (item == router.pathname) {
-          itemsRef.current[index]?.classList.add('!text-black', 'lg:!bg-white', 'sm:!bg-activeIconHover')
+          itemsRef.current[index]?.classList.add('!text-black', 'lg:!bg-white', '!bg-activeIconHover')
           navbarRef?.current?.classList.remove('hidden')
         }
       })
@@ -67,7 +67,7 @@ export default function SearchNavBar() {
         </div>
       )}
       {!!musicData && router.pathname.includes('search') && router.pathname != '/search/playlist' && (
-        <div className='bg-bgColor flex flex-row lg:h-12 sm:h-14 lg:w-10/12 w-full fixed lg:left-[16.666%] lg:top-16 sm:top-12 lg:px-8 sm:px-4 items-center z-20 transition-all duration-500'>
+        <div className='bg-bgColor flex flex-row lg:h-12 h-14 lg:w-10/12 w-full fixed lg:left-[16.666%] lg:top-16 top-12 lg:px-8 px-4 items-center z-20 transition-all duration-500'>
           <div
             ref={(el) => (itemsRef.current[0] = el)}
             onClick={() => router.push('/search')}

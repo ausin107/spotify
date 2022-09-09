@@ -19,17 +19,19 @@ export default function ChannelRow({ artistData }) {
           })}
         </div>
       </div>
-      <div className='lg:hidden flex px-4 mb-8 items-center'>
-        <img
-          className='rounded-full shadow-2xl w-14 h-14 mr-4'
-          src={artistData[0].snippet.thumbnails.medium.url}
-          alt=''
-        />
-        <div className=''>
-          <div className='text-white font-semibold mb-1'>
-            {artistData[0].snippet.title.replace('Official', '').trim()}
+      <div className='lg:hidden pt-28 sm:pt-0 px-4 mb-6'>
+        <div className='flex items-center'>
+          <img
+            className='rounded-full shadow-2xl w-14 h-14 mr-4'
+            src={artistData[0].snippet.thumbnails.medium.url}
+            alt=''
+          />
+          <div className=''>
+            <div className='text-white font-semibold mb-1'>
+              {artistData[0].snippet.title.replace('Official', '').trim()}
+            </div>
+            <div className='text-iconColor text-xs font-semibold'>Artist</div>
           </div>
-          <div className='text-iconColor text-xs font-semibold'>Artist</div>
         </div>
       </div>
     </>

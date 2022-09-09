@@ -22,6 +22,7 @@ export default function MusicSearchRow({ musicData, title }) {
         </div>
       </div>
       <div className='px-4 block lg:hidden mb-20'>
+        {!!title && <div className='text-white text-xl mb-3 font-bold'>{title}</div>}
         {musicData.map((item, index) => {
           let title = item.snippet.title
             .replace('Official Music Video', '')

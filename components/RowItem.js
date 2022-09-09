@@ -37,12 +37,12 @@ export default function RowItem({ data }) {
     <div className='text-white lg:p-4 lg:pb-5 w-full cursor-pointer relative group lg:bg-itemBg lg:hover:bg-itemActiveBg rounded h-full'>
       <img
         draggable={false}
-        className='lg:rounded lg:mb-4 sm:mb-3 shadow-2xl lg:w-48 lg:h-44 sm:h-56 sm:w-60 h-36 w-40 object-cover'
+        className='lg:rounded lg:mb-4 mb-3 shadow-2xl lg:w-48 lg:h-44 sm:h-56 sm:w-60 h-36 w-40 object-cover'
         src={data.snippet.thumbnails.medium.url}
         alt=''
       />
       <div
-        className='group-hover:visible group-hover:translate-y-0 hover:scale-105 group-hover:opacity-100 transition-all duration-300 invisible translate-y-2 opacity-0 p-3 d-flex bg-playIconBg absolute rounded-full right-2 bottom-10 sm:right-6 sm:bottom-12 lg:bottom-[5.5rem]'
+        className='group-hover:visible group-hover:translate-y-0 hover:scale-105 group-hover:opacity-100 transition-all duration-300 invisible translate-y-2 opacity-0 p-3 d-flex bg-playIconBg absolute rounded-full right-2 bottom-[3.3rem] sm:right-6 sm:bottom-12 lg:bottom-[5.5rem]'
         onClick={handleShow}>
         {musicState.isPlay && musicState.musicId == musicId ? (
           <PauseIcon width='24' height='24' className='fill-black' />

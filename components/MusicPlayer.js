@@ -32,6 +32,7 @@ import { getCollection } from './collection/collectionAction'
 export default function MusicPlayer() {
   const [isLoop, setLoop] = useState(false)
   const [isMix, setMixMusic] = useState(false)
+  const [musicName, setMusicName] = useState('')
   const [played, setPlayed] = useState(0)
   const [duration, setDuration] = useState(0)
   const [volume, setVolume] = useState(0.5)
@@ -57,8 +58,7 @@ export default function MusicPlayer() {
   const isPlay = useSelector((state) => state.player.isPlay)
   const isPlayList = useSelector((state) => state.player.isPlayList)
   const currentId = useSelector((state) => state.collection.currentId)
-  const title =
-    musicData?.snippet.title.length > 55 ? musicData?.snippet.title.slice(0, 55) + '...' : musicData?.snippet.title
+
   const handleReady = () => {
     setDuration(playerRef.current.getDuration())
   }
@@ -211,6 +211,15 @@ export default function MusicPlayer() {
       }
     }
   }, [router.pathname])
+  useEffect(() => {
+    let title = musicData?.snippet.title
+    if (window.innerWidth < 640) {
+      title = title?.length > 30 ? title.slice(0, 30) + '...' : title
+    } else if (window.innerWidth >= 640) {
+      title = title?.length > 55 ? title.slice(0, 55) + '...' : title
+    }
+    setMusicName(title)
+  }, [musicData])
   const handleQueue = () => {
     if (router.pathname == '/queue') {
       window.history.back()
@@ -245,7 +254,7 @@ export default function MusicPlayer() {
                   src={musicData.snippet.thumbnails.medium.url}
                 />
                 <div>
-                  <div className='text-white text-sm font-semibold mb-2 w-60'>{title}</div>
+                  <div className='text-white text-sm font-semibold mb-2 w-60'>{musicName}</div>
                   <div className='text-iconColor text-sm'>{musicData.snippet.channelTitle}</div>
                 </div>
                 <div className='flex'>
@@ -362,7 +371,7 @@ export default function MusicPlayer() {
                   src={musicData.snippet.thumbnails.medium.url}
                 />
                 <div>
-                  <div className='text-white text-sm font-semibold sm:w-[35rem] w-64'>{title}</div>
+                  <div className='text-white text-sm font-semibold sm:w-[35rem] w-64'>{musicName}</div>
                   <div className='text-iconColor text-sm'>{musicData.snippet.channelTitle}</div>
                 </div>
               </div>
@@ -421,7 +430,7 @@ export default function MusicPlayer() {
           </div>
         )}
         {isShowPlayer && (
-          <div className='bg-mobilePlayerBg w-screen h-screen flex flex-col p-6'>
+          <div className='bg-mobilePlayerBg w-screen flex flex-col p-6'>
             <div className='flex items-center justify-between'>
               <ClosePlayerIcon width='24' height='24' className='fill-white' onClick={handleShowMobilePlayer} />
               <div className='text-white font-semibold'>Music Player</div>
@@ -430,13 +439,13 @@ export default function MusicPlayer() {
             <div className='mt-12 flex items-center justify-center'>
               <img
                 draggable={false}
-                className='h-64 w-64 object-cover shadow-2xl'
+                className='sm:h-64 sm:w-64 w-80 h-80 object-cover shadow-2xl'
                 src={musicData.snippet.thumbnails.medium.url}
               />
             </div>
-            <div className='flex items-center justify-between mt-8'>
+            <div className='flex items-center justify-between sm:mt-8 mt-14'>
               <div className=''>
-                <div className='text-white text-xl font-bold'>{title}</div>
+                <div className='text-white text-xl font-bold'>{musicName}</div>
                 <div className='text-iconColor font-semibold'>{musicData.snippet.channelTitle}</div>
               </div>
               <LoveButton musicId={musicId} musicData={musicData} width='24' height='24' />

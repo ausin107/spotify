@@ -59,7 +59,7 @@ export default function PlaylistSearchItem({ data }) {
       tabIndex={0}
       onClick={handlePlay}>
       <div
-        className='w-[3%] sm:hidden lg:block group-hover:visible group-focus:visible invisible '
+        className='w-[3%] hidden lg:block group-hover:visible group-focus:visible invisible '
         onClick={(e) => handlePlayPause(e)}>
         {isPlay && musicId == itemId ? (
           <PauseIcon className='fill-white cursor-pointer' width='16' height='16' />
@@ -67,7 +67,7 @@ export default function PlaylistSearchItem({ data }) {
           <PlayIcon className='fill-white cursor-pointer' width='16' height='16' />
         )}
       </div>
-      <div className='flex lg:w-3/5 sm:w-4/5'>
+      <div className='flex lg:w-3/5 w-4/5'>
         <img src={data.snippet.thumbnails.medium.url} className=' h-11 w-11 object-cover shadow-2xl mr-4' alt='' />
         <div className=''>
           <div className='font-semibold'>

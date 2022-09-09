@@ -37,7 +37,11 @@ export default function PlayListItem({ data, path, index }) {
       setDuration(duration)
     }
     getDuration()
-    if (router.pathname == '/collection' || router.pathname.includes('search')) {
+    if (
+      router.pathname == '/collection' ||
+      router.pathname.includes('search') ||
+      router.pathname.includes('extplaylists')
+    ) {
       trashRef.current.classList.add('hidden')
     } else {
       trashRef.current.classList.remove('hidden')
@@ -117,7 +121,7 @@ export default function PlayListItem({ data, path, index }) {
       onClick={handlePlay}
       tabIndex={0}>
       <div className='text-iconColor font-semibold lg:w-[3%] sm:w-[5%] text-lg hidden sm:block'>{handleHover()}</div>
-      <div className='flex lg:w-2/5 sm:w-[70%] w-[90%]'>
+      <div className='flex lg:w-2/5 sm:w-[70%] w-[80%]'>
         <img src={data?.snippet?.thumbnails?.medium?.url} className='h-11 w-11 object-cover shadow-2xl mr-4' />
         <div className=''>
           <div>
@@ -141,7 +145,7 @@ export default function PlayListItem({ data, path, index }) {
         <Duration isoTime={duration} className='text-navbarColor font-semibold w-[35%] sm:block hidden' />
       </div>
       <div
-        className='w-[3%] justify-end invisible group-hover:visible group-focus:visible cursor-pointer flex'
+        className='w-[10%] justify-end lg:invisible lg:group-hover:visible lg:group-focus:visible cursor-pointer flex'
         onClick={hanldeRemove}
         ref={trashRef}>
         <TrashCanIcon className='text-iconColor w-4 hover:text-white' />

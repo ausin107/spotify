@@ -28,9 +28,9 @@ export default function PlaylistHeader({ data, path }) {
     containerRef.classList.toggle('!h-screen')
   }
   return (
-    <div className='pt-20 pb-48 lg:px-9 sm:px-6 flex bg-greyBg lg:items-end sm:items-start lg:flex-row sm:flex-col'>
-      <div className='w-full lg:w-60 flex justify-center lg:block sm:mb-4 lg:mb-0'>
-        <div className='lg:w-60 lg:h-60 sm:w-72 sm:h-72 shadow-3xl bg-itemActiveBg flex items-center justify-center'>
+    <div className='pt-20 pb-48 lg:px-9 sm:px-6 px-4 flex bg-greyBg lg:items-end items-start lg:flex-row flex-col'>
+      <div className='w-full lg:w-60 flex justify-center lg:block mb-4 lg:mb-0'>
+        <div className='lg:w-60 lg:h-60 sm:w-72 sm:h-72 w-44 h-44 shadow-3xl bg-itemActiveBg flex items-center justify-center'>
           <MusicIconV2 width='65' height='65' className='fill-textBreakLine' />
         </div>
       </div>
@@ -41,7 +41,7 @@ export default function PlaylistHeader({ data, path }) {
           Playlist
         </div>
         <div
-          className='text-white font-bold lg:text-8xl sm:text-2xl lg:mb-12 sm:mb-2 cursor-pointer '
+          className='text-white font-bold lg:text-8xl text-2xl lg:mb-12 mb-2 cursor-pointer '
           style={{ textShadow: '4px -1px 46px rgb(0 0 0 / 75%)' }}
           onClick={handleShowEditForm}>
           {currentData && currentData.title}
