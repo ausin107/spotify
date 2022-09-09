@@ -136,7 +136,7 @@ export default function PlaylistsBody({ playlistItems, path, currentPlId, extPla
     }
   }
   return (
-    <div className='flex lg:px-9 sm:px-6 -top-40 relative pt-4 bg-resultBg flex-col '>
+    <div className='flex lg:px-9 sm:px-6 px-4 -top-40 relative pt-4 bg-resultBg flex-col '>
       <div className='flex items-center mb-8'>
         {buttonStatus()}
         {router.pathname != '/collection' && (

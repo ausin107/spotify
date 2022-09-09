@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 import PlaylistsBody from '../../components/PlaylistsBody'
 import { ArrowBackIcon } from '../../components/Icon'
 import { loadPlaylistItems, loadPlaylistInfo } from '../../lib/loadData'
+import { SpinIcon } from '../../components/Icon'
 export default function ExtPLaylist() {
   const [plItems, setPlItems] = useState()
   const [plInfo, setPlInfo] = useState()
@@ -21,7 +22,7 @@ export default function ExtPLaylist() {
   }, [playListId])
   return (
     <>
-      {!!plInfo && !!plItems && (
+      {!!plInfo && !!plItems ? (
         <>
           <div className='lg:pt-20 sm:pt-16 lg:pb-48 sm:pb-40 px-9 flex lg:flex-row flex-col bg-greyBg lg:items-end'>
             <div className='w-full lg:w-60 lg:h-60 flex sm:justify-center sm:h-72 lg:mb-0 sm:mb-3'>
@@ -46,16 +47,20 @@ export default function ExtPLaylist() {
                 User - {plItems?.length} song
               </div>
             </div>
-            <ArrowBackIcon
-              width='24'
-              height='24'
-              className='lg:hidden fill-white absolute top-4 left-4'
-              onClick={() => router.back()}
-            />
           </div>
           <PlaylistsBody playlistItems={plItems} extPlaylistInfo={plInfo} isLovedPl={true} />
         </>
+      ) : (
+        <div className='w-full h-screen flex items-center justify-center'>
+          <SpinIcon width={36} className='animate-spin text-white' />
+        </div>
       )}
+      <ArrowBackIcon
+        width='24'
+        height='24'
+        className='lg:hidden fill-white absolute top-4 left-4'
+        onClick={() => router.back()}
+      />
     </>
   )
 }

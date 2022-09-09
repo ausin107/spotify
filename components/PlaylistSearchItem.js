@@ -32,6 +32,17 @@ export default function PlaylistSearchItem({ data }) {
       dispatch(setPlayPauseMusic())
     }
   }
+  const handlePlay = (e) => {
+    dispatch(setNotPlayList())
+    e.stopPropagation()
+    const musicInfo = {
+      musicData: data,
+      musicId: itemId,
+    }
+    if (musicId != itemId) {
+      dispatch(showMusicPlayer(musicInfo))
+    }
+  }
   const handleAddMusic = async (e) => {
     e.stopPropagation()
     if (isAuth) {
@@ -43,15 +54,20 @@ export default function PlaylistSearchItem({ data }) {
     }
   }
   return (
-    <div className='flex p-2 px-6 items-center hover:bg-itemActiveBg focus:bg-itemActiveBg rounded group' tabIndex={0}>
-      <div className='w-[3%] group-hover:visible group-focus:visible invisible ' onClick={(e) => handlePlayPause(e)}>
+    <div
+      className='flex p-2 lg:px-6 sm:px-4 items-center hover:bg-itemActiveBg focus:bg-itemActiveBg rounded group'
+      tabIndex={0}
+      onClick={handlePlay}>
+      <div
+        className='w-[3%] sm:hidden lg:block group-hover:visible group-focus:visible invisible '
+        onClick={(e) => handlePlayPause(e)}>
         {isPlay && musicId == itemId ? (
           <PauseIcon className='fill-white cursor-pointer' width='16' height='16' />
         ) : (
           <PlayIcon className='fill-white cursor-pointer' width='16' height='16' />
         )}
       </div>
-      <div className='flex w-3/5'>
+      <div className='flex lg:w-3/5 sm:w-4/5'>
         <img src={data.snippet.thumbnails.medium.url} className=' h-11 w-11 object-cover shadow-2xl mr-4' alt='' />
         <div className=''>
           <div className='font-semibold'>
@@ -66,10 +82,10 @@ export default function PlaylistSearchItem({ data }) {
           </div>
         </div>
       </div>
-      <div className='w-[22%] text-iconColor text-sm font-semibold group-hover:text-white group-focus:text-white hover:underline cursor-pointer underline-offset-1'>
+      <div className='w-[22%] hidden lg:block text-iconColor text-sm font-semibold group-hover:text-white group-focus:text-white hover:underline cursor-pointer underline-offset-1'>
         {albumName}
       </div>
-      <div className='w-[15%] flex justify-end' onClick={handleAddMusic}>
+      <div className='lg:w-[15%] w-1/5 flex justify-end' onClick={handleAddMusic}>
         <div className='border border-iconColor rounded-full py-1 px-4 w-fit text-white text-sm font-semibold hover:border-white cursor-pointer'>
           Add
         </div>

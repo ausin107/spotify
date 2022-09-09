@@ -43,9 +43,9 @@ export default function Library() {
     }
   }
   return (
-    <div className='pb-80 lg:pt-12 sm:lg-4'>
-      <div className='m-8 pb-16 border-b border-searchChildBg'>
-        <div className='text-white font-bold mb-6 text-2xl'>Library</div>
+    <div className='lg:pb-80 pb-40 lg:pt-12 sm:lg-4 pt-12'>
+      <div className='sm:m-8 m-4 pb-16 border-b border-searchChildBg'>
+        <div className='text-white font-bold mb-6 text-2xl lg:hidden block'>Library</div>
         <div className='text-white font-bold mb-6 text-2xl hidden lg:block'>Playlist</div>
         <div className='grid'>
           <Link href='/collection'>
@@ -65,7 +65,7 @@ export default function Library() {
           </Link>
           {!!playlists &&
             playlists.map((item) => {
-              const plTitle = item.title.length > 50 ? item.title.slice(0, 50) + '...' : item.title
+              const plTitle = item.title.length > 40 ? item.title.slice(0, 40) + '...' : item.title
               return (
                 <Link key={item.playListId} href={'/playlists/' + item.playListId}>
                   <div className='flex mb-4 items-center'>
@@ -82,7 +82,7 @@ export default function Library() {
             })}
           {!!extPlaylists &&
             extPlaylists.map((item) => {
-              const plTitle = item.title.length > 50 ? item.title.slice(0, 50) + '...' : item.title
+              const plTitle = item.title.length > 40 ? item.title.slice(0, 40) + '...' : item.title
               return (
                 <Link key={item.playListId} href={'/extplaylists/' + item.playListId}>
                   <div className='flex mb-4 items-center'>

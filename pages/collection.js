@@ -22,7 +22,7 @@ export default function Collection() {
   }, [allMusic])
   return (
     <div className=''>
-      <div className='lg:pt-20 sm:pt-16 pb-48 lg:px-9 sm:px-6 flex lg:bg-likedBg sm:bg-collectionMobileBg lg:items-end sm:items-start'>
+      <div className='lg:pt-20 pt-16 pb-48 lg:px-9 sm:px-6 px-4 flex lg:bg-likedBg bg-collectionMobileBg lg:items-end items-start'>
         <div className='w-60 h-60 shadow-3xl hidden lg:block'>
           <Image src='/loveImg.png' width='240' height='240' className='' />
         </div>
@@ -33,7 +33,7 @@ export default function Collection() {
             Playlist
           </div>
           <div
-            className='text-white font-bold lg:text-8xl sm:text-3xl lg:mb-12 sm:mb-4'
+            className='text-white font-bold lg:text-8xl text-3xl lg:mb-12 mb-4'
             style={{ textShadow: '4px -1px 46px rgb(0 0 0 / 75%)' }}>
             Favorite Song
           </div>

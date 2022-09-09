@@ -94,7 +94,7 @@ export default function PlayList() {
           </div>
         </div>
       ) : (
-        <div className='bg-resultBg px-8 pt-8 pb-20 relative -top-40'>
+        <div className='bg-resultBg lg:px-8 sm:px-6 pt-8 pb-20 relative -top-40'>
           <div
             className='text-iconColor cursor-pointer font-semibold flex justify-end mr-8 hover:text-white'
             onClick={() => setShow(true)}>
@@ -102,7 +102,7 @@ export default function PlayList() {
           </div>
         </div>
       )}
-      <div className='px-8 pt-10 relative -top-40'>
+      <div className=' lg:px-8 sm:px-6 pt-10 relative -top-40'>
         <div className='text-white text-2xl font-bold mb-2'>Recommend</div>
         <div className='text-sm text-iconColor font-semibold mb-8'>Based on the content included in this playlist</div>
         {recData &&

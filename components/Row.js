@@ -17,7 +17,7 @@ export default function Row({ title, data }) {
         max: 464,
         min: 0,
       },
-      items: 2,
+      items: 2.5,
       partialVisibilityGutter: 30,
     },
     tablet: {
@@ -30,13 +30,13 @@ export default function Row({ title, data }) {
     },
   }
   return (
-    <div className='lg:p-6 sm:mb-8 sm:p-2 lg:w-[83.333vw] w-screen'>
-      <h2 className='text-white font-bold lg:text-2xl sm:text-lg sm:ml-2 lg:mb-6 sm:mb-3'>{title}</h2>
+    <div className='lg:p-6 sm:mb-8 sm:p-2 mb-3 p-4 lg:w-[83.333vw] w-screen'>
+      <h2 className='text-white font-bold lg:text-2xl text-lg sm:ml-2 lg:mb-6 mb-3'>{title}</h2>
       <Carousel
         ssr={true}
         slidesToSlide={3}
         containerClass=''
-        itemClass='text-white lg:px-3 sm:px-2'
+        itemClass='text-white lg:px-3 px-2'
         keyBoardControl
         removeArrowOnDeviceType={['tablet', 'mobile']}
         responsive={responsive}>

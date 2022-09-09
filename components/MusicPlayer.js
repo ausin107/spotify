@@ -352,7 +352,7 @@ export default function MusicPlayer() {
       <div className='lg:hidden fixed bottom-20 left-0 w-screen z-30 select-none'>
         {isShow && (
           <div
-            className='bg-itemBg h-14 w-[98%] mx-2 flex flex-col justify-end items-center rounded px-2'
+            className='bg-itemBg h-14 sm:w-[98%] w-[96%] mx-2 flex flex-col justify-end items-center rounded px-2'
             onClick={(e) => handleShowMobilePlayer(e)}>
             <div className='flex w-full mb-2 justify-between'>
               <div className='flex items-center'>
@@ -362,7 +362,7 @@ export default function MusicPlayer() {
                   src={musicData.snippet.thumbnails.medium.url}
                 />
                 <div>
-                  <div className='text-white text-sm font-semibold w-[35rem]'>{title}</div>
+                  <div className='text-white text-sm font-semibold sm:w-[35rem] w-64'>{title}</div>
                   <div className='text-iconColor text-sm'>{musicData.snippet.channelTitle}</div>
                 </div>
               </div>

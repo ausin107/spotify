@@ -14,6 +14,7 @@ export default function PlayListItem({ data, path, index }) {
   const [duration, setDuration] = useState('')
   const [isHover, setHover] = useState(false)
   const [isFocus, setFocus] = useState(false)
+  const [musicName, setMusicName] = useState('')
   const authKey = useSelector((state) => state.auth.authKey)
   const isShow = useSelector((state) => state.player.isShow)
   const isPlay = useSelector((state) => state.player.isPlay)
@@ -24,9 +25,6 @@ export default function PlayListItem({ data, path, index }) {
   const dispatch = useDispatch()
   const trashRef = useRef()
   const router = useRouter()
-  const title = data.snippet.title
-  let musicName = title.replace('Official Music Video', '').replace('(', '').replace(')', '').replaceAll('|', '')
-  musicName = musicName.length >= 45 ? musicName.slice(0, 45) + '...' : musicName
   let albumName = musicName.length >= 30 ? musicName.slice(0, 30) + '...' : musicName
   const channelName = data.snippet.channelTitle.replace('Official', '').trim()
   const date = data.snippet.publishedAt.slice(0, 10)
@@ -44,6 +42,16 @@ export default function PlayListItem({ data, path, index }) {
     } else {
       trashRef.current.classList.remove('hidden')
     }
+    const title = data.snippet.title
+    let musicName = title.replace('Official Music Video', '').replace('(', '').replace(')', '').replaceAll('|', '')
+    if (window.innerWidth < 640) {
+      musicName = musicName.length >= 25 ? musicName.slice(0, 25) + '...' : musicName
+    } else if (window.innerWidth >= 640 && window.innerWidth < 1024) {
+      musicName = musicName.length >= 45 ? musicName.slice(0, 45) + '...' : musicName
+    } else if (window.innerWidth >= 1024) {
+      musicName = musicName.length >= 45 ? musicName.slice(0, 45) + '...' : musicName
+    }
+    setMusicName(musicName)
   }, [])
   const handlePlayPause = () => {
     if (router.pathname == '/collection' || router.pathname.includes('/playlists/')) {
@@ -60,6 +68,22 @@ export default function PlayListItem({ data, path, index }) {
       if (isShow && musicId == itemId) {
         dispatch(setPlayPauseMusic())
       } else if (musicId != itemId) {
+        dispatch(showMusicPlayer({ musicData: data, musicId: itemId }))
+      }
+    }
+  }
+  const handlePlay = (e) => {
+    e.stopPropagation()
+    if (router.pathname == '/collection' || router.pathname.includes('/playlists/')) {
+      dispatch(setPlayList())
+      if (!isShow) {
+        dispatch(getCollection(path, index))
+      } else if (musicId != itemId) {
+        dispatch(getCollection(path, index))
+      }
+    } else {
+      dispatch(setNotPlayList())
+      if (musicId != itemId) {
         dispatch(showMusicPlayer({ musicData: data, musicId: itemId }))
       }
     }
@@ -90,9 +114,10 @@ export default function PlayListItem({ data, path, index }) {
       onMouseLeave={() => setHover(false)}
       onFocus={() => setFocus(true)}
       onBlur={() => setFocus(false)}
+      onClick={handlePlay}
       tabIndex={0}>
-      <div className='text-iconColor font-semibold lg:w-[3%] sm:w-[5%] text-lg'>{handleHover()}</div>
-      <div className='flex lg:w-2/5 sm:w-[70%]'>
+      <div className='text-iconColor font-semibold lg:w-[3%] sm:w-[5%] text-lg hidden sm:block'>{handleHover()}</div>
+      <div className='flex lg:w-2/5 sm:w-[70%] w-[90%]'>
         <img src={data?.snippet?.thumbnails?.medium?.url} className='h-11 w-11 object-cover shadow-2xl mr-4' />
         <div className=''>
           <div>
@@ -111,9 +136,9 @@ export default function PlayListItem({ data, path, index }) {
         {albumName}
       </div>
       <DateConvert className='text-iconColor font-semibold text-sm w-1/5 lg:block hidden' data={date} />
-      <div className='flex justify-end items-center lg:w-[10%] sm:w-[25%]'>
-        <LoveButton musicId={itemId} musicData={data} className='mr-4 cursor-pointer lg:w-[15%] sm:w-[11%]' />
-        <Duration isoTime={duration} className='text-navbarColor font-semibold w-[35%]' />
+      <div className='flex justify-end items-center lg:w-[10%] sm:w-[25%] w-[10%]'>
+        <LoveButton musicId={itemId} musicData={data} className='mr-4 cursor-pointer lg:w-[15%] sm:w-[11%] w-full' />
+        <Duration isoTime={duration} className='text-navbarColor font-semibold w-[35%] sm:block hidden' />
       </div>
       <div
         className='w-[3%] justify-end invisible group-hover:visible group-focus:visible cursor-pointer flex'

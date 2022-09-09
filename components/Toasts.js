@@ -18,7 +18,7 @@ export default function Toasts() {
 
   return (
     <div className={newClass}>
-      <div className='py-3 px-6 rounded font-semibold text-white flex items-center justify-center bg-toastsBg shadow-xl w-1/5'>
+      <div className='py-3 px-6 rounded font-semibold text-white flex items-center justify-center bg-toastsBg shadow-xl lg:w-1/5 sm:w-[30%]'>
         {toastMess}
       </div>
     </div>
