@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { SpotifyLogo, FacebookIcon, GoogleIcon, SpinIcon } from '../components/Icon'
+import { SpotifyLogo, FacebookIcon, GoogleIcon, SpinIcon, ArrowBackIcon } from '../components/Icon'
 import { useRouter } from 'next/router'
 import { signInWithEmailAndPassword, GoogleAuthProvider, FacebookAuthProvider, signInWithPopup } from 'firebase/auth'
 import { useDispatch } from 'react-redux'
@@ -146,6 +146,12 @@ export default function Login() {
         className='uppercase text-googleText text-center text-lg border-2 w-96 border-googleText py-3 px-20 rounded-full mb-14 cursor-pointer hover:scale-105'>
         Subscribe to Spotify
       </div>
+      <ArrowBackIcon
+        width='24'
+        height='24'
+        className='absolute top-4 left-4 fill-black block lg:hidden'
+        onClick={() => router.back()}
+      />
     </div>
   )
 }

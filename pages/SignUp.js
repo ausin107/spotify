@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { SpinIcon } from '../components/Icon'
+import { ArrowBackIcon, SpinIcon } from '../components/Icon'
 import { useState } from 'react'
 import { SpotifyLogo, FacebookIcon, GoogleIcon } from '../components/Icon'
 import {
@@ -172,6 +172,12 @@ export default function SignUp() {
         </Link>
         .
       </div>
+      <ArrowBackIcon
+        width='24'
+        height='24'
+        className='absolute top-4 left-4 fill-black block lg:hidden'
+        onClick={() => router.back()}
+      />
     </div>
   )
 }
