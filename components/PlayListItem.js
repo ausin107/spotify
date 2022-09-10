@@ -113,7 +113,7 @@ export default function PlayListItem({ data, path, index }) {
   }
   return (
     <div
-      className='flex p-2 lg:px-6 sm:px-2 items-center hover:bg-itemActiveBg focus:bg-itemActiveBg rounded group'
+      className='flex p-2 lg:px-6 sm:px-2 items-center justify-between hover:bg-itemActiveBg focus:bg-itemActiveBg rounded group'
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
       onFocus={() => setFocus(true)}
@@ -136,7 +136,7 @@ export default function PlayListItem({ data, path, index }) {
           </div>
         </div>
       </div>
-      <div className='w-1/4 text-iconColor font-semibold text-sm group-hover:text-white group-focus:text-white lg:block hidden'>
+      <div className='w-1/4 lg:w-[30%] text-iconColor font-semibold text-sm group-hover:text-white group-focus:text-white lg:block hidden'>
         {albumName}
       </div>
       <DateConvert className='text-iconColor font-semibold text-sm w-1/5 lg:block hidden' data={date} />

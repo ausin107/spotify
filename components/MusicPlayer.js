@@ -214,7 +214,7 @@ export default function MusicPlayer() {
   useEffect(() => {
     let title = musicData?.snippet.title
     if (window.innerWidth < 640) {
-      title = title?.length > 30 ? title.slice(0, 30) + '...' : title
+      title = title?.length > 27 ? title.slice(0, 27) + '...' : title
     } else if (window.innerWidth >= 640) {
       title = title?.length > 55 ? title.slice(0, 55) + '...' : title
     }
@@ -430,7 +430,7 @@ export default function MusicPlayer() {
           </div>
         )}
         {isShowPlayer && (
-          <div className='bg-mobilePlayerBg w-screen flex flex-col p-6'>
+          <div className='bg-mobilePlayerBg w-screen h-screen flex flex-col p-6'>
             <div className='flex items-center justify-between'>
               <ClosePlayerIcon width='24' height='24' className='fill-white' onClick={handleShowMobilePlayer} />
               <div className='text-white font-semibold'>Music Player</div>

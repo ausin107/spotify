@@ -38,7 +38,7 @@ export default function BottomBar() {
     }
   }, [router.pathname])
   return (
-    <div className='bg-bottomBarBg fixed h-20 w-screen flex justify-around lg:hidden z-20 pt-6 pb-4 bottom-0'>
+    <div className='bg-bottomBarBg fixed h-20 w-screen flex justify-around lg:hidden z-30 pt-6 pb-4 bottom-0'>
       <Link href='/'>
         <div className='w-1/5 h-12 flex justify-between flex-col items-center'>
           {router.pathname == '/' ? (
@@ -85,7 +85,7 @@ export default function BottomBar() {
       </div>
       <div
         ref={bannerRef}
-        className='p-4 rounded-md z-10 bg-banner2LoginBg w-4/5 absolute bottom-20 transition-all duration-500 opacity-100 hiddenBanner'>
+        className='p-4 rounded-md z-40 bg-banner2LoginBg w-4/5 absolute bottom-20 transition-all duration-500 opacity-100 hiddenBanner'>
         <div className='text-white text-xl mb-2 font-bold'>Enjoy your Library</div>
         <div className='text-white mb-2 font-semibold'>
           Login to watch your playlist, video and create awesome playlists.

@@ -5,6 +5,7 @@ import MusicSearchRow from '../../components/MusicSearchRow'
 import TopResult from '../../components/TopResult'
 import { SpinIcon } from '../../components/Icon'
 import DefaultSearch from '../../components/DefaultSearch'
+import MusicsList from '../../components/MusicsList'
 export default function Search() {
   let musicData = useSelector((state) => state.search.musicData)
   const artistData = useSelector((state) => state.search.articsData)
@@ -24,7 +25,8 @@ export default function Search() {
             <>
               <TopResult musicData={musicData} />
               <ChannelRow artistData={artistData} />
-              <MusicSearchRow musicData={musicData} title='All Music' />
+              {/* <MusicSearchRow musicData={musicData} title='All Music' /> */}
+              <MusicsList data={musicData} />
             </>
           ) : (
             <DefaultSearch />
