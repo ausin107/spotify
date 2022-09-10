@@ -25,7 +25,6 @@ export default function Search() {
             <>
               <TopResult musicData={musicData} />
               <ChannelRow artistData={artistData} />
-              {/* <MusicSearchRow musicData={musicData} title='All Music' /> */}
               <MusicsList data={musicData} />
             </>
           ) : (

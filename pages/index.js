@@ -53,8 +53,8 @@ export default function Home({ VNMusic, KRMusic, GMusic }) {
       />
       {isShow && (
         <div className='fixed lg:hidden p-10 pt-16 bg-black w-screen h-screen z-20 top-0 left-0'>
-          <div className='text-white text-2xl font-bold mb-5'>Account</div>
-          <div className='text-white text-2xl font-bold mb-5'>Profile</div>
+          <div className='text-iconColor text-2xl font-bold mb-5'>Account</div>
+          <div className='text-iconColor text-2xl font-bold mb-5'>Profile</div>
           {auth ? (
             <div className='text-white text-2xl font-bold mb-5' onClick={handleLogout}>
               Log out
@@ -65,11 +65,11 @@ export default function Home({ VNMusic, KRMusic, GMusic }) {
             </div>
           )}
           <div className='border-white border w-4 mb-5'></div>
-          <div className='text-white text-lg font-bold mb-3'>Premium</div>
-          <div className='text-white text-lg font-bold mb-3'>Support</div>
-          <div className='text-white text-lg font-bold mb-3'>Download</div>
-          <div className='text-white text-lg font-bold mb-3'>Privacy</div>
-          <div className='text-white text-lg font-bold mb-3'>Rules</div>
+          <div className='text-iconColor text-lg font-bold mb-3'>Premium</div>
+          <div className='text-iconColor text-lg font-bold mb-3'>Support</div>
+          <div className='text-iconColor text-lg font-bold mb-3'>Download</div>
+          <div className='text-iconColor text-lg font-bold mb-3'>Privacy</div>
+          <div className='text-iconColor text-lg font-bold mb-3'>Rules</div>
           <ClosePlayerIcon
             width='24'
             height='24'

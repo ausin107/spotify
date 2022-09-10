@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
 import { showMusicPlayer, setPlayPauseMusic, setPlayList } from '../components/music_player/musicPlayerSlice'
 import { getCollection } from '../components/collection/collectionAction'
 import { useDispatch, useSelector } from 'react-redux'
 import { getAllFavoriteMusic } from '../lib/firebaseAction'
-import { PlayIcon, PauseIcon, MusicIconV2 } from '../components/Icon'
+import { PlayIcon, PauseIcon, MusicIconV2, PlusIcon } from '../components/Icon'
+import { useRouter } from 'next/router'
+import { addMusicToPlayList, getAllPlaylistsInfo } from '../lib/firebaseAction'
+import { loadAllPlaylist } from '../components/playlists/playlistSlice'
+import { setShow } from '../components/toast/toastSlice'
 export default function Library() {
   const [data, setData] = useState('')
   const dispatch = useDispatch()
@@ -15,6 +18,7 @@ export default function Library() {
   const allMusic = useSelector((state) => state.collection.items)
   const playlists = useSelector((state) => state.playlist.allPlaylist)
   const extPlaylists = useSelector((state) => state.extplaylist.allExtPlaylist)
+  const router = useRouter()
   useEffect(() => {
     const getData = async () => {
       const result = await getAllFavoriteMusic(`collection/${authKey}/items`)
@@ -41,6 +45,21 @@ export default function Library() {
     } else if (isPlayList) {
       dispatch(setPlayPauseMusic())
     }
+  }
+  const handleCreatePl = async () => {
+    let newPLInfo = {}
+    if (playlists.length == 0) {
+      newPLInfo.title = 'My Playlist #1'
+      newPLInfo.description = ''
+    } else {
+      newPLInfo.title = 'My Playlist #' + (playlists.length + 1)
+      newPLInfo.description = ''
+    }
+    const playlistId = await addMusicToPlayList(`collection/${authKey}/playlists`, newPLInfo)
+    const newPlaylist = await getAllPlaylistsInfo(`collection/${authKey}/playlists`)
+    dispatch(loadAllPlaylist(newPlaylist))
+    router.push(`/playlists/${playlistId}`)
+    dispatch(setShow('Created new playlist to library'))
   }
   return (
     <div className='lg:pb-80 pb-40 lg:pt-12 sm:lg-4 pt-12'>
@@ -98,6 +117,12 @@ export default function Library() {
               )
             })}
         </div>
+        <PlusIcon
+          width='24'
+          height='24'
+          className='fill-white lg:hidden absolute top-4 right-4'
+          onClick={handleCreatePl}
+        />
       </div>
     </div>
   )

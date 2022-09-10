@@ -82,9 +82,9 @@ export default function SearchMusicItem({ musicData }) {
           </div>
         </div>
       </div>
-      <div className='flex items-center w-[15%] '>
-        <LoveButton musicData={musicData} className='mr-4 cursor-pointer' />
-        <Duration isoTime={duration} className='text-navbarColor font-semibold w-2/5' />
+      <div className='flex items-center w-[15%] justify-end'>
+        <LoveButton musicData={musicData} className='mr-4 cursor-pointer w-1/4' />
+        <Duration isoTime={duration} className='text-navbarColor font-semibold w-full hidden lg:block' />
       </div>
     </div>
   )

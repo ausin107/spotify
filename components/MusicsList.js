@@ -13,7 +13,7 @@ export default function MusicsList({ data, path }) {
         </div>
         <div className='text-iconColor text-sm w-[3%]'></div>
       </div>
-      <div className='lg:border-t border-searchChildBg flex flex-col pt-4 pb-4'>
+      <div className='lg:border-t border-searchChildBg flex flex-col sm:pt-4 pb-16'>
         {data.map((item, index) => {
           return <PlayListItem key={index} data={item} path={path} index={index} />
         })}

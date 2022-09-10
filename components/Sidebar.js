@@ -156,7 +156,7 @@ export default function Sidebar() {
               className='flex text-iconColor mb-4 font-semibold items-center icon-class'
               ref={(el) => (linkRef.current[3] = el)}>
               <div className='bg-iconColor mr-4 p-[0.4rem] rounded icon-bg'>
-                <PlusIcon className='fill-black' />
+                <PlusIcon width='12' height='12' className='fill-black' />
               </div>
               Create playlist
             </div>

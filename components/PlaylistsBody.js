@@ -91,7 +91,7 @@ export default function PlaylistsBody({ playlistItems, path, currentPlId, extPla
         return (
           <div
             onClick={handlePause}
-            className='p-4 bg-playIconBg hover:bg-activeIconHover rounded-full hover:scale-105 w-fit cursor-pointer'>
+            className='p-4 bg-playIconBg hover:bg-activeIconHover rounded-full hover:scale-105 w-fit cursor-pointer mr-8'>
             <PauseIcon className='fill-black' width='24' height='24' />
           </div>
         )
@@ -99,7 +99,7 @@ export default function PlaylistsBody({ playlistItems, path, currentPlId, extPla
         return (
           <div
             onClick={handlePlay}
-            className='p-4 bg-playIconBg hover:bg-activeIconHover rounded-full hover:scale-105 w-fit cursor-pointer'>
+            className='p-4 bg-playIconBg hover:bg-activeIconHover rounded-full hover:scale-105 w-fit cursor-pointer mr-8'>
             <PlayIcon className='fill-black' width='24' height='24' />
           </div>
         )
@@ -140,7 +140,7 @@ export default function PlaylistsBody({ playlistItems, path, currentPlId, extPla
       <div className='flex items-center mb-8'>
         {buttonStatus()}
         {router.pathname != '/collection' && (
-          <div className='ml-8 cursor-pointer'>
+          <div className='cursor-pointer'>
             <OptionIcons
               width='36'
               height='36'
