@@ -18,7 +18,7 @@ export default function ExtPLaylist() {
       setPlInfo(plInfo.items[0])
       const plItems = await loadPlaylistItems(playListId, 50)
       setPlItems(plItems.items)
-      let extPlTitle = plInfo.items[0].snippet.title
+      let extPlTitle = plInfo?.items[0]?.snippet.title
       if (window.innerWidth < 640) {
         extPlTitle = extPlTitle?.length > 27 ? extPlTitle.slice(0, 27) + '...' : extPlTitle
       } else if (window.innerWidth >= 640 && window.innerWidth < 1024) {

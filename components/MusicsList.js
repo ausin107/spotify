@@ -15,7 +15,7 @@ export default function MusicsList({ data, path }) {
       </div>
       <div className='lg:border-t border-searchChildBg flex flex-col sm:pt-4 pb-16'>
         {data.map((item, index) => {
-          return <PlayListItem key={index} data={item} path={path} index={index} />
+          return <PlayListItem key={index} data={item} path={path} index={index} extPlItems={data} />
         })}
       </div>
     </div>

@@ -5,12 +5,13 @@ import Image from 'next/image'
 import DateConvert from './DateConvert'
 import Duration from './Duration'
 import LoveButton from './LoveButton'
+import { loadItemsSuccess } from './collection/collectionSlice'
 import { PlayIcon, PauseIcon, TrashCanIcon } from './Icon'
 import { loadMusicData } from '../lib/loadData'
 import { getCollection, deleteCollection } from './collection/collectionAction'
 import { setPlayPauseMusic, setPlayList, setNotPlayList, showMusicPlayer } from './music_player/musicPlayerSlice'
 import { setShow } from './toast/toastSlice'
-export default function PlayListItem({ data, path, index }) {
+export default function PlayListItem({ data, path, index, extPlItems }) {
   const [duration, setDuration] = useState('')
   const [isHover, setHover] = useState(false)
   const [isFocus, setFocus] = useState(false)
@@ -22,6 +23,7 @@ export default function PlayListItem({ data, path, index }) {
   const currentPLId = useSelector((state) => state.collection.currentPlaylist)
   const currentId = useSelector((state) => state.collection.currentId)
   const isPlayList = useSelector((state) => state.player.isPlayList)
+  const extpl = useSelector((state) => state.extplaylist.allExtPlaylist)
   const dispatch = useDispatch()
   const trashRef = useRef()
   const router = useRouter()
@@ -53,19 +55,27 @@ export default function PlayListItem({ data, path, index }) {
     } else if (window.innerWidth >= 640 && window.innerWidth < 1024) {
       musicName = musicName.length >= 45 ? musicName.slice(0, 45) + '...' : musicName
     } else if (window.innerWidth >= 1024) {
-      musicName = musicName.length >= 45 ? musicName.slice(0, 45) + '...' : musicName
+      musicName = musicName.length >= 40 ? musicName.slice(0, 40) + '...' : musicName
     }
     setMusicName(musicName)
   }, [])
   const handlePlayPause = () => {
-    if (router.pathname == '/collection' || router.pathname.includes('/playlists/')) {
+    if (
+      router.pathname == '/collection' ||
+      router.pathname.includes('/playlists/') ||
+      router.pathname.includes('/extplaylists/')
+    ) {
       dispatch(setPlayList())
-      if (isShow && musicId == itemId) {
-        dispatch(setPlayPauseMusic())
-      } else if (!isShow) {
-        dispatch(getCollection(path, index))
-      } else if (musicId != itemId) {
-        dispatch(getCollection(path, index))
+      if (!!extPlItems) {
+        dispatch(loadItemsSuccess({ data: extPlItems, index: 0 }))
+      } else {
+        if (isShow && musicId == itemId) {
+          dispatch(setPlayPauseMusic())
+        } else if (!isShow) {
+          dispatch(getCollection(path, index))
+        } else if (musicId != itemId) {
+          dispatch(getCollection(path, index))
+        }
       }
     } else {
       dispatch(setNotPlayList())
@@ -78,12 +88,20 @@ export default function PlayListItem({ data, path, index }) {
   }
   const handlePlay = (e) => {
     e.stopPropagation()
-    if (router.pathname == '/collection' || router.pathname.includes('/playlists/')) {
+    if (
+      router.pathname == '/collection' ||
+      router.pathname.includes('/playlists/') ||
+      router.pathname.includes('/extplaylists/')
+    ) {
       dispatch(setPlayList())
-      if (!isShow) {
-        dispatch(getCollection(path, index))
-      } else if (musicId != itemId) {
-        dispatch(getCollection(path, index))
+      if (!!extPlItems) {
+        dispatch(loadItemsSuccess({ data: extPlItems, index }))
+      } else {
+        if (!isShow) {
+          dispatch(getCollection(path, index))
+        } else if (musicId != itemId) {
+          dispatch(getCollection(path, index))
+        }
       }
     } else {
       dispatch(setNotPlayList())
@@ -136,11 +154,11 @@ export default function PlayListItem({ data, path, index }) {
           </div>
         </div>
       </div>
-      <div className='w-1/4 lg:w-[30%] text-iconColor font-semibold text-sm group-hover:text-white group-focus:text-white lg:block hidden'>
+      <div className='w-1/4 lg:w-[25%] text-iconColor font-semibold text-sm group-hover:text-white group-focus:text-white lg:block hidden'>
         {albumName}
       </div>
       <DateConvert className='text-iconColor font-semibold text-sm w-1/5 lg:block hidden' data={date} />
-      <div className='flex justify-end items-center lg:w-[10%] sm:w-[25%] w-[10%]'>
+      <div className='flex justify-end items-center lg:w-[12%] sm:w-[25%] w-[10%]'>
         <LoveButton musicId={itemId} musicData={data} className='sm:mr-4 cursor-pointer lg:w-[15%] sm:w-[11%] w-3/5' />
         <Duration isoTime={duration} className='text-navbarColor font-semibold w-[35%] sm:block hidden' />
       </div>

@@ -100,6 +100,9 @@ export default function MusicPlayer() {
   const handleSeekMouseUp = (e) => {
     playerRef.current.seekTo(e.target.value, 'fraction')
   }
+  const handleSeekVolume = (e) => {
+    volumeRef.current.seekTo(e.target.value, 'fraction')
+  }
   const handleSetVolume = (e) => {
     setVolume(e.target.value)
     volumeRef.current.map((item) => {
@@ -424,6 +427,7 @@ export default function MusicPlayer() {
                 value={volume}
                 id='music-volume-input'
                 onChange={(e) => handleSetVolume(e)}
+                onMouseUp={(e) => handleSeekVolume(e)}
                 ref={(el) => (volumeRef.current[1] = el)}
               />
             </div>

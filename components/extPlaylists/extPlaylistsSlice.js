@@ -5,7 +5,7 @@ const initialState = {
   isLoading: false,
 }
 export const extPlaylistsSlice = createSlice({
-  name: 'ytPlaylist',
+  name: 'extPlaylist',
   initialState,
   reducers: {
     startLoading: (state) => {
