@@ -30,37 +30,37 @@ import SekeletonPlayer from './SekeletonPlayer'
 import { useRouter } from 'next/router'
 import { getCollection } from './collection/collectionAction'
 export default function MusicPlayer() {
-  const [isLoop, setLoop] = useState(false)
-  const [isMix, setMixMusic] = useState(false)
-  const [musicName, setMusicName] = useState('')
-  const [played, setPlayed] = useState(0)
-  const [duration, setDuration] = useState(0)
+  const [player, setPlayer] = useState({
+    loop: false,
+    mix: false,
+    name: '',
+    played: 0,
+    duration: 0,
+    isShowPlayer: false,
+    isShowVolumn: false,
+    volumeIcon: <VolumeIconMedium className='fill-musicPlayer hover:fill-white' width='16' height='16' />,
+  })
   const [volume, setVolume] = useState(0.5)
-  const [isShowPlayer, setShowPlayer] = useState(false)
-  const [isShowVolumn, setShowVolumn] = useState(false)
-  const [volumeIcon, setVolumeIcon] = useState(
-    <VolumeIconMedium className='fill-musicPlayer hover:fill-white' width='16' height='16' />
-  )
   const musicInput = useRef([])
+  const volumeRef = useRef([])
   const loopIConRef = useRef()
   const playerRef = useRef()
   const mixMusicRef = useRef()
-  const volumeRef = useRef([])
   const queueRef = useRef()
   const dispatch = useDispatch()
+  const router = useRouter()
+  const playListId = router.query.id
   const isShow = useSelector((state) => state.player.isShow)
   const musicData = useSelector((state) => state.player.musicData)
   const musicId = useSelector((state) => state.player.musicId)
   const allMusic = useSelector((state) => state.collection.items)
   const authKey = useSelector((state) => state.auth.authKey)
-  const router = useRouter()
-  const playListId = router.query.id
   const isPlay = useSelector((state) => state.player.isPlay)
   const isPlayList = useSelector((state) => state.player.isPlayList)
   const currentId = useSelector((state) => state.collection.currentId)
 
   const handleReady = () => {
-    setDuration(playerRef.current.getDuration())
+    setPlayer({ ...player, duration: playerRef.current.getDuration() })
   }
   const handleMusicUrl = () => {
     return 'https://www.youtube.com/watch?v=' + musicId
@@ -70,12 +70,12 @@ export default function MusicPlayer() {
     dispatch(setPlayPauseMusic())
   }
   const handleLoopMusic = () => {
-    if (isLoop) {
-      setLoop(false)
+    if (player.loop) {
+      setPlayer({ ...player, loop: false })
       loopIConRef.current.classList.remove('fill-activeIcon', 'hover:fill-activeIconHover')
       loopIConRef.current.classList.add('fill-musicPlayer', 'hover:fill-white')
     } else {
-      setLoop(true)
+      setPlayer({ ...player, loop: true })
       loopIConRef.current.classList.add('fill-activeIcon', 'hover:fill-activeIconHover')
       loopIConRef.current.classList.remove('fill-musicPlayer', 'hover:fill-white')
     }
@@ -83,13 +83,13 @@ export default function MusicPlayer() {
   const handleProgress = (state) => {
     musicInput.current.map((item) => {
       if (!!item) {
-        item.style.backgroundSize = (state.playedSeconds / duration) * 100 + '%'
+        item.style.backgroundSize = (state.playedSeconds / player.duration) * 100 + '%'
       }
     })
-    setPlayed(state.played)
+    setPlayer({ ...player, played: state.played })
   }
   const handleChange = (e) => {
-    setPlayed(e.target.value)
+    setPlayer({ ...player, played: e.target.value })
     musicInput.current.map((item) => {
       if (!!item) {
         item.style.backgroundSize = e.target.value * 100 + '%'
@@ -97,27 +97,33 @@ export default function MusicPlayer() {
     })
     playerRef.current.seekTo(e.target.value, 'fraction')
   }
-  const handleSeekMouseUp = (e) => {
-    playerRef.current.seekTo(e.target.value, 'fraction')
-  }
-  const handleSeekVolume = (e) => {
-    volumeRef.current.seekTo(e.target.value, 'fraction')
-  }
   const handleSetVolume = (e) => {
-    setVolume(e.target.value)
+    setVolume(parseFloat(e.target.value))
     volumeRef.current.map((item) => {
       if (!!item) {
         item.style.backgroundSize = e.target.value * 100 + '%'
       }
     })
     if (e.target.value > 0 && e.target.value < 0.3) {
-      setVolumeIcon(<VolumeIconLow className='fill-musicPlayer hover:fill-white' width='16' height='16' />)
+      setPlayer({
+        ...player,
+        volumeIcon: <VolumeIconLow className='fill-musicPlayer hover:fill-white' width='16' height='16' />,
+      })
     } else if (e.target.value >= 0.3 && e.target.value < 0.6) {
-      setVolumeIcon(<VolumeIconMedium className='fill-musicPlayer hover:fill-white' width='16' height='16' />)
+      setPlayer({
+        ...player,
+        volumeIcon: <VolumeIconMedium className='fill-musicPlayer hover:fill-white' width='16' height='16' />,
+      })
     } else if (e.target.value >= 0.6) {
-      setVolumeIcon(<VolumeIconHigh className='fill-musicPlayer hover:fill-white' width='16' height='16' />)
+      setPlayer({
+        ...player,
+        volumeIcon: <VolumeIconHigh className='fill-musicPlayer hover:fill-white' width='16' height='16' />,
+      })
     } else {
-      setVolumeIcon(<VolumeIconMuted className='fill-musicPlayer hover:fill-white' width='16' height='16' />)
+      setPlayer({
+        ...player,
+        volumeIcon: <VolumeIconMuted className='fill-musicPlayer hover:fill-white' width='16' height='16' />,
+      })
     }
   }
   const handleMuted = () => {
@@ -128,7 +134,10 @@ export default function MusicPlayer() {
         }
       })
       setVolume(0)
-      setVolumeIcon(<VolumeIconMuted className='fill-musicPlayer hover:fill-white' width='16' height='16' />)
+      setPlayer({
+        ...player,
+        volumeIcon: <VolumeIconMuted className='fill-musicPlayer hover:fill-white' width='16' height='16' />,
+      })
     } else {
       volumeRef.current.map((item) => {
         if (!!item) {
@@ -136,14 +145,17 @@ export default function MusicPlayer() {
         }
       })
       setVolume(0.5)
-      setVolumeIcon(<VolumeIconMedium className='fill-musicPlayer hover:fill-white' width='16' height='16' />)
+      setPlayer({
+        ...player,
+        volumeIcon: <VolumeIconMedium className='fill-musicPlayer hover:fill-white' width='16' height='16' />,
+      })
     }
   }
   const handleBack = () => {
     if (isPlayList) {
       dispatch(decreaseCurrentId())
     } else {
-      const playedTime = (playerRef.current.getCurrentTime() - 15) / duration
+      const playedTime = (playerRef.current.getCurrentTime() - 15) / player.duration
       playerRef.current.seekTo(playedTime, 'fraction')
     }
   }
@@ -151,7 +163,7 @@ export default function MusicPlayer() {
     if (isPlayList) {
       dispatch(increaseCurrentId())
     } else {
-      const playedTime = (playerRef.current.getCurrentTime() + 15) / duration
+      const playedTime = (playerRef.current.getCurrentTime() + 15) / player.duration
       playerRef.current.seekTo(playedTime, 'fraction')
     }
   }
@@ -162,8 +174,8 @@ export default function MusicPlayer() {
   }
   const handleMixMusic = () => {
     if (isPlayList) {
-      if (isMix) {
-        setMixMusic(false)
+      if (player.mix) {
+        setPlayer({ ...player, mix: false })
         mixMusicRef.current.classList.remove('fill-activeIcon', 'hover:fill-activeIconHover')
         mixMusicRef.current.classList.add('fill-musicPlayer', 'hover:fill-white')
         !!playListId
@@ -175,7 +187,7 @@ export default function MusicPlayer() {
           return 0.5 - Math.random()
         })
         let currentMusic = allMusic.filter((index) => index == currentId)
-        setMixMusic(true)
+        setPlayer({ ...player, mix: true })
         dispatch(loadItemsSuccess({ data: [...currentMusic, ...mixMusic], index: currentId }))
         mixMusicRef.current.classList.add('fill-activeIcon', 'hover:fill-activeIconHover')
         mixMusicRef.current.classList.remove('fill-musicPlayer', 'hover:fill-white')
@@ -184,7 +196,14 @@ export default function MusicPlayer() {
   }
   const handleShowMobilePlayer = (e) => {
     e.stopPropagation()
-    isShowPlayer ? setShowPlayer(false) : setShowPlayer(true)
+    player.isShowPlayer ? setPlayer({ ...player, isShowPlayer: false }) : setPlayer({ ...player, isShowPlayer: true })
+  }
+  const handleQueue = () => {
+    if (router.pathname == '/queue') {
+      window.history.back()
+    } else {
+      router.push('/queue')
+    }
   }
   useEffect(() => {
     if (isPlayList) {
@@ -221,15 +240,15 @@ export default function MusicPlayer() {
     } else if (window.innerWidth >= 640) {
       title = title?.length > 55 ? title.slice(0, 55) + '...' : title
     }
-    setMusicName(title)
+    setPlayer({ ...player, name: title })
   }, [musicData])
-  const handleQueue = () => {
-    if (router.pathname == '/queue') {
-      window.history.back()
-    } else {
-      router.push('/queue')
-    }
-  }
+  useEffect(() => {
+    volumeRef.current.map((item) => {
+      if (!!item) {
+        item.style.backgroundSize = volume * 100 + '%'
+      }
+    })
+  }, [player.isShowVolumn])
   return (
     <>
       <div id='music-player' className='fixed bottom-0 left-0 w-screen h-[6.5rem] z-30 hidden lg:block select-none'>
@@ -246,8 +265,8 @@ export default function MusicPlayer() {
               onProgress={(state) => handleProgress(state)}
               onEnded={handleEnded}
               ref={playerRef}
-              loop={isLoop}
-              volume={parseFloat(volume)}
+              loop={player.loop}
+              volume={volume}
             />
             <div className='flex flex-row justify-between h-full items-center'>
               <div className='flex items-center w-[30%]'>
@@ -257,7 +276,7 @@ export default function MusicPlayer() {
                   src={musicData.snippet.thumbnails.medium.url}
                 />
                 <div>
-                  <div className='text-white text-sm font-semibold mb-2 w-60'>{musicName}</div>
+                  <div className='text-white text-sm font-semibold mb-2 w-60'>{player.name}</div>
                   <div className='text-iconColor text-sm'>{musicData.snippet.channelTitle}</div>
                 </div>
                 <div className='flex'>
@@ -314,20 +333,19 @@ export default function MusicPlayer() {
                   </div>
                 </div>
                 <div className='flex items-center'>
-                  <Duration time={parseInt(played * duration)} className='text-navbarColor text-xs' />
+                  <Duration time={parseInt(player.played * player.duration)} className='text-navbarColor text-xs' />
                   <input
                     className='w-[32rem] h-1 mx-2 cursor-pointer'
                     type='range'
                     min={0}
                     max={0.999999}
                     step='any'
-                    value={played}
+                    value={player.played}
                     onChange={(e) => handleChange(e)}
-                    onMouseUp={(e) => handleSeekMouseUp(e)}
                     id='music-time-input'
                     ref={(el) => (musicInput.current[0] = el)}
                   />
-                  <Duration time={duration} className='text-navbarColor text-xs' />
+                  <Duration time={player.duration} className='text-navbarColor text-xs' />
                 </div>
               </div>
               <div className='flex w-[15%] items-center justify-center'>
@@ -340,7 +358,7 @@ export default function MusicPlayer() {
                 />
                 <div className='flex items-center'>
                   <div onClick={handleMuted} className='cursor-pointer'>
-                    {volumeIcon}
+                    {player.volumeIcon}
                   </div>
                   <input
                     className='w-24 h-1 mx-2 cursor-pointer'
@@ -374,7 +392,7 @@ export default function MusicPlayer() {
                   src={musicData.snippet.thumbnails.medium.url}
                 />
                 <div>
-                  <div className='text-white text-sm font-semibold sm:w-[35rem] w-64'>{musicName}</div>
+                  <div className='text-white text-sm font-semibold sm:w-[35rem] w-64'>{player.name}</div>
                   <div className='text-iconColor text-sm'>{musicData.snippet.channelTitle}</div>
                 </div>
               </div>
@@ -395,7 +413,7 @@ export default function MusicPlayer() {
               min={0}
               max={0.999999}
               step='any'
-              value={played}
+              value={player.played}
               id='music-time-mobile-input'
               readOnly
               ref={(el) => (musicInput.current[1] = el)}
@@ -404,19 +422,19 @@ export default function MusicPlayer() {
         )}
       </div>
       <div className='fixed z-50 lg:hidden top-0 left-0 select-none'>
-        {isShowVolumn && (
+        {player.isShowVolumn && (
           <div className='w-screen h-screen bg-black flex flex-col items-center'>
             <ClosePlayerIcon
               width='24'
               height='24'
               className='fill-white absolute top-4 left-4'
-              onClick={() => setShowVolumn(false)}
+              onClick={() => setPlayer({ ...player, isShowVolumn: false })}
             />
             <ConnectDevice className='text-white w-4/5 mt-20 mb-4' />
             <div className='text-white font-bold text-2xl mb-72'>Connect to a device</div>
             <div className='flex items-center px-4 mb-8 w-full'>
               <div onClick={handleMuted} className='cursor-pointer mr-4'>
-                {volumeIcon}
+                {player.volumeIcon}
               </div>
               <input
                 className='w-full h-1 mx-2 cursor-pointer'
@@ -427,13 +445,12 @@ export default function MusicPlayer() {
                 value={volume}
                 id='music-volume-input'
                 onChange={(e) => handleSetVolume(e)}
-                onMouseUp={(e) => handleSeekVolume(e)}
                 ref={(el) => (volumeRef.current[1] = el)}
               />
             </div>
           </div>
         )}
-        {isShowPlayer && (
+        {player.isShowPlayer && (
           <div className='bg-mobilePlayerBg w-screen h-screen flex flex-col p-6'>
             <div className='flex items-center justify-between'>
               <ClosePlayerIcon width='24' height='24' className='fill-white' onClick={handleShowMobilePlayer} />
@@ -449,7 +466,7 @@ export default function MusicPlayer() {
             </div>
             <div className='flex items-center justify-between sm:mt-8 mt-14'>
               <div className=''>
-                <div className='text-white text-xl font-bold'>{musicName}</div>
+                <div className='text-white text-xl font-bold'>{player.name}</div>
                 <div className='text-iconColor font-semibold'>{musicData.snippet.channelTitle}</div>
               </div>
               <LoveButton musicId={musicId} musicData={musicData} width='24' height='24' />
@@ -461,15 +478,17 @@ export default function MusicPlayer() {
                 min={0}
                 max={0.999999}
                 step='any'
-                value={played}
+                value={player.played}
                 onChange={(e) => handleChange(e)}
-                onMouseUp={(e) => handleSeekMouseUp(e)}
                 id='music-time-input'
                 ref={(el) => (musicInput.current[2] = el)}
               />
               <div className='flex justify-between'>
-                <Duration time={parseInt(played * duration)} className='text-navbarColor text-xs font-semibold' />
-                <Duration time={duration} className='text-navbarColor text-xs font-semibold' />
+                <Duration
+                  time={parseInt(player.played * player.duration)}
+                  className='text-navbarColor text-xs font-semibold'
+                />
+                <Duration time={player.duration} className='text-navbarColor text-xs font-semibold' />
               </div>
             </div>
             <div className='flex mt-7 mb-6 justify-between items-center'>
@@ -498,7 +517,12 @@ export default function MusicPlayer() {
               </div>
             </div>
             <div className='flex justify-between'>
-              <ConnectIcon width='16' heigth='16' className='fill-white' onClick={() => setShowVolumn(true)} />
+              <ConnectIcon
+                width='16'
+                heigth='16'
+                className='fill-white'
+                onClick={() => setPlayer({ ...player, isShowVolumn: true })}
+              />
               <ShareIcon width='16' heigth='16' className='fill-white' />
             </div>
           </div>
