@@ -1,12 +1,10 @@
-import React from 'react'
 import SearchMusicItem from './SearchMusicItem'
 import { PlayIcon, PauseIcon } from './Icon'
 import { setPlayPauseMusic, showMusicPlayer, setNotPlayList } from './music_player/musicPlayerSlice'
 import { useDispatch, useSelector } from 'react-redux'
 export default function TopResult({ musicData }) {
   const dispatch = useDispatch()
-  const isPlay = useSelector((state) => state.player.isPlay)
-  const musicId = useSelector((state) => state.player.musicId)
+  const { isPlay, musicId } = useSelector((state) => state.player)
   let musicName = musicData[0].snippet.title
     .replace('Official Music Video', '')
     .replace('(', '')

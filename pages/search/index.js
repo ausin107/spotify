@@ -1,15 +1,12 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import ChannelRow from '../../components/ChannelRow'
-import MusicSearchRow from '../../components/MusicSearchRow'
 import TopResult from '../../components/TopResult'
 import { SpinIcon } from '../../components/Icon'
 import DefaultSearch from '../../components/DefaultSearch'
 import MusicsList from '../../components/MusicsList'
 export default function Search() {
-  let musicData = useSelector((state) => state.search.musicData)
-  const artistData = useSelector((state) => state.search.articsData)
-  const isLoading = useSelector((state) => state.search.isLoading)
+  let { musicData, artistData, isLoading } = useSelector((state) => state.search)
   useEffect(() => {
     document.title = 'Spotify - Search'
   }, [])

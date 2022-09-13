@@ -8,9 +8,7 @@ import { useDispatch, useSelector } from 'react-redux'
 export default function SearchMusicItem({ musicData }) {
   const [duration, setDuration] = useState(0)
   const [isLoved, setLoved] = useState(false)
-  const isPlay = useSelector((state) => state.player.isPlay)
-  const musicId = useSelector((state) => state.player.musicId)
-  const authKey = useSelector((state) => state.auth.authKey)
+  const { isPlay, musicId } = useSelector((state) => state.player)
   const dispatch = useDispatch()
   const itemRef = useRef()
   let musicName = musicData.snippet.title

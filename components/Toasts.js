@@ -2,8 +2,7 @@ import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { setNotShow } from './toast/toastSlice'
 export default function Toasts() {
-  const isShow = useSelector((state) => state.toast.isShow)
-  const toastMess = useSelector((state) => state.toast.toastMess)
+  const { isShow, toastMess } = useSelector((state) => state.toast)
   const dispatch = useDispatch()
   const newClass = 'fixed bottom-32 w-full flex justify-center transition-all duration-500 opacity-100 z-40' + isShow
 

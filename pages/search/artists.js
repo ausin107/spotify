@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
-
 export default function Artists() {
   const [artists, setArtists] = useState()
   const artistData = useSelector((state) => state.search.articsData)

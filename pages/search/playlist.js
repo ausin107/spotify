@@ -12,9 +12,7 @@ export default function Playlist() {
   const [plName, setPlName] = useState('')
   const dispatch = useDispatch()
   const authKey = useSelector((state) => state.auth.authKey)
-  const allExtPlaylist = useSelector((state) => state.extplaylist.allExtPlaylist)
-  const currentExtPlaylist = useSelector((state) => state.extplaylist.currentPlInfo)
-  const isLoading = useSelector((state) => state.extplaylist.isLoading)
+  const { allExtPlaylist, currentExtPlaylist, isLoading } = useSelector((state) => state.extplaylist)
   const router = useRouter()
   useEffect(() => {
     const getData = async () => {

@@ -7,11 +7,8 @@ import { setShow } from './toast/toastSlice'
 export default function LoveButton({ musicId, musicData, className, width, height }) {
   const [isLove, setLove] = useState(false)
   const dispatch = useDispatch()
-  const currentId = useSelector((state) => state.collection.currentId)
-  const isAuth = useSelector((state) => state.auth.isAuth)
-  const authKey = useSelector((state) => state.auth.authKey)
-  const isLoading = useSelector((state) => state.collection.isLoading)
-  const allMusic = useSelector((state) => state.collection.items)
+  const { currentId, allMusic } = useSelector((state) => state.collection)
+  const { isAuth, authKey } = useSelector((state) => state.auth)
   const handleLoveMusic = async (e) => {
     e.stopPropagation()
     if (isAuth) {

@@ -5,9 +5,7 @@ import { Playlists } from '../components/Icon'
 export default function Queue() {
   const [playingMs, setPlayingMs] = useState()
   const [waitingMs, setWaitingMs] = useState([])
-  const isPlayList = useSelector((state) => state.player.isPlayList)
-  const allMusics = useSelector((state) => state.collection.items)
-  const currentMsId = useSelector((state) => state.collection.currentId)
+  const { allMusics, currentMsId } = useSelector((state) => state.collection.items)
   useEffect(() => {
     let waitingList = []
     allMusics.map((item, index) => {
@@ -20,7 +18,7 @@ export default function Queue() {
     setWaitingMs(waitingList)
   }, [allMusics, currentMsId])
   return (
-    <div className=''>
+    <>
       {!!playingMs && !!waitingMs ? (
         <div className='pt-28 pb-48 px-9 flex flex-col border-b border-searchChildBg mb-28'>
           <div className='text-white text-2xl font-bold mb-6'>Waiting list</div>
@@ -47,6 +45,6 @@ export default function Queue() {
           </button>
         </div>
       )}
-    </div>
+    </>
   )
 }

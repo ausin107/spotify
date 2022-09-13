@@ -50,15 +50,9 @@ export default function MusicPlayer() {
   const dispatch = useDispatch()
   const router = useRouter()
   const playListId = router.query.id
-  const isShow = useSelector((state) => state.player.isShow)
-  const musicData = useSelector((state) => state.player.musicData)
-  const musicId = useSelector((state) => state.player.musicId)
-  const allMusic = useSelector((state) => state.collection.items)
+  const { isShow, musicData, musicId, isPlay, isPlayList } = useSelector((state) => state.player)
+  const { allMusic, currentId } = useSelector((state) => state.collection)
   const authKey = useSelector((state) => state.auth.authKey)
-  const isPlay = useSelector((state) => state.player.isPlay)
-  const isPlayList = useSelector((state) => state.player.isPlayList)
-  const currentId = useSelector((state) => state.collection.currentId)
-
   const handleReady = () => {
     setPlayer({ ...player, duration: playerRef.current.getDuration() })
   }

@@ -1,6 +1,6 @@
 import { loadTrendingMusic } from '../lib/loadData'
 import { useEffect, useState } from 'react'
-import { ClosePlayerIcon, SettingIcon } from '../components/Icon'
+import { ClosePlayerIcon, SettingIcon, SpinIcon } from '../components/Icon'
 import { useDispatch, useSelector } from 'react-redux'
 import Row from '../components/Row'
 import Head from 'next/head'
@@ -12,9 +12,9 @@ export async function getStaticProps() {
   const GMusic = await loadTrendingMusic('')
   return {
     props: {
-      VNMusic: VNMusic?.items,
-      KRMusic: KRMusic?.items,
-      GMusic: GMusic?.items,
+      VNMusic: VNMusic?.items || null,
+      KRMusic: KRMusic?.items || null,
+      GMusic: GMusic?.items || null,
     },
   }
 }
@@ -44,11 +44,15 @@ export default function Home({ VNMusic, KRMusic, GMusic }) {
       </Head>
       <div className='pb-24'>
         <div className='h-80 bg-mainContainerBg absolute w-screen'></div>
-        {!!VNMusic && !!KRMusic && !!GMusic && (
+        {!!VNMusic && !!KRMusic && !!GMusic ? (
           <div className='pt-16 relative z-10'>
             <Row title='Top Thịnh Hành Tại Việt Nam' data={VNMusic} />
             <Row title='Đang Hot Tại Hàn Quốc' data={KRMusic} />
             <Row title='Bảng Phát Hành Mới Nổi Tiếng' data={GMusic} />
+          </div>
+        ) : (
+          <div className='w-full h-screen flex items-center justify-center'>
+            <SpinIcon width={36} className='animate-spin text-white' />
           </div>
         )}
         <SettingIcon

@@ -8,13 +8,11 @@ export const toastSlice = createSlice({
   initialState,
   reducers: {
     setShow: (state, action) => {
-      //   state.isShow = true
       state.isShow = ''
       state.toastMess = action.payload
     },
     setNotShow: (state) => {
       state.isShow = ' hiddenToast'
-      //   state.isShow = false
     },
   },
 })

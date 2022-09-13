@@ -1,5 +1,3 @@
-import React from 'react'
-
 export default function Duration({ time, isoTime, className }) {
   const IsoConverter = (isoTime) => {
     let duration = isoTime

@@ -1,4 +1,4 @@
-import { allSearchPageData } from './allSearchPageData'
+import { allSearchPageData } from '../lib/allSearchPageData'
 export default function DefaultSearch() {
   return (
     <div className='px-8 pt-16 lg:pt-24'>

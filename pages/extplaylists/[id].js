@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useState, useEffect } from 'react'
+import { useDispatch } from 'react-redux'
 import { useRouter } from 'next/router'
 import PlaylistsBody from '../../components/PlaylistsBody'
 import { ArrowBackIcon } from '../../components/Icon'

@@ -1,8 +1,7 @@
-import React from 'react'
 import RowItem from './RowItem'
 import { updateCurrentPlInfo, startLoading } from './extPlaylists/extPlaylistsSlice'
 import { useRouter } from 'next/router'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 export default function MusicSearchRow({ musicData, title }) {
   const router = useRouter()
   const dispatch = useDispatch()

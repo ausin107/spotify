@@ -8,7 +8,6 @@ import {
   LibraryIconActive,
   SearchIconActive,
   SearchIcon,
-  LoveIcon,
   LoveMusicActive,
   LoveMusic,
 } from './Icon'

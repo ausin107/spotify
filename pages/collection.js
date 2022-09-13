@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getAllFavoriteMusic } from '../lib/firebaseAction'
 import Image from 'next/image'
@@ -8,7 +8,6 @@ import PlaylistsBody from '../components/PlaylistsBody'
 import { useRouter } from 'next/router'
 export default function Collection() {
   const [data, setData] = useState('')
-  const dispatch = useDispatch()
   const router = useRouter()
   const authKey = useSelector((state) => state.auth.authKey)
   const allMusic = useSelector((state) => state.collection.items)
@@ -21,7 +20,7 @@ export default function Collection() {
     document.title = 'Spotify - Favorite'
   }, [allMusic])
   return (
-    <div className=''>
+    <>
       <div className='lg:pt-20 pt-16 pb-48 lg:px-9 sm:px-6 px-4 flex lg:bg-likedBg bg-collectionMobileBg lg:items-end items-start'>
         <div className='w-60 h-60 shadow-3xl hidden lg:block'>
           <Image src='/loveImg.png' width='240' height='240' className='' />
@@ -62,6 +61,6 @@ export default function Collection() {
           </Link>
         </div>
       )}
-    </div>
+    </>
   )
 }

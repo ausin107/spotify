@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import { MusicIconV2 } from './Icon'
 import { getSinglePlaylistsInfo } from '../lib/firebaseAction'
 import { useRouter } from 'next/router'

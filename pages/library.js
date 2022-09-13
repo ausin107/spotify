@@ -12,9 +12,8 @@ import { setShow } from '../components/toast/toastSlice'
 export default function Library() {
   const [data, setData] = useState('')
   const dispatch = useDispatch()
+  const { isPlay, isPlayList } = useSelector((state) => state.player)
   const authKey = useSelector((state) => state.auth.authKey)
-  const isPlay = useSelector((state) => state.player.isPlay)
-  const isPlayList = useSelector((state) => state.player.isPlayList)
   const allMusic = useSelector((state) => state.collection.items)
   const playlists = useSelector((state) => state.playlist.allPlaylist)
   const extPlaylists = useSelector((state) => state.extplaylist.allExtPlaylist)

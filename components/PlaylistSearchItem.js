@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { PauseIcon, PlayIcon } from './Icon'
 import { setNotPlayList, setPlayPauseMusic, showMusicPlayer } from './music_player/musicPlayerSlice'
@@ -6,13 +5,9 @@ import { addCollection, getCollection } from './collection/collectionAction'
 import { setShow } from './toast/toastSlice'
 export default function PlaylistSearchItem({ data }) {
   const dispatch = useDispatch()
-  const isPlay = useSelector((state) => state.player.isPlay)
-  const musicId = useSelector((state) => state.player.musicId)
-  const isShow = useSelector((state) => state.player.isShow)
-  const authKey = useSelector((state) => state.auth.authKey)
-  const isAuth = useSelector((state) => state.auth.isAuth)
-  const currentId = useSelector((state) => state.collection.currentId)
-  const currentPLId = useSelector((state) => state.collection.currentPlaylist)
+  const { isPlay, musicId } = useSelector((state) => state.player)
+  const { authKey, isAuth } = useSelector((state) => state.auth)
+  const { currentId, currentPLId } = useSelector((state) => state.collection)
   const title = data.snippet.title
   let musicName = title.replace('Official Music Video', '').replace('(', '').replace(')', '').replaceAll('|', '')
   musicName = musicName.length >= 50 ? musicName.slice(0, 50) + '...' : musicName

@@ -1,4 +1,3 @@
-import { useRef, useState, useEffect } from 'react'
 import { PlayIcon, PauseIcon } from './Icon'
 import { useDispatch, useSelector } from 'react-redux/'
 import { showMusicPlayer, setPlayPauseMusic, setNotPlayList } from './music_player/musicPlayerSlice'
