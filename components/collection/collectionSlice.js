@@ -5,7 +5,7 @@ const initialState = {
   isLoading: false,
   currentId: null,
   currentPlaylist: null,
-  allMusics: [],
+  items: [],
 }
 export const collectionSlice = createSlice({
   name: 'collection',
@@ -15,7 +15,7 @@ export const collectionSlice = createSlice({
       state.isLoading = true
     },
     loadItemsSuccess: (state, action) => {
-      state.allMusics = action.payload.data
+      state.items = action.payload.data
       state.currentId = action.payload.index
     },
     endLoading: (state) => {
@@ -25,7 +25,7 @@ export const collectionSlice = createSlice({
       state.currentId = action.payload.index
     },
     increaseCurrentId: (state) => {
-      if (state.currentId < state.allMusics.length - 1) {
+      if (state.currentId < state.items.length - 1) {
         state.currentId += 1
       }
     },
