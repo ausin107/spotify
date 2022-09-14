@@ -51,7 +51,7 @@ export default function MusicPlayer() {
   const router = useRouter()
   const playListId = router.query.id
   const { isShow, musicData, musicId, isPlay, isPlayList } = useSelector((state) => state.player)
-  const { allMusic, currentId } = useSelector((state) => state.collection)
+  const { allMusics, currentId } = useSelector((state) => state.collection)
   const authKey = useSelector((state) => state.auth.authKey)
   const handleReady = () => {
     setPlayer({ ...player, duration: playerRef.current.getDuration() })
@@ -176,11 +176,11 @@ export default function MusicPlayer() {
           ? dispatch(getCollection(`collection/${authKey}/playlists/${playListId}/items`))
           : dispatch(getCollection(`collection/${authKey}/items`))
       } else {
-        let mixMusic = [...allMusic]
+        let mixMusic = [...allMusics]
         mixMusic.sort(function () {
           return 0.5 - Math.random()
         })
-        let currentMusic = allMusic.filter((index) => index == currentId)
+        let currentMusic = allMusics.filter((index) => index == currentId)
         setPlayer({ ...player, mix: true })
         dispatch(loadItemsSuccess({ data: [...currentMusic, ...mixMusic], index: currentId }))
         mixMusicRef.current.classList.add('fill-activeIcon', 'hover:fill-activeIconHover')
@@ -201,8 +201,8 @@ export default function MusicPlayer() {
   }
   useEffect(() => {
     if (isPlayList) {
-      !!allMusic &&
-        allMusic.map((item, index) => {
+      !!allMusics &&
+        allMusics.map((item, index) => {
           if (index == currentId) {
             let musicId = typeof item.id == 'object' ? item.id.videoId : item.id
             musicId = musicId.length > 15 ? item.snippet.resourceId.videoId : musicId
@@ -215,7 +215,7 @@ export default function MusicPlayer() {
           }
         })
     }
-  }, [currentId, allMusic])
+  }, [currentId, allMusics])
   useEffect(() => {
     if (!!queueRef.current) {
       if (router.pathname == '/queue') {

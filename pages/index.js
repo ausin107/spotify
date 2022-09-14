@@ -38,10 +38,6 @@ export default function Home({ VNMusic, KRMusic, GMusic }) {
   }
   return (
     <>
-      <Head>
-        <title>Spotify - Home</title>
-        <link rel='icon' href='/SpotifyLogo.png' />
-      </Head>
       <div className='pb-24'>
         <div className='h-80 bg-mainContainerBg absolute w-screen'></div>
         {!!VNMusic && !!KRMusic && !!GMusic ? (
