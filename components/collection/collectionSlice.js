@@ -6,6 +6,7 @@ const initialState = {
   currentId: null,
   currentPlaylist: null,
   items: [],
+  originItems: [],
 }
 export const collectionSlice = createSlice({
   name: 'collection',
@@ -40,6 +41,9 @@ export const collectionSlice = createSlice({
     updateCollectionInfo: (state, action) => {
       state.collectionData = action.payload
     },
+    setOriginItems: (state, action) => {
+      state.originItems = action.payload
+    },
   },
 })
 export const {
@@ -51,6 +55,7 @@ export const {
   decreaseCurrentId,
   setCurrentPlayList,
   updateCollectionInfo,
+  setOriginItems,
 } = collectionSlice.actions
 
 export default collectionSlice.reducer

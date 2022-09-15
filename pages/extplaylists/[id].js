@@ -10,7 +10,6 @@ export default function ExtPLaylist() {
   const [plInfo, setPlInfo] = useState()
   const [extPlName, setExtPlName] = useState('')
   const router = useRouter()
-  const dispatch = useDispatch()
   const playListId = router.query.id
   useEffect(() => {
     const getData = async () => {

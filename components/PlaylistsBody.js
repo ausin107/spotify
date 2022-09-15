@@ -1,15 +1,15 @@
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useRouter } from 'next/router'
 import { PlayIcon, PauseIcon, OptionIcons } from './Icon'
 import { getCollection } from './collection/collectionAction'
 import { getAllPlaylistsInfo, removeDocument, addFavoriteMusic } from '../lib/firebaseAction'
 import { setPlayList, setPlayPauseMusic, showMusicPlayer } from './music_player/musicPlayerSlice'
-import { useRouter } from 'next/router'
 import { loadAllPlaylist } from './playlists/playlistSlice'
 import { loadAllExtPlaylists } from './extPlaylists/extPlaylistsSlice'
 import { setShow } from './toast/toastSlice'
+import { loadItemsSuccess, setOriginItems } from './collection/collectionSlice'
 import MusicsList from './MusicsList'
-import { loadItemsSuccess } from './collection/collectionSlice'
 export default function PlaylistsBody({ playlistItems, path, currentPlId, extPlaylistInfo, isLovedPl }) {
   const [isShowPlMenu, setShowPlMenu] = useState(false)
   const dispatch = useDispatch()
@@ -41,10 +41,12 @@ export default function PlaylistsBody({ playlistItems, path, currentPlId, extPla
             musicData: item,
             musicId,
           }
-          dispatch(loadItemsSuccess({ data: playlistItems, index: 0 }))
+
           dispatch(showMusicPlayer(musicInfo))
         }
       })
+      dispatch(loadItemsSuccess({ data: playlistItems, index: 0 }))
+      dispatch(setOriginItems(playlistItems))
     }
   }
   const handlePause = () => {

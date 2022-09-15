@@ -25,16 +25,16 @@ import LoveButton from './LoveButton'
 import Duration from './Duration'
 import { setPlayPauseMusic, showMusicPlayer } from './music_player/musicPlayerSlice'
 import { useSelector, useDispatch } from 'react-redux'
-import { increaseCurrentId, decreaseCurrentId, loadItemsSuccess } from './collection/collectionSlice'
+import { increaseCurrentId, decreaseCurrentId, loadItemsSuccess, setOriginItems } from './collection/collectionSlice'
 import SekeletonPlayer from './SekeletonPlayer'
 import { useRouter } from 'next/router'
-import { getCollection } from './collection/collectionAction'
 export default function MusicPlayer() {
   const [player, setPlayer] = useState({
     loop: false,
     mix: false,
     name: '',
     played: 0,
+    loadedSeconds: 0,
     duration: 0,
     isShowPlayer: false,
     isShowVolumn: false,
@@ -49,10 +49,8 @@ export default function MusicPlayer() {
   const queueRef = useRef()
   const dispatch = useDispatch()
   const router = useRouter()
-  const playListId = router.query.id
   const { isShow, musicData, musicId, isPlay, isPlayList } = useSelector((state) => state.player)
-  const { items, currentId } = useSelector((state) => state.collection)
-  const authKey = useSelector((state) => state.auth.authKey)
+  const { items, currentId, originItems } = useSelector((state) => state.collection)
   const handleReady = () => {
     setPlayer({ ...player, duration: playerRef.current.getDuration() })
   }
@@ -61,7 +59,9 @@ export default function MusicPlayer() {
   }
   const handlePlayPause = (e) => {
     e.stopPropagation()
-    dispatch(setPlayPauseMusic())
+    if (player.loadedSeconds >= 1) {
+      dispatch(setPlayPauseMusic())
+    }
   }
   const handleLoopMusic = () => {
     if (player.loop) {
@@ -80,7 +80,7 @@ export default function MusicPlayer() {
         item.style.backgroundSize = (state.playedSeconds / player.duration) * 100 + '%'
       }
     })
-    setPlayer({ ...player, played: state.played })
+    setPlayer({ ...player, played: state.played, loadedSeconds: state.loadedSeconds })
   }
   const handleChange = (e) => {
     setPlayer({ ...player, played: e.target.value })
@@ -166,16 +166,15 @@ export default function MusicPlayer() {
       dispatch(increaseCurrentId())
     }
   }
-  const handleMixMusic = () => {
+  const handleMixMusic = async () => {
     if (isPlayList) {
       if (player.mix) {
         setPlayer({ ...player, mix: false })
         mixMusicRef.current.classList.remove('fill-activeIcon', 'hover:fill-activeIconHover')
         mixMusicRef.current.classList.add('fill-musicPlayer', 'hover:fill-white')
-        !!playListId
-          ? dispatch(getCollection(`collection/${authKey}/playlists/${playListId}/items`))
-          : dispatch(getCollection(`collection/${authKey}/items`))
+        dispatch(loadItemsSuccess({ data: originItems, index: 0 }))
       } else {
+        dispatch(setOriginItems(items))
         let mixMusic = [...items]
         mixMusic.sort(function () {
           return 0.5 - Math.random()
