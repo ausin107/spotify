@@ -5,18 +5,18 @@ import { Playlists } from '../components/Icon'
 export default function Queue() {
   const [playingMs, setPlayingMs] = useState()
   const [waitingMs, setWaitingMs] = useState([])
-  const { allMusics, currentMsId } = useSelector((state) => state.collection.items)
+  const { items, currentId } = useSelector((state) => state.collection)
   useEffect(() => {
     let waitingList = []
-    allMusics.map((item, index) => {
-      if (index == currentMsId) {
+    items.map((item, index) => {
+      if (index == currentId) {
         setPlayingMs(item)
-      } else if (index > currentMsId) {
+      } else if (index > currentId) {
         waitingList = [...waitingList, item]
       }
     })
     setWaitingMs(waitingList)
-  }, [allMusics, currentMsId])
+  }, [items, currentId])
   return (
     <>
       {!!playingMs && !!waitingMs ? (

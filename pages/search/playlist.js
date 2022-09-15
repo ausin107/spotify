@@ -12,12 +12,12 @@ export default function Playlist() {
   const [plName, setPlName] = useState('')
   const dispatch = useDispatch()
   const authKey = useSelector((state) => state.auth.authKey)
-  const { allExtPlaylist, currentExtPlaylist, isLoading } = useSelector((state) => state.extplaylist)
+  const { allExtPlaylist, currentPlInfo, isLoading } = useSelector((state) => state.extplaylist)
   const router = useRouter()
   useEffect(() => {
     const getData = async () => {
       const isLovedPl = await getSingleFavoriteMusic(
-        `collection/${authKey}/extplaylists/${currentExtPlaylist?.id?.playlistId}`
+        `collection/${authKey}/extplaylists/${currentPlInfo?.id?.playlistId}`
       )
       if (!!isLovedPl) {
         const plId = isLovedPl?.playListId
@@ -25,13 +25,13 @@ export default function Playlist() {
         setPlData(data.items)
         setLovedPl(true)
       } else {
-        const plId = currentExtPlaylist?.id.playlistId
+        const plId = currentPlInfo?.id.playlistId
         const data = await loadPlaylistItems(plId, 50)
         setPlData(data.items)
         setLovedPl(false)
       }
       dispatch(endLoading())
-      let plTitle = currentExtPlaylist?.snippet.title
+      let plTitle = currentPlInfo?.snippet.title
       if (window.innerWidth < 640) {
         plTitle = plTitle?.length > 25 ? plTitle.slice(0, 25) + '...' : plTitle
       } else if (window.innerWidth >= 640 && window.innerWidth < 1024) {
@@ -42,7 +42,7 @@ export default function Playlist() {
       setPlName(plTitle)
     }
     getData()
-  }, [currentExtPlaylist, allExtPlaylist])
+  }, [currentPlInfo, allExtPlaylist])
   return (
     <>
       <BackIcon
@@ -61,7 +61,7 @@ export default function Playlist() {
             <div className='lg:pt-20 pt-16 lg:pb-48 pb-40 sm:px-9 px-4 flex lg:flex-row flex-col bg-greyBg lg:items-end'>
               <div className='w-full lg:w-60 lg:h-60 sm:h-72 flex justify-center lg:mb-0 mb-3'>
                 <img
-                  src={currentExtPlaylist.snippet.thumbnails.medium.url}
+                  src={currentPlInfo.snippet.thumbnails.medium.url}
                   alt=''
                   className='lg:w-60 lg:h-60 sm:w-72 sm:h-72 w-44 h-44 object-cover shadow-3xl'
                 />
@@ -83,8 +83,8 @@ export default function Playlist() {
               </div>
             </div>
           )}
-          {!!plData && !!currentExtPlaylist && (
-            <PlaylistsBody playlistItems={plData} extPlaylistInfo={currentExtPlaylist} isLovedPl={isLovedPl} />
+          {!!plData && !!currentPlInfo && (
+            <PlaylistsBody playlistItems={plData} extPlaylistInfo={currentPlInfo} isLovedPl={isLovedPl} />
           )}
         </>
       )}

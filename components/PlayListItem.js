@@ -17,7 +17,7 @@ export default function PlayListItem({ data, path, index, extPlItems }) {
   const [isFocus, setFocus] = useState(false)
   const [musicName, setMusicName] = useState('')
   const { isShow, isPlay, musicId } = useSelector((state) => state.player)
-  const { currentPLId, currentId } = useSelector((state) => state.collection)
+  const { currentPlaylist, currentId } = useSelector((state) => state.collection)
   const authKey = useSelector((state) => state.auth.authKey)
   const dispatch = useDispatch()
   const trashRef = useRef()
@@ -120,8 +120,8 @@ export default function PlayListItem({ data, path, index, extPlItems }) {
   }
   const hanldeRemove = (e) => {
     e.stopPropagation()
-    dispatch(deleteCollection(`collection/${authKey}/playlists/${currentPLId}/items/${itemId}`))
-    dispatch(getCollection(`collection/${authKey}/playlists/${currentPLId}/items`, currentId))
+    dispatch(deleteCollection(`collection/${authKey}/playlists/${currentPlaylist}/items/${itemId}`))
+    dispatch(getCollection(`collection/${authKey}/playlists/${currentPlaylist}/items`, currentId))
     dispatch(setShow('Removed from your Favorite Songs'))
   }
   return (

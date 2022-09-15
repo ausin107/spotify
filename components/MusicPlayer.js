@@ -271,7 +271,9 @@ export default function MusicPlayer() {
                 />
                 <div>
                   <div className='text-white text-sm font-semibold mb-2 w-60'>{player.name}</div>
-                  <div className='text-iconColor text-sm'>{musicData.snippet.channelTitle}</div>
+                  <div className='text-iconColor text-sm'>
+                    {musicData.snippet.videoOwnerChannelTitle || musicData.snippet.channelTitle}
+                  </div>
                 </div>
                 <div className='flex'>
                   <LoveButton

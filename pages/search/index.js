@@ -3,10 +3,9 @@ import { useSelector } from 'react-redux'
 import ChannelRow from '../../components/ChannelRow'
 import TopResult from '../../components/TopResult'
 import { SpinIcon } from '../../components/Icon'
-import DefaultSearch from '../../components/DefaultSearch'
 import MusicsList from '../../components/MusicsList'
 export default function Search() {
-  let { musicData, artistData, isLoading } = useSelector((state) => state.search)
+  let { musicData, articsData, isLoading } = useSelector((state) => state.search)
   useEffect(() => {
     document.title = 'Spotify - Search'
   }, [])
@@ -18,14 +17,16 @@ export default function Search() {
         </div>
       ) : (
         <>
-          {!!musicData && !!artistData ? (
+          {!!musicData && !!articsData ? (
             <>
               <TopResult musicData={musicData} />
-              <ChannelRow artistData={artistData} />
+              <ChannelRow artistData={articsData} />
               <MusicsList data={musicData} />
             </>
           ) : (
-            <DefaultSearch />
+            <div className='h-screen flex justify-center items-center font-bold text-4xl text-white'>
+              Search your music here
+            </div>
           )}
         </>
       )}

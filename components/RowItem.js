@@ -5,14 +5,14 @@ import { updateCurrentPlInfo, startLoading } from './extPlaylists/extPlaylistsSl
 import { useRouter } from 'next/router'
 export default function RowItem({ data }) {
   const dispatch = useDispatch()
-  const musicState = useSelector((state) => state.player)
+  const { musicId, isPlay } = useSelector((state) => state.player)
   let title = data.snippet.title
     .replace('Official Music Video', '')
     .replace('(', '')
     .replace(')', '')
     .replaceAll('|', '')
   title = title.length > 30 ? title.slice(0, 30) + '...' : title
-  const musicId = data.id.videoId || data.id
+  const curentMusicId = data.id.videoId || data.id
   const router = useRouter()
   const handleShow = () => {
     if (router.pathname == '/search/playlists') {
@@ -22,12 +22,12 @@ export default function RowItem({ data }) {
     } else {
       dispatch(setNotPlayList())
       const musicInfo = {
-        musicId,
+        musicId: curentMusicId,
         musicData: data,
       }
-      if (musicState.musicId != musicId) {
+      if (musicId != curentMusicId) {
         dispatch(showMusicPlayer(musicInfo))
-      } else if (musicState.musicId == musicId) {
+      } else if (musicId == curentMusicId) {
         dispatch(setPlayPauseMusic())
       }
     }
@@ -43,7 +43,7 @@ export default function RowItem({ data }) {
       <div
         className='group-hover:visible group-hover:translate-y-0 hover:scale-105 group-hover:opacity-100 transition-all duration-300 invisible translate-y-2 opacity-0 p-3 d-flex bg-playIconBg absolute rounded-full right-2 bottom-[3.3rem] sm:right-6 sm:bottom-12 lg:bottom-[5.5rem]'
         onClick={handleShow}>
-        {musicState.isPlay && musicState.musicId == musicId ? (
+        {isPlay && musicId == curentMusicId ? (
           <PauseIcon width='24' height='24' className='fill-black' />
         ) : (
           <PlayIcon width='24' height='24' className='fill-black' />
