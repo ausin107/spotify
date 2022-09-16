@@ -21,6 +21,7 @@ export default function PlayListItem({ data, path, index, extPlItems }) {
   const authKey = useSelector((state) => state.auth.authKey)
   const dispatch = useDispatch()
   const trashRef = useRef()
+  const dateRef = useRef()
   const router = useRouter()
   let albumName = musicName.length >= 30 ? musicName.slice(0, 30) + '...' : musicName
   const channelName = data.snippet.channelTitle.replace('Official', '').trim()
@@ -42,6 +43,11 @@ export default function PlayListItem({ data, path, index, extPlItems }) {
       trashRef.current.classList.add('hidden')
     } else {
       trashRef.current.classList.remove('hidden')
+    }
+    if (router.pathname.includes('/playlists/')) {
+      dateRef.current.classList.add('!w-[18%]')
+    } else {
+      dateRef.current.classList.remove('!w-[18%]')
     }
     const title = data.snippet.title
     let musicName = title.replace('Official Music Video', '').replace('(', '').replace(')', '').replaceAll('|', '')
@@ -152,13 +158,15 @@ export default function PlayListItem({ data, path, index, extPlItems }) {
       <div className='w-1/4 lg:w-[25%] text-iconColor font-semibold text-sm group-hover:text-white group-focus:text-white lg:block hidden'>
         {albumName}
       </div>
-      <DateConvert className='text-iconColor font-semibold text-sm w-1/5 lg:block hidden' data={date} />
+      <div className='w-1/5 lg:block hidden' ref={dateRef}>
+        <DateConvert className='text-iconColor font-semibold text-sm' data={date} />
+      </div>
       <div className='flex justify-end items-center lg:w-[12%] sm:w-[25%] w-[10%]'>
         <LoveButton musicId={itemId} musicData={data} className='sm:mr-4 cursor-pointer lg:w-[15%] sm:w-[11%] w-3/5' />
         <Duration isoTime={duration} className='text-navbarColor font-semibold w-[35%] sm:block hidden' />
       </div>
       <div
-        className='w-[10%] justify-end lg:invisible lg:group-hover:visible lg:group-focus:visible cursor-pointer flex'
+        className='lg:w-[2%] w-[10%] justify-end lg:invisible lg:group-hover:visible lg:group-focus:visible cursor-pointer flex'
         onClick={hanldeRemove}
         ref={trashRef}>
         <TrashCanIcon className='text-iconColor w-4 hover:text-white' />

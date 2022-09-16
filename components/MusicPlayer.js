@@ -20,6 +20,7 @@ import {
   ConnectDevice,
   ConnectIcon,
   ShareIcon,
+  SpinIcon,
 } from './Icon'
 import LoveButton from './LoveButton'
 import Duration from './Duration'
@@ -59,7 +60,7 @@ export default function MusicPlayer() {
   }
   const handlePlayPause = (e) => {
     e.stopPropagation()
-    if (player.loadedSeconds >= 1) {
+    if (player.loadedSeconds >= 1 && player.played > 0) {
       dispatch(setPlayPauseMusic())
     }
   }
@@ -172,16 +173,26 @@ export default function MusicPlayer() {
         setPlayer({ ...player, mix: false })
         mixMusicRef.current.classList.remove('fill-activeIcon', 'hover:fill-activeIconHover')
         mixMusicRef.current.classList.add('fill-musicPlayer', 'hover:fill-white')
-        dispatch(loadItemsSuccess({ data: originItems, index: 0 }))
+        let currentIndex = originItems.findIndex((item, index) => {
+          if (item.etag == musicData.etag) {
+            return index
+          }
+        })
+        let musics = originItems.filter((item, index) => {
+          if (index >= currentIndex) {
+            return item
+          }
+        })
+        dispatch(loadItemsSuccess({ data: musics, index: 0 }))
       } else {
         dispatch(setOriginItems(items))
         let mixMusic = [...items]
         mixMusic.sort(function () {
           return 0.5 - Math.random()
         })
-        let currentMusic = items.filter((index) => index == currentId)
+        let result = mixMusic.filter((item) => item.etag != musicData.etag)
         setPlayer({ ...player, mix: true })
-        dispatch(loadItemsSuccess({ data: [...currentMusic, ...mixMusic], index: currentId }))
+        dispatch(loadItemsSuccess({ data: [musicData, ...result], index: 0 }))
         mixMusicRef.current.classList.add('fill-activeIcon', 'hover:fill-activeIconHover')
         mixMusicRef.current.classList.remove('fill-musicPlayer', 'hover:fill-white')
       }
