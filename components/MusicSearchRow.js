@@ -2,6 +2,7 @@ import RowItem from './RowItem'
 import { updateCurrentPlInfo, startLoading } from './extPlaylists/extPlaylistsSlice'
 import { useRouter } from 'next/router'
 import { useDispatch } from 'react-redux'
+import LazyImage from './LazyImage'
 export default function MusicSearchRow({ musicData, title }) {
   const router = useRouter()
   const dispatch = useDispatch()
@@ -31,10 +32,9 @@ export default function MusicSearchRow({ musicData, title }) {
           title = title.length > 80 ? title.slice(0, 80) + '...' : title
           return (
             <div key={index} className='flex mb-4 items-center' onClick={() => handleShow(item)}>
-              <img
-                draggable={false}
+              <LazyImage
                 className='shadow-2xl h-14 w-14 object-cover mr-4'
-                src={item.snippet.thumbnails.medium.url}
+                lazySrc={item.snippet.thumbnails.medium.url}
                 alt=''
               />
               <div className=''>

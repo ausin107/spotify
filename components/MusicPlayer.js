@@ -37,7 +37,6 @@ export default function MusicPlayer() {
     played: 0,
     loadedSeconds: 0,
     duration: 0,
-    isShowPlayer: false,
     isShowVolumn: false,
     volumeIcon: <VolumeIconMedium className='fill-musicPlayer hover:fill-white' width='16' height='16' />,
   })
@@ -48,6 +47,7 @@ export default function MusicPlayer() {
   const playerRef = useRef()
   const mixMusicRef = useRef()
   const queueRef = useRef()
+  const mobilePlayerRef = useRef()
   const dispatch = useDispatch()
   const router = useRouter()
   const { isShow, musicData, musicId, isPlay, isPlayList } = useSelector((state) => state.player)
@@ -200,7 +200,7 @@ export default function MusicPlayer() {
   }
   const handleShowMobilePlayer = (e) => {
     e.stopPropagation()
-    player.isShowPlayer ? setPlayer({ ...player, isShowPlayer: false }) : setPlayer({ ...player, isShowPlayer: true })
+    mobilePlayerRef.current?.classList.toggle('hiddenMobilePlayer')
   }
   const handleQueue = () => {
     if (router.pathname == '/queue') {
@@ -456,83 +456,83 @@ export default function MusicPlayer() {
             </div>
           </div>
         )}
-        {player.isShowPlayer && (
-          <div className='bg-mobilePlayerBg w-screen h-screen flex flex-col p-6'>
-            <div className='flex items-center justify-between'>
-              <ClosePlayerIcon width='24' height='24' className='fill-white' onClick={handleShowMobilePlayer} />
-              <div className='text-white font-semibold'>Music Player</div>
-              <OptionIcons width='24' height='24' className='fill-iconColor' />
+        <div
+          className='bg-mobilePlayerBg w-screen h-screen flex flex-col p-6 transition-all duration-300 opacity-100 hiddenMobilePlayer'
+          ref={mobilePlayerRef}>
+          <div className='flex items-center justify-between'>
+            <ClosePlayerIcon width='24' height='24' className='fill-white' onClick={handleShowMobilePlayer} />
+            <div className='text-white font-semibold'>Music Player</div>
+            <OptionIcons width='24' height='24' className='fill-iconColor' />
+          </div>
+          <div className='mt-12 flex items-center justify-center'>
+            <img
+              draggable={false}
+              className='sm:h-64 sm:w-64 w-80 h-80 object-cover shadow-2xl'
+              src={musicData?.snippet.thumbnails.medium.url}
+            />
+          </div>
+          <div className='flex items-center justify-between sm:mt-8 mt-14'>
+            <div className=''>
+              <div className='text-white text-xl font-bold'>{player.name}</div>
+              <div className='text-iconColor font-semibold'>{musicData?.snippet.channelTitle}</div>
             </div>
-            <div className='mt-12 flex items-center justify-center'>
-              <img
-                draggable={false}
-                className='sm:h-64 sm:w-64 w-80 h-80 object-cover shadow-2xl'
-                src={musicData.snippet.thumbnails.medium.url}
-              />
-            </div>
-            <div className='flex items-center justify-between sm:mt-8 mt-14'>
-              <div className=''>
-                <div className='text-white text-xl font-bold'>{player.name}</div>
-                <div className='text-iconColor font-semibold'>{musicData.snippet.channelTitle}</div>
-              </div>
-              <LoveButton musicId={musicId} musicData={musicData} width='24' height='24' />
-            </div>
-            <div className='mt-8 flex flex-col'>
-              <input
-                className='w-full h-1 mb-1'
-                type='range'
-                min={0}
-                max={0.999999}
-                step='any'
-                value={player.played}
-                onChange={(e) => handleChange(e)}
-                id='music-time-input'
-                ref={(el) => (musicInput.current[2] = el)}
-              />
-              <div className='flex justify-between'>
-                <Duration
-                  time={parseInt(player.played * player.duration)}
-                  className='text-navbarColor text-xs font-semibold'
-                />
-                <Duration time={player.duration} className='text-navbarColor text-xs font-semibold' />
-              </div>
-            </div>
-            <div className='flex mt-7 mb-6 justify-between items-center'>
-              <div className='' onClick={handleMixMusic}>
-                <MixMusic className='fill-white' width='24' height='24' iconRef={mixMusicRef} />
-              </div>
-              <div className='' onClick={handleBack}>
-                {isPlayList ? (
-                  <BackMusic className='fill-white' width='24' height='24' />
-                ) : (
-                  <Back15s className='fill-white' width='24' height='24' />
-                )}
-              </div>
-              <div className='bg-white p-4 w-fit rounded-full' onClick={handlePlayPause}>
-                {isPlay ? <PauseIcon width='24' height='24' /> : <PlayIcon width='24' height='24' />}
-              </div>
-              <div className='' onClick={handleNext}>
-                {isPlayList ? (
-                  <NextMusic className='fill-white' width='24' height='24' />
-                ) : (
-                  <Next15s className='fill-white' width='24' height='24' />
-                )}
-              </div>
-              <div className='' onClick={handleLoopMusic}>
-                <LoopMusic className='fill-white' width='24' height='24' iconRef={loopIConRef} />
-              </div>
-            </div>
+            <LoveButton musicId={musicId} musicData={musicData} width='24' height='24' />
+          </div>
+          <div className='mt-8 flex flex-col'>
+            <input
+              className='w-full h-1 mb-1'
+              type='range'
+              min={0}
+              max={0.999999}
+              step='any'
+              value={player.played}
+              onChange={(e) => handleChange(e)}
+              id='music-time-input'
+              ref={(el) => (musicInput.current[2] = el)}
+            />
             <div className='flex justify-between'>
-              <ConnectIcon
-                width='16'
-                heigth='16'
-                className='fill-white'
-                onClick={() => setPlayer({ ...player, isShowVolumn: true })}
+              <Duration
+                time={parseInt(player.played * player.duration)}
+                className='text-navbarColor text-xs font-semibold'
               />
-              <ShareIcon width='16' heigth='16' className='fill-white' />
+              <Duration time={player.duration} className='text-navbarColor text-xs font-semibold' />
             </div>
           </div>
-        )}
+          <div className='flex mt-7 mb-6 justify-between items-center'>
+            <div className='' onClick={handleMixMusic}>
+              <MixMusic className='fill-white' width='24' height='24' iconRef={mixMusicRef} />
+            </div>
+            <div className='' onClick={handleBack}>
+              {isPlayList ? (
+                <BackMusic className='fill-white' width='24' height='24' />
+              ) : (
+                <Back15s className='fill-white' width='24' height='24' />
+              )}
+            </div>
+            <div className='bg-white p-4 w-fit rounded-full' onClick={handlePlayPause}>
+              {isPlay ? <PauseIcon width='24' height='24' /> : <PlayIcon width='24' height='24' />}
+            </div>
+            <div className='' onClick={handleNext}>
+              {isPlayList ? (
+                <NextMusic className='fill-white' width='24' height='24' />
+              ) : (
+                <Next15s className='fill-white' width='24' height='24' />
+              )}
+            </div>
+            <div className='' onClick={handleLoopMusic}>
+              <LoopMusic className='fill-white' width='24' height='24' iconRef={loopIConRef} />
+            </div>
+          </div>
+          <div className='flex justify-between'>
+            <ConnectIcon
+              width='16'
+              heigth='16'
+              className='fill-white'
+              onClick={() => setPlayer({ ...player, isShowVolumn: true })}
+            />
+            <ShareIcon width='16' heigth='16' className='fill-white' />
+          </div>
+        </div>
       </div>
     </>
   )

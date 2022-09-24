@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux/'
 import { showMusicPlayer, setPlayPauseMusic, setNotPlayList } from './music_player/musicPlayerSlice'
 import { updateCurrentPlInfo, startLoading } from './extPlaylists/extPlaylistsSlice'
 import { useRouter } from 'next/router'
+import LazyImage from './LazyImage'
 export default function RowItem({ data }) {
   const dispatch = useDispatch()
   const { musicId, isPlay } = useSelector((state) => state.player)
@@ -34,10 +35,9 @@ export default function RowItem({ data }) {
   }
   return (
     <div className='text-white lg:p-4 lg:pb-5 w-full cursor-pointer relative group lg:bg-itemBg lg:hover:bg-itemActiveBg rounded h-full'>
-      <img
-        draggable={false}
-        className='lg:rounded lg:mb-4 mb-3 shadow-2xl lg:w-48 lg:h-44 sm:h-56 sm:w-60 h-36 w-40 object-cover'
-        src={data.snippet.thumbnails.medium.url}
+      <LazyImage
+        className='lg:rounded lg:mb-4 mb-3 shadow-2xl lg:w-48 lg:h-44 sm:h-56 sm:w-60 h-36 w-40 object-cover skeleton'
+        lazySrc={data.snippet.thumbnails.medium.url}
         alt=''
       />
       <div

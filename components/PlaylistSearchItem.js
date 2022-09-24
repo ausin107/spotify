@@ -3,6 +3,8 @@ import { PauseIcon, PlayIcon } from './Icon'
 import { setNotPlayList, setPlayPauseMusic, showMusicPlayer } from './music_player/musicPlayerSlice'
 import { addCollection, getCollection } from './collection/collectionAction'
 import { setShow } from './toast/toastSlice'
+import { useRef } from 'react'
+import LazyImage from './LazyImage'
 export default function PlaylistSearchItem({ data }) {
   const dispatch = useDispatch()
   const { isPlay, musicId } = useSelector((state) => state.player)
@@ -63,7 +65,11 @@ export default function PlaylistSearchItem({ data }) {
         )}
       </div>
       <div className='flex lg:w-3/5 w-4/5'>
-        <img src={data.snippet.thumbnails.medium.url} className=' h-11 w-11 object-cover shadow-2xl mr-4' alt='' />
+        <LazyImage
+          lazySrc={data.snippet.thumbnails.medium.url}
+          className=' h-11 w-11 object-cover shadow-2xl mr-4'
+          alt=''
+        />
         <div className=''>
           <div className='font-semibold'>
             {musicId == itemId ? (

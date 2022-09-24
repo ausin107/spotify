@@ -11,6 +11,7 @@ import { loadMusicData } from '../lib/loadData'
 import { getCollection, deleteCollection } from './collection/collectionAction'
 import { setPlayPauseMusic, setPlayList, setNotPlayList, showMusicPlayer } from './music_player/musicPlayerSlice'
 import { setShow } from './toast/toastSlice'
+import LazyImage from './LazyImage'
 export default function PlayListItem({ data, path, index, extPlItems }) {
   const [duration, setDuration] = useState('')
   const [isHover, setHover] = useState(false)
@@ -141,7 +142,11 @@ export default function PlayListItem({ data, path, index, extPlItems }) {
       tabIndex={0}>
       <div className='text-iconColor font-semibold lg:w-[3%] sm:w-[5%] text-lg hidden sm:block'>{handleHover()}</div>
       <div className='flex lg:w-2/5 sm:w-[70%] w-[80%]'>
-        <img src={data?.snippet?.thumbnails?.medium?.url} className='h-11 w-11 object-cover shadow-2xl mr-4' />
+        <LazyImage
+          lazySrc={data?.snippet?.thumbnails?.medium?.url}
+          className='h-11 w-11 object-cover shadow-2xl mr-4'
+          alt='image'
+        />
         <div className=''>
           <div>
             {musicId == itemId ? (
