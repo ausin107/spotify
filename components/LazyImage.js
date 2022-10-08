@@ -1,5 +1,4 @@
 import { useRef, useEffect } from 'react'
-
 export default function LazyImage({ lazySrc, className, alt }) {
   const imgRef = useRef()
   useEffect(() => {
@@ -14,6 +13,6 @@ export default function LazyImage({ lazySrc, className, alt }) {
     return () => {
       observer.unobserve(img)
     }
-  }, [])
+  }, [lazySrc])
   return <img draggable={false} lazy-src={lazySrc} className={className} alt={alt} ref={imgRef} />
 }

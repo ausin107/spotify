@@ -16,7 +16,6 @@ export default function PlayListItem({ data, path, index, extPlItems }) {
   const [duration, setDuration] = useState('')
   const [isHover, setHover] = useState(false)
   const [isFocus, setFocus] = useState(false)
-  const [musicName, setMusicName] = useState('')
   const { isShow, isPlay, musicId } = useSelector((state) => state.player)
   const { currentPlaylist, currentId } = useSelector((state) => state.collection)
   const authKey = useSelector((state) => state.auth.authKey)
@@ -24,11 +23,18 @@ export default function PlayListItem({ data, path, index, extPlItems }) {
   const trashRef = useRef()
   const dateRef = useRef()
   const router = useRouter()
-  let albumName = musicName.length >= 30 ? musicName.slice(0, 30) + '...' : musicName
-  const channelName = data.snippet.channelTitle.replace('Official', '').trim()
+  let channelName = data.snippet.channelTitle.replace(/Official/gi, '').trim()
+  if (!!data.snippet.videoOwnerChannelTitle) {
+    channelName = data.snippet.videoOwnerChannelTitle.replace(/Official/gi, '').trim()
+  }
   const date = data.snippet.publishedAt.slice(0, 10)
   let itemId = typeof data.id == 'object' ? data.id.videoId : data.id
   itemId = itemId.length > 15 ? data.snippet.resourceId.videoId : itemId
+  let musicName = data.snippet.title
+    .replace(/Official Music Video/gi, '')
+    .replace('(', '')
+    .replace(')', '')
+    .replaceAll('|', '')
   useEffect(() => {
     const getDuration = async () => {
       const result = await loadMusicData(itemId)
@@ -50,16 +56,6 @@ export default function PlayListItem({ data, path, index, extPlItems }) {
     } else {
       dateRef.current.classList.remove('!w-[18%]')
     }
-    const title = data.snippet.title
-    let musicName = title.replace('Official Music Video', '').replace('(', '').replace(')', '').replaceAll('|', '')
-    if (window.innerWidth < 640) {
-      musicName = musicName.length >= 25 ? musicName.slice(0, 25) + '...' : musicName
-    } else if (window.innerWidth >= 640 && window.innerWidth < 1024) {
-      musicName = musicName.length >= 45 ? musicName.slice(0, 45) + '...' : musicName
-    } else if (window.innerWidth >= 1024) {
-      musicName = musicName.length >= 40 ? musicName.slice(0, 40) + '...' : musicName
-    }
-    setMusicName(musicName)
   }, [])
   const handlePlayPause = () => {
     if (
@@ -147,12 +143,12 @@ export default function PlayListItem({ data, path, index, extPlItems }) {
           className='h-11 w-11 object-cover shadow-2xl mr-4'
           alt='image'
         />
-        <div className=''>
-          <div>
+        <div className='max-w-[80%]'>
+          <div className=''>
             {musicId == itemId ? (
-              <div className='text-playIconBg'>{musicName}</div>
+              <div className='text-playIconBg whitespace-nowrap text-ellipsis overflow-hidden'>{musicName}</div>
             ) : (
-              <div className='text-white'>{musicName}</div>
+              <div className='text-white whitespace-nowrap text-ellipsis overflow-hidden'>{musicName}</div>
             )}
           </div>
           <div className='text-iconColor text-sm font-semibold group-hover:text-white group-focus:text-white '>
@@ -160,8 +156,8 @@ export default function PlayListItem({ data, path, index, extPlItems }) {
           </div>
         </div>
       </div>
-      <div className='w-1/4 lg:w-[25%] text-iconColor font-semibold text-sm group-hover:text-white group-focus:text-white lg:block hidden'>
-        {albumName}
+      <div className='w-[25%] text-iconColor font-semibold text-sm group-hover:text-white group-focus:text-white lg:block hidden'>
+        <div className='whitespace-nowrap text-ellipsis overflow-hidden max-w-[85%]'>{musicName}</div>
       </div>
       <div className='w-1/5 lg:block hidden' ref={dateRef}>
         <DateConvert className='text-iconColor font-semibold text-sm' data={date} />

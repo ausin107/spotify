@@ -17,7 +17,6 @@ export default function BottomBar() {
   const bannerRef = useRef()
   const linkRef = useRef([])
   const isAuth = useSelector((state) => state.auth.isAuth)
-
   const hanldeAuth = (path) => {
     if (isAuth) {
       router.push(path)
