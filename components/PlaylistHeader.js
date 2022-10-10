@@ -34,15 +34,14 @@ export default function PlaylistHeader({ data, path }) {
           <MusicIconV2 width='65' height='65' className='fill-textBreakLine' />
         </div>
       </div>
-      <div className='lg:px-6'>
+      <div className='lg:px-6 lg:h-60'>
         <div
           className='uppercase text-white font-bold text-xs mb-2 lg:block hidden'
           style={{ textShadow: '4px -1px 46px rgb(0 0 0 / 75%)' }}>
           Playlist
         </div>
         <div
-          className='text-white font-bold lg:text-8xl text-2xl lg:mb-12 mb-2 cursor-pointer '
-          style={{ textShadow: '4px -1px 46px rgb(0 0 0 / 75%)' }}
+          className='text-white font-bold lg:text-7xl lg:h-[65%] text-2xl lg:mb-12 mb-2 cursor-pointer overflow-hidden'
           onClick={handleShowEditForm}>
           {currentData && currentData.title}
         </div>

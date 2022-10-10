@@ -21,7 +21,8 @@ export default function PlaylistsBody({ playlistItems, path, currentPlId, extPla
   const handlePlay = () => {
     if (currentPlId == playListId && !extPlaylistInfo) {
       dispatch(setPlayList())
-      playlistItems.map((item, index) => {
+      let newPlItems = [...playlistItems]
+      newPlItems.map((item, index) => {
         if (index == 0) {
           let musicId = typeof item.id == 'object' ? item.id.videoId : item.id
           const musicInfo = {
@@ -34,19 +35,19 @@ export default function PlaylistsBody({ playlistItems, path, currentPlId, extPla
       })
     } else if (!!extPlaylistInfo) {
       dispatch(setPlayList())
-      playlistItems.map((item, index) => {
+      let newPlItems = [...playlistItems]
+      newPlItems.map((item, index) => {
         if (index == 0) {
           let musicId = item.snippet.resourceId.videoId
           const musicInfo = {
             musicData: item,
             musicId,
           }
-
           dispatch(showMusicPlayer(musicInfo))
         }
       })
-      dispatch(loadItemsSuccess({ data: playlistItems, index: 0 }))
-      dispatch(setOriginItems(playlistItems))
+      dispatch(loadItemsSuccess({ data: newPlItems, index: 0 }))
+      dispatch(setOriginItems(newPlItems))
     }
   }
   const handlePause = () => {

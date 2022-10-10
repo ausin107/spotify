@@ -1,7 +1,5 @@
 export default function DateConvert({ data, className }) {
-  const year = data.slice(0, 4)
-  const month = data.slice(6, 7)
-  const day = data.slice(9, 11)
-  const date = day + '/' + month + '/' + year
-  return <div className={className}>{date}</div>
+  const [year, month, day] = data.split('-')
+  const result = `${Number(day)}/${Number(month)}/${Number(year)}`
+  return <div className={className}>{result}</div>
 }

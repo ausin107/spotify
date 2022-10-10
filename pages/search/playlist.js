@@ -58,7 +58,7 @@ export default function Playlist() {
       ) : (
         <>
           {!!plData && (
-            <div className='lg:pt-20 pt-16 lg:pb-48 pb-40 sm:px-9 px-4 flex lg:flex-row flex-col bg-greyBg lg:items-end'>
+            <div className='lg:pt-20 pt-16 lg:pb-48 pb-40 sm:px-9 px-4 flex lg:flex-row flex-col bg-greyBg lg:items-center'>
               <div className='w-full lg:w-60 lg:h-60 sm:h-72 flex justify-center lg:mb-0 mb-3'>
                 <img
                   src={currentPlInfo.snippet.thumbnails.medium.url}
@@ -66,16 +66,14 @@ export default function Playlist() {
                   className='lg:w-60 lg:h-60 sm:w-72 sm:h-72 w-44 h-44 object-cover shadow-3xl'
                 />
               </div>
-              <div className='lg:px-6 mb-4 lg:mb-0'>
+              <div className='lg:px-6 mb-4 lg:mb-0 lg:w-3/4 lg:h-60'>
                 <div
                   className='uppercase text-white font-bold text-xs mb-2 lg:block hidden'
                   style={{ textShadow: '4px -1px 46px rgb(0 0 0 / 75%)' }}>
                   Playlist
                 </div>
-                <div
-                  className='text-white font-bold lg:text-8xl text-2xl lg:mb-12 mb-2 normal-case'
-                  style={{ textShadow: '4px -1px 46px rgb(0 0 0 / 75%)' }}>
-                  {plName}
+                <div className='text-white font-bold lg:text-7xl text-2xl lg:mb-12 mb-2 normal-case lg:h-[65%] overflow-hidden'>
+                  {currentPlInfo?.snippet.title}
                 </div>
                 <div className='text-white text-xs font-bold' style={{ textShadow: '4px -1px 46px rgb(0 0 0 / 75%)' }}>
                   User - {plData.length} song

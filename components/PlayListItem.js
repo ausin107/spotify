@@ -47,14 +47,14 @@ export default function PlayListItem({ data, path, index, extPlItems }) {
       router.pathname.includes('search') ||
       router.pathname.includes('extplaylists')
     ) {
-      trashRef.current.classList.add('hidden')
+      trashRef?.current?.classList.add('hidden')
     } else {
-      trashRef.current.classList.remove('hidden')
+      trashRef?.current?.classList.remove('hidden')
     }
     if (router.pathname.includes('/playlists/')) {
-      dateRef.current.classList.add('!w-[18%]')
+      dateRef?.current?.classList.add('!w-[18%]')
     } else {
-      dateRef.current.classList.remove('!w-[18%]')
+      dateRef?.current?.classList.remove('!w-[18%]')
     }
   }, [])
   const handlePlayPause = () => {
