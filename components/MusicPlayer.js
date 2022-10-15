@@ -43,9 +43,9 @@ export default function MusicPlayer() {
   const [volume, setVolume] = useState(0.5)
   const musicInput = useRef([])
   const volumeRef = useRef([])
-  const loopIConRef = useRef()
+  const mixMusicRef = useRef([])
+  const loopIConRef = useRef([])
   const playerRef = useRef()
-  const mixMusicRef = useRef()
   const queueRef = useRef()
   const mobilePlayerRef = useRef()
   const dispatch = useDispatch()
@@ -67,12 +67,16 @@ export default function MusicPlayer() {
   const handleLoopMusic = () => {
     if (player.loop) {
       setPlayer({ ...player, loop: false })
-      loopIConRef.current.classList.remove('fill-activeIcon', 'hover:fill-activeIconHover')
-      loopIConRef.current.classList.add('fill-musicPlayer', 'hover:fill-white')
+      loopIConRef.current.map((item) => {
+        item.classList.remove('fill-activeIcon', 'hover:fill-activeIconHover')
+        item.classList.add('fill-musicPlayer', 'hover:fill-white')
+      })
     } else {
       setPlayer({ ...player, loop: true })
-      loopIConRef.current.classList.add('fill-activeIcon', 'hover:fill-activeIconHover')
-      loopIConRef.current.classList.remove('fill-musicPlayer', 'hover:fill-white')
+      loopIConRef.current.map((item) => {
+        item.classList.remove('fill-musicPlayer', 'hover:fill-white')
+        item.classList.add('fill-activeIcon', 'hover:fill-activeIconHover')
+      })
     }
   }
   const handleProgress = (state) => {
@@ -171,8 +175,10 @@ export default function MusicPlayer() {
     if (isPlayList) {
       if (player.mix) {
         setPlayer({ ...player, mix: false })
-        mixMusicRef.current.classList.remove('fill-activeIcon', 'hover:fill-activeIconHover')
-        mixMusicRef.current.classList.add('fill-musicPlayer', 'hover:fill-white')
+        mixMusicRef.current.map((item) => {
+          item.classList.remove('fill-activeIcon', 'hover:fill-activeIconHover')
+          item.classList.add('fill-musicPlayer', 'hover:fill-white')
+        })
         let currentIndex = originItems.findIndex((item, index) => {
           if (item.etag == musicData.etag) {
             return index
@@ -193,8 +199,10 @@ export default function MusicPlayer() {
         let result = mixMusic.filter((item) => item.etag != musicData.etag)
         setPlayer({ ...player, mix: true })
         dispatch(loadItemsSuccess({ data: [musicData, ...result], index: 0 }))
-        mixMusicRef.current.classList.add('fill-activeIcon', 'hover:fill-activeIconHover')
-        mixMusicRef.current.classList.remove('fill-musicPlayer', 'hover:fill-white')
+        mixMusicRef.current.map((item) => {
+          item.classList.remove('fill-musicPlayer', 'hover:fill-white')
+          item.classList.add('fill-activeIcon', 'hover:fill-activeIconHover')
+        })
       }
     }
   }
@@ -307,7 +315,7 @@ export default function MusicPlayer() {
                       className='fill-musicPlayer hover:fill-white'
                       width='16'
                       height='16'
-                      iconRef={mixMusicRef}
+                      iconRef={(el) => (mixMusicRef.current[0] = el)}
                     />
                   </div>
                   <div className='px-3 cursor-pointer pr-6' onClick={handleBack}>
@@ -334,7 +342,7 @@ export default function MusicPlayer() {
                       className='fill-musicPlayer hover:fill-white'
                       width='16'
                       height='16'
-                      iconRef={loopIConRef}
+                      iconRef={(el) => (loopIConRef.current[0] = el)}
                     />
                   </div>
                 </div>
@@ -500,7 +508,7 @@ export default function MusicPlayer() {
           </div>
           <div className='flex mt-7 mb-6 justify-between items-center'>
             <div className='' onClick={handleMixMusic}>
-              <MixMusic className='fill-white' width='24' height='24' iconRef={mixMusicRef} />
+              <MixMusic className='fill-white' width='24' height='24' iconRef={(el) => (mixMusicRef.current[1] = el)} />
             </div>
             <div className='' onClick={handleBack}>
               {isPlayList ? (
@@ -520,7 +528,12 @@ export default function MusicPlayer() {
               )}
             </div>
             <div className='' onClick={handleLoopMusic}>
-              <LoopMusic className='fill-white' width='24' height='24' iconRef={loopIConRef} />
+              <LoopMusic
+                className='fill-white'
+                width='24'
+                height='24'
+                iconRef={(el) => (loopIConRef.current[1] = el)}
+              />
             </div>
           </div>
           <div className='flex justify-between'>
