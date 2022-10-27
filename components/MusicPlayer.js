@@ -247,11 +247,7 @@ export default function MusicPlayer() {
   }, [router.pathname])
   useEffect(() => {
     let title = musicData?.snippet.title
-    if (window.innerWidth < 640) {
-      title = title?.length > 27 ? title.slice(0, 27) + '...' : title
-    } else if (window.innerWidth >= 640) {
-      title = title?.length > 55 ? title.slice(0, 55) + '...' : title
-    }
+    title = title?.replace(/official|music|video/gi, '')
     setPlayer({ ...player, name: title })
   }, [musicData])
   useEffect(() => {
@@ -288,7 +284,7 @@ export default function MusicPlayer() {
                   src={musicData.snippet.thumbnails.medium.url}
                 />
                 <div>
-                  <div className='text-white text-sm font-semibold mb-2 w-60'>{player.name}</div>
+                  <div className='text-white text-sm font-semibold mb-2 w-60 h-10 overflow-hidden'>{player.name}</div>
                   <div className='text-iconColor text-sm'>
                     {musicData.snippet.videoOwnerChannelTitle || musicData.snippet.channelTitle}
                   </div>
@@ -406,8 +402,12 @@ export default function MusicPlayer() {
                   src={musicData.snippet.thumbnails.medium.url}
                 />
                 <div>
-                  <div className='text-white text-sm font-semibold sm:w-[35rem] w-64'>{player.name}</div>
-                  <div className='text-iconColor text-sm'>{musicData.snippet.channelTitle}</div>
+                  <div className='text-white text-sm font-semibold sm:w-[35rem] w-64 overflow-hidden text-ellipsis whitespace-nowrap'>
+                    {player.name}
+                  </div>
+                  <div className='text-iconColor text-sm  sm:w-[35rem] w-64 overflow-hidden text-ellipsis whitespace-nowrap'>
+                    {musicData?.snippet.videoOwnerChannelTitle || musicData?.snippet.channelTitle}
+                  </div>
                 </div>
               </div>
               <div className='flex items-center mr-4'>
@@ -474,17 +474,26 @@ export default function MusicPlayer() {
           </div>
           <div className='mt-12 flex items-center justify-center'>
             <img
+              ref={mobileImage}
               draggable={false}
-              className='sm:h-64 sm:w-64 w-80 h-80 object-cover shadow-2xl'
-              src={musicData?.snippet.thumbnails.medium.url}
+              className='sm:h-64 sm:w-64 w-64 h-64 object-cover shadow-2xl'
+              src={musicData?.snippet.thumbnails.maxres.url || musicData?.snippet.thumbnails.high.url}
             />
           </div>
-          <div className='flex items-center justify-between sm:mt-8 mt-14'>
-            <div className=''>
-              <div className='text-white text-xl font-bold'>{player.name}</div>
-              <div className='text-iconColor font-semibold'>{musicData?.snippet.channelTitle}</div>
+          <div className='flex items-center justify-between sm:mt-8 mt-4'>
+            <div className='w-[85%]'>
+              <div className='text-white text-xl font-bold h-14 overflow-hidden'>{player.name}</div>
+              <div className='text-iconColor font-semibold'>
+                {musicData?.snippet.videoOwnerChannelTitle || musicData?.snippet.channelTitle}
+              </div>
             </div>
-            <LoveButton musicId={musicId} musicData={musicData} width='24' height='24' />
+            <LoveButton
+              className='w-1/5 flex justify-end'
+              musicId={musicId}
+              musicData={musicData}
+              width='24'
+              height='24'
+            />
           </div>
           <div className='mt-8 flex flex-col'>
             <input

@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { PlayIcon, PauseIcon, LoveMusic, LoveMusicActive } from './Icon'
+import { PlayIcon, PauseIcon } from './Icon'
 import { loadMusicData } from '../lib/loadData'
 import { showMusicPlayer, setPlayPauseMusic, setNotPlayList } from './music_player/musicPlayerSlice'
 import Duration from './Duration'
@@ -7,15 +7,10 @@ import LoveButton from './LoveButton'
 import { useDispatch, useSelector } from 'react-redux'
 export default function SearchMusicItem({ musicData }) {
   const [duration, setDuration] = useState(0)
-  const [isLoved, setLoved] = useState(false)
   const { isPlay, musicId } = useSelector((state) => state.player)
   const dispatch = useDispatch()
   const itemRef = useRef()
-  let musicName = musicData.snippet.title
-    .replace('Official Music Video', '')
-    .replace('(', '')
-    .replace(')', '')
-    .replaceAll('|', '')
+  let musicName = musicData.snippet.title.replace(/official|music|video|(|)|\|/gi, '')
   musicName = musicName.length >= 35 ? musicName.slice(0, 35) + '...' : musicName
   useEffect(() => {
     const getDuration = async () => {
@@ -25,10 +20,6 @@ export default function SearchMusicItem({ musicData }) {
     }
     getDuration()
   }, [musicData])
-  const handleLoved = (e) => {
-    e.stopPropagation()
-    isLoved ? setLoved(false) : setLoved(true)
-  }
   const handlePlay = () => {
     dispatch(setNotPlayList())
     itemRef.current.focus()
