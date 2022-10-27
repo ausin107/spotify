@@ -474,7 +474,6 @@ export default function MusicPlayer() {
           </div>
           <div className='mt-12 flex items-center justify-center'>
             <img
-              ref={mobileImage}
               draggable={false}
               className='sm:h-64 sm:w-64 w-64 h-64 object-cover shadow-2xl'
               src={musicData?.snippet.thumbnails.maxres.url || musicData?.snippet.thumbnails.high.url}
