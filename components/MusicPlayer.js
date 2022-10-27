@@ -479,7 +479,7 @@ export default function MusicPlayer() {
               src={musicData?.snippet.thumbnails.maxres.url || musicData?.snippet.thumbnails.high.url}
             />
           </div>
-          <div className='flex items-center justify-between sm:mt-8 mt-4'>
+          <div className='flex items-center justify-between sm:mt-8 mt-10'>
             <div className='w-[85%]'>
               <div className='text-white text-xl font-bold h-14 overflow-hidden'>{player.name}</div>
               <div className='text-iconColor font-semibold'>
