@@ -52,6 +52,9 @@ export default function MusicPlayer() {
   const router = useRouter()
   const { isShow, musicData, musicId, isPlay, isPlayList } = useSelector((state) => state.player)
   const { items, currentId, originItems } = useSelector((state) => state.collection)
+  let imgUrl = !!musicData?.snippet?.thumbnails?.maxres?.url
+    ? musicData.snippet.thumbnails.maxres.url
+    : musicData?.snippet?.thumbnails?.high?.url
   const handleReady = () => {
     setPlayer({ ...player, duration: playerRef.current.getDuration() })
   }
@@ -278,11 +281,7 @@ export default function MusicPlayer() {
             />
             <div className='flex flex-row justify-between h-full items-center'>
               <div className='flex items-center w-[30%]'>
-                <img
-                  draggable={false}
-                  className='h-16 w-16 object-cover mr-4'
-                  src={musicData.snippet.thumbnails.medium.url}
-                />
+                <img draggable={false} className='h-16 w-16 object-cover mr-4' src={imgUrl} />
                 <div>
                   <div className='text-white text-sm font-semibold mb-2 w-60 h-10 overflow-hidden'>{player.name}</div>
                   <div className='text-iconColor text-sm'>
@@ -396,11 +395,7 @@ export default function MusicPlayer() {
             onClick={(e) => handleShowMobilePlayer(e)}>
             <div className='flex w-full mb-2 justify-between'>
               <div className='flex items-center'>
-                <img
-                  draggable={false}
-                  className='h-10 w-10 rounded object-cover mr-4'
-                  src={musicData.snippet.thumbnails.medium.url}
-                />
+                <img draggable={false} className='h-10 w-10 rounded object-cover mr-4' src={imgUrl} />
                 <div>
                   <div className='text-white text-sm font-semibold sm:w-[35rem] w-64 overflow-hidden text-ellipsis whitespace-nowrap'>
                     {player.name}
@@ -473,13 +468,9 @@ export default function MusicPlayer() {
             <OptionIcons width='24' height='24' className='fill-iconColor' />
           </div>
           <div className='mt-12 flex items-center justify-center'>
-            <img
-              draggable={false}
-              className='sm:h-64 sm:w-64 w-64 h-64 object-cover shadow-2xl'
-              src={musicData?.snippet.thumbnails.maxres.url || musicData?.snippet.thumbnails.high.url}
-            />
+            <img draggable={false} className='sm:h-64 sm:w-64 w-64 h-64 object-cover shadow-2xl' src={imgUrl} />
           </div>
-          <div className='flex items-center justify-between sm:mt-8 mt-10'>
+          <div className='flex items-center justify-between sm:mt-8 mt-12'>
             <div className='w-[85%]'>
               <div className='text-white text-xl font-bold h-14 overflow-hidden'>{player.name}</div>
               <div className='text-iconColor font-semibold'>

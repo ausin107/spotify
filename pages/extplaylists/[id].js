@@ -25,7 +25,7 @@ export default function ExtPLaylist() {
     <>
       {!!plInfo && !!plItems ? (
         <>
-          <div className='lg:pt-20 pt-16 lg:pb-48 pb-40 px-4 flex lg:flex-row flex-col bg-greyBg lg:items-center'>
+          <div className='lg:pt-20 pt-16 lg:pb-48 pb-40 px-4 lg:px-9 flex lg:flex-row flex-col bg-greyBg lg:items-center'>
             <div className='w-full lg:w-60 lg:h-60 flex justify-center sm:h-72 lg:mb-0 mb-3'>
               <img
                 src={plInfo?.snippet.thumbnails.maxres.url || plInfo?.snippet.thumbnails.high.url}
