@@ -153,7 +153,7 @@ export default function PlaylistsBody({ playlistItems, path, currentPlId, extPla
             {isShowPlMenu && (
               <div className='fixed w-screen h-screen top-0 left-0 z-50' onClick={handleShowOption}>
                 <div
-                  className='absolute bg-itemActiveBg p-1 rounded lg:top-[27vw] lg:left-[24vw] sm:top-[59vw] sm:left-[22vw] top-[85vw] left-[35vw]  shadow-2xl'
+                  className='absolute bg-itemActiveBg p-1 rounded lg:top-[27vw] lg:left-[24vw] sm:top-[59vw] sm:left-[22vw] top-[85vw] left-[35vw] shadow-2xl'
                   onClick={(e) => e.stopPropagation()}>
                   <div className='px-4 pr-16 py-2 text-optionText font-semibold hover:bg-searchChildBg rounded-sm'>
                     Add to waiting list

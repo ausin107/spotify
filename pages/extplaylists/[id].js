@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
+import LazyImage from '../../components/LazyImage'
 import PlaylistsBody from '../../components/PlaylistsBody'
 import { ArrowBackIcon } from '../../components/Icon'
 import { loadPlaylistItems, loadPlaylistInfo } from '../../lib/loadData'
@@ -27,8 +28,12 @@ export default function ExtPLaylist() {
         <>
           <div className='lg:pt-20 pt-16 lg:pb-48 pb-40 px-4 lg:px-9 flex lg:flex-row flex-col bg-greyBg lg:items-center'>
             <div className='w-full lg:w-60 lg:h-60 flex justify-center sm:h-72 lg:mb-0 mb-3'>
-              <img
-                src={plInfo?.snippet.thumbnails.maxres.url || plInfo?.snippet.thumbnails.high.url}
+              <LazyImage
+                lazySrc={
+                  !!plInfo?.snippet?.thumbnails?.maxres?.url
+                    ? plInfo?.snippet.thumbnails.maxres.url
+                    : plInfo?.snippet.thumbnails.high.url
+                }
                 alt=''
                 className='lg:w-60 lg:h-60 sm:w-72 sm:h-72 w-44 h-44 object-cover shadow-3xl'
               />

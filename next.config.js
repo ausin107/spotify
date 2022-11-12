@@ -3,5 +3,3 @@
 //   // reactStrictMode: false,
 //   swcMinify: true,
 // }
-
-// module.exports = nextConfig

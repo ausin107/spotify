@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import PlaylistsBody from '../../components/PlaylistsBody'
 import { useDispatch, useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
+import LazyImage from '../../components/LazyImage'
 import { BackIcon, SpinIcon } from '../../components/Icon'
 import { loadPlaylistItems } from '../../lib/loadData'
 import { getSingleFavoriteMusic } from '../../lib/firebaseAction'
@@ -9,7 +10,6 @@ import { endLoading } from '../../components/extPlaylists/extPlaylistsSlice'
 export default function Playlist() {
   const [plData, setPlData] = useState()
   const [isLovedPl, setLovedPl] = useState(false)
-  const [plName, setPlName] = useState('')
   const dispatch = useDispatch()
   const authKey = useSelector((state) => state.auth.authKey)
   const { allExtPlaylist, currentPlInfo, isLoading } = useSelector((state) => state.extplaylist)
@@ -31,17 +31,9 @@ export default function Playlist() {
         setLovedPl(false)
       }
       dispatch(endLoading())
-      let plTitle = currentPlInfo?.snippet.title
-      if (window.innerWidth < 640) {
-        plTitle = plTitle?.length > 25 ? plTitle.slice(0, 25) + '...' : plTitle
-      } else if (window.innerWidth >= 640 && window.innerWidth < 1024) {
-        plTitle = plTitle?.length > 50 ? plTitle.slice(0, 50) + '...' : plTitle
-      } else {
-        plTitle = plTitle?.length > 13 ? plTitle.slice(0, 13) + '...' : plTitle
-      }
-      setPlName(plTitle)
     }
     getData()
+    console.log(currentPlInfo)
   }, [currentPlInfo, allExtPlaylist])
   return (
     <>
@@ -60,9 +52,13 @@ export default function Playlist() {
           {!!plData && (
             <div className='lg:pt-20 pt-16 lg:pb-48 pb-40 sm:px-9 px-4 flex lg:flex-row flex-col bg-greyBg lg:items-center'>
               <div className='w-full lg:w-60 lg:h-60 sm:h-72 flex justify-center lg:mb-0 mb-3'>
-                <img
-                  src={currentPlInfo.snippet.thumbnails.medium.url}
-                  alt=''
+                <LazyImage
+                  lazySrc={
+                    !!currentPlInfo?.snippet?.thumbnails?.maxres?.url
+                      ? currentPlInfo.snippet.thumbnails.maxres.url
+                      : currentPlInfo?.snippet?.thumbnails?.high?.url
+                  }
+                  alt='Playlist Image'
                   className='lg:w-60 lg:h-60 sm:w-72 sm:h-72 w-44 h-44 object-cover shadow-3xl'
                 />
               </div>

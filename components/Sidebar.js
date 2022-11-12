@@ -61,11 +61,11 @@ export default function Sidebar() {
   useEffect(() => {
     const pathName = ['/', '/search', '/library', '/playlist', '/collection']
     for (let x in pathName) {
-      linkRef.current[x].classList.remove('!text-white', '!font-bold')
+      linkRef.current[x].classList.remove('!text-white')
       if (pathName[x] == router.pathname) {
-        linkRef.current[x].classList.add('!text-white', '!font-bold')
+        linkRef.current[x].classList.add('!text-white')
       } else if (pathName[x] == '/search' && router.pathname.includes('search')) {
-        linkRef.current[x].classList.add('!text-white', '!font-bold')
+        linkRef.current[x].classList.add('!text-white')
       }
     }
   }, [router.pathname])
@@ -96,7 +96,11 @@ export default function Sidebar() {
         />
         <div className='mb-8'>
           <Link href='/'>
-            <div className='text-iconColor mb-4 flex font-semibold icon-class' ref={(el) => (linkRef.current[0] = el)}>
+            <div
+              className='text-iconColor mb-4 flex font-semibold icon-class'
+              onMouseDown={(el) => el.target.classList.add('!font-normal')}
+              onMouseUp={(el) => el.target.classList.remove('!font-normal')}
+              ref={(el) => (linkRef.current[0] = el)}>
               {router.pathname == '/' ? (
                 <HomeIconActive className='fill-white mr-4' />
               ) : (
@@ -106,7 +110,11 @@ export default function Sidebar() {
             </div>
           </Link>
           <Link href='/search'>
-            <div className='text-iconColor mb-4 flex font-semibold icon-class' ref={(el) => (linkRef.current[1] = el)}>
+            <div
+              className='text-iconColor mb-4 flex font-semibold icon-class'
+              ref={(el) => (linkRef.current[1] = el)}
+              onMouseDown={(el) => el.target.classList.add('!font-normal')}
+              onMouseUp={(el) => el.target.classList.remove('!font-normal')}>
               {router.pathname.includes('search') ? (
                 <SearchIconActive className='fill-white mr-4' />
               ) : (
@@ -119,7 +127,9 @@ export default function Sidebar() {
             <div
               onClick={() => hanldeAuth(0, '/library')}
               className='text-iconColor mb-4 flex font-semibold icon-class'
-              ref={(el) => (linkRef.current[2] = el)}>
+              ref={(el) => (linkRef.current[2] = el)}
+              onMouseDown={(el) => el.target.classList.add('!font-normal')}
+              onMouseUp={(el) => el.target.classList.remove('!font-normal')}>
               {router.pathname == '/library' ? (
                 <LibraryIconActive className='fill-white mr-4' />
               ) : (

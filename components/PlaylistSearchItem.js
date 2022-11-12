@@ -67,7 +67,7 @@ export default function PlaylistSearchItem({ data }) {
       <div className='flex lg:w-3/5 w-4/5'>
         <LazyImage
           lazySrc={data.snippet.thumbnails.medium.url}
-          className=' h-11 w-11 object-cover shadow-2xl mr-4'
+          className='h-11 w-11 object-cover shadow-2xl mr-4'
           alt=''
         />
         <div className=''>

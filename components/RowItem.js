@@ -7,11 +7,7 @@ import LazyImage from './LazyImage'
 export default function RowItem({ data }) {
   const dispatch = useDispatch()
   const { musicId, isPlay } = useSelector((state) => state.player)
-  let title = data.snippet.title
-    .replace('Official Music Video', '')
-    .replace('(', '')
-    .replace(')', '')
-    .replaceAll('|', '')
+  let title = data.snippet.title.replace(/official|music|video|\(|\)|\|/gi, '')
   title = title.length > 30 ? title.slice(0, 30) + '...' : title
   const curentMusicId = data.id.videoId || data.id
   const router = useRouter()

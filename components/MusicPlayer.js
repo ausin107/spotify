@@ -48,6 +48,7 @@ export default function MusicPlayer() {
   const playerRef = useRef()
   const queueRef = useRef()
   const mobilePlayerRef = useRef()
+  const playPauseBtnRef = useRef()
   const dispatch = useDispatch()
   const router = useRouter()
   const { isShow, musicData, musicId, isPlay, isPlayList } = useSelector((state) => state.player)
@@ -65,6 +66,12 @@ export default function MusicPlayer() {
     e.stopPropagation()
     if (player.loadedSeconds >= 1 && player.played > 0) {
       dispatch(setPlayPauseMusic())
+    }
+  }
+  const handleMouseActive = (e) => {
+    e.stopPropagation()
+    if (player.loadedSeconds >= 1 && player.played > 0) {
+      playPauseBtnRef.current.classList.toggle('!scale-95')
     }
   }
   const handleLoopMusic = () => {
@@ -321,8 +328,11 @@ export default function MusicPlayer() {
                     )}
                   </div>
                   <div
-                    className='bg-white p-2 w-fit rounded-full cursor-pointer hover:scale-105'
-                    onClick={handlePlayPause}>
+                    className='bg-white p-2 w-fit rounded-full'
+                    onClick={handlePlayPause}
+                    onMouseDown={handleMouseActive}
+                    onMouseUp={handleMouseActive}
+                    ref={playPauseBtnRef}>
                     {isPlay ? <PauseIcon width='16' height='16' /> : <PlayIcon width='16' height='16' />}
                   </div>
                   <div className='px-3 cursor-pointer pl-6' onClick={handleNext}>

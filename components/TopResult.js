@@ -1,4 +1,5 @@
 import SearchMusicItem from './SearchMusicItem'
+import LazyImage from './LazyImage'
 import { PlayIcon, PauseIcon } from './Icon'
 import { setPlayPauseMusic, showMusicPlayer, setNotPlayList } from './music_player/musicPlayerSlice'
 import { useDispatch, useSelector } from 'react-redux'
@@ -39,9 +40,9 @@ export default function TopResult({ musicData }) {
       <div className='lg:w-[30%] sm:w-[40%]' onClick={handleShow}>
         <div className='text-2xl font-bold text-white lg:mb-7 sm:mb-3'>Top Result</div>
         <div className='group bg-itemBg hover:bg-itemActiveBg rounded lg:pl-5 lg:py-5 sm:px-3 sm:py-3 relative transition-all duration-300'>
-          <img
+          <LazyImage
             className='rounded w-48 lg:mb-8 sm:mb-5 shadow-2xl'
-            src={musicData[0].snippet.thumbnails.medium.url}
+            lazySrc={musicData[0].snippet.thumbnails.medium.url}
             alt=''
           />
           <div className='font-bold text-2xl text-white mb-4'>{musicName.slice(0, 15)}</div>

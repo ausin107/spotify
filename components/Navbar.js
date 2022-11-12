@@ -109,7 +109,9 @@ export default function Navbar() {
             </div>
             <button
               onClick={handleSumbit}
-              className='w-[4.5rem] h-10 bg-activeIcon hover:bg-activeIconHover hover:scale-105 rounded font-semibold'>
+              onMouseDown={(el) => el.target.classList.add('scale-90')}
+              onMouseUp={(el) => el.target.classList.remove('scale-90')}
+              className='w-[4.5rem] h-10 bg-activeIcon rounded font-semibold'>
               Search
             </button>
           </div>
